@@ -6,8 +6,8 @@ class Customer {
   String email;
   String type;
   String phone;
-  double latitude;
-  double longitude;
+  String latitude;
+  String longitude;
 
   Customer({
     required this.name,
@@ -27,8 +27,10 @@ class Customer {
       email: data['email'] ?? '',
       type: data['type'] ?? '',
       phone: data['phone'] ?? '',
-      latitude: (data['latitude'] ?? 0).toDouble(),
-      longitude: (data['longitude'] ?? 0).toDouble(),
+      latitude: data['latitude'] ?? '',
+      longitude: data['longitude'] ?? '',
+      //latitude: (data['latitude'] ?? 0).toDouble(),
+      //longitude: (data['longitude'] ?? 0).toDouble(),
     );
   }
 }

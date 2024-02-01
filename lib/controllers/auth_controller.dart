@@ -84,15 +84,15 @@ class AuthController extends GetxController {
       type,
       cnic,
       phone,
-      latitude = "",
-      longitude = ""}) async {
+      latitude = " ",
+      longitude = " "}) async {
     DocumentReference store =
         firestore.collection(usersCollection1).doc(currentUser!.uid);
     store.set({
       'name': name,
       'password': password,
       'email': email,
-      'ProfileImageurl': '',
+      'ProfileImageurl': ' ',
       'id': currentUser!.uid,
       'type': type,
       'Phone': phone,

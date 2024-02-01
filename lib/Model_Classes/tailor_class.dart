@@ -7,8 +7,8 @@ class Tailor {
   String type;
   String phone;
   String cnic;
-  // double latitude;
-  // double longitude;
+  String latitude;
+  String longitude;
   String profile_url;
 
   Tailor({
@@ -19,8 +19,8 @@ class Tailor {
     required this.phone,
     required this.cnic,
     required this.profile_url,
-    // required this.latitude,
-    // required this.longitude,
+    required this.latitude,
+    required this.longitude,
   });
 
   factory Tailor.fromFirestore1(DocumentSnapshot doc) {
@@ -33,6 +33,8 @@ class Tailor {
       profile_url: data['ProfileImageurl'],
       type: data['type'] ?? '',
       phone: data['phone'] ?? '',
+      latitude: data['latitude'] ?? '',
+      longitude: data['longitude'] ?? '',
       // latitude: (data['latitude'] ?? 0).toDouble(),
       // longitude: (data['longitude'] ?? 0).toDouble(),
     );
