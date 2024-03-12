@@ -6,7 +6,6 @@ import 'package:dashboard/widgets_common/details_button.dart';
 import 'package:dashboard/widgets_common/bg_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-//import 'package:get/get_state_manager/src/simple/list_notifier.dart';
 
 class ProfilePage extends StatefulWidget {
   final Customer customer;
@@ -57,13 +56,12 @@ class _ProfilePageState extends State<ProfilePage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        "${widget.customer.name}"
-                            .text
+                        widget.customer.name.text
                             .fontFamily(semibold)
                             .white
                             .make(),
                         5.heightBox,
-                        "${widget.customer.email}".text.white.make(),
+                        widget.customer.email.text.white.make(),
                       ],
                     ),
                   ),
@@ -95,7 +93,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ListView.separated(
               shrinkWrap: true,
               separatorBuilder: (context, index) {
-                return Divider(
+                return const Divider(
                   color: lightGrey,
                 );
               },
@@ -117,8 +115,8 @@ class _ProfilePageState extends State<ProfilePage> {
                 .box
                 .rounded
                 .white
-                .margin(EdgeInsets.all(12))
-                .padding(EdgeInsets.symmetric(horizontal: 16))
+                .margin(const EdgeInsets.all(12))
+                .padding(const EdgeInsets.symmetric(horizontal: 16))
                 .shadowSm
                 .make()
                 .box

@@ -29,13 +29,12 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.transparent,
         appBarTheme: const AppBarTheme(
-            //to set appbar icon colours
             iconTheme: IconThemeData(color: darkFontGrey),
             elevation: 0.0,
             backgroundColor: Colors.white),
         fontFamily: regular,
       ),
-      home: SplashScreen(),
+      home: const SplashScreen(),
     );
   }
 }

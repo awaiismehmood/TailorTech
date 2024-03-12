@@ -23,8 +23,6 @@ class _ProfilePage_TailorState extends State<ProfilePage_Tailor> {
       body: SafeArea(
         child: Column(
           children: [
-            //wdite profile button
-
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: Align(
