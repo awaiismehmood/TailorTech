@@ -1,5 +1,6 @@
 import 'package:dashboard/Model_Classes/customer_class.dart';
-import 'package:dashboard/view/measurements/measurements.dart';
+import 'package:dashboard/Customer_views/measurements/measurements.dart';
+import 'package:dashboard/try_/order_place.dart';
 import 'package:dashboard/widgets_common/exercise_tile.dart';
 import 'package:dashboard/widgets_common/emotion_face.dart';
 import 'package:flutter/material.dart';
@@ -123,7 +124,7 @@ class _HomePageState extends State<HomePage> {
                     ),
 
                     // 4 different
-                    Row(
+                    const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         //bad
@@ -223,7 +224,9 @@ class _HomePageState extends State<HomePage> {
                                   color: Colors.orange,
                                 ),
                                 ExerciseTile(
-                                  onpress: () {},
+                                  onpress: () {
+                                    Get.offAll(TailorInfoScreen());
+                                  },
                                   icon: Icons.more,
                                   exerciseName: "find tailor",
                                   numberOfExercises: 10,

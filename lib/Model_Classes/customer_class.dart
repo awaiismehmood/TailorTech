@@ -6,8 +6,7 @@ class Customer {
   String email;
   String type;
   String phone;
-  String latitude;
-  String longitude;
+  String profileImageUrl;
 
   Customer({
     required this.name,
@@ -15,8 +14,7 @@ class Customer {
     required this.email,
     required this.type,
     required this.phone,
-    required this.latitude,
-    required this.longitude,
+    required this.profileImageUrl,
   });
 
   factory Customer.fromFirestore(DocumentSnapshot doc) {
@@ -27,10 +25,7 @@ class Customer {
       email: data['email'] ?? '',
       type: data['type'] ?? '',
       phone: data['phone'] ?? '',
-      latitude: data['latitude'] ?? '',
-      longitude: data['longitude'] ?? '',
-      //latitude: (data['latitude'] ?? 0).toDouble(),
-      //longitude: (data['longitude'] ?? 0).toDouble(),
+      profileImageUrl: data['ProfileImageurl'] ?? '',
     );
   }
 }

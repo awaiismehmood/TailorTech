@@ -1,13 +1,12 @@
-import 'package:dashboard/view/auth_screen/login_screen.dart';
+import 'package:dashboard/Customer_views/auth_screen/login_screen.dart';
 import 'package:dashboard/Tailor_views/auth_screen/login_screen.dart';
 import 'package:dashboard/consts/consts.dart';
-import 'package:dashboard/try/widget_try.dart';
+import 'package:dashboard/widgets_common/icon_button.dart';
 import 'package:dashboard/widgets_common/applogo_widget.dart';
 // import 'package:dashboard/widgets_common/button.dart';
 //import 'package:dashboard/widgets_common/applogo_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:velocity_x/velocity_x.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dashboard/Model_Classes/customer_class.dart';
 import 'package:dashboard/consts/firebase_const.dart';
-import 'package:dashboard/view/home_screen/home_screen.dart';
+import 'package:dashboard/Customer_views/home_screen/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';

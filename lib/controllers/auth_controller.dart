@@ -1,8 +1,5 @@
-//import 'package:cloud_firestore/cloud_firestore.dart';
-import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dashboard/view/splash_screen/splash_screen.dart';
+import 'package:dashboard/First_screen/first_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -26,9 +23,6 @@ class AuthController extends GetxController {
     try {
       userCredential = await auth.signInWithEmailAndPassword(
           email: emailController.text, password: passwordController.text);
-
-      log('Authentication successful: ${userCredential}');
-      log('login successful');
     } on FirebaseAuthException catch (e) {
       VxToast.show(context, msg: e.toString());
     }
@@ -50,26 +44,24 @@ class AuthController extends GetxController {
 
   //storing data od costumer method
 
-  storeuserData(
-      {name,
-      password,
-      email,
-      type,
-      phone,
-      latitude = "",
-      longitude = ""}) async {
+  storeuserData({
+    name,
+    password,
+    email,
+    type,
+    phone,
+    profileImageurl,
+  }) async {
     DocumentReference store =
         firestore.collection(usersCollection).doc(currentUser!.uid);
     store.set({
       'name': name,
       'password': password,
       'email': email,
-      'ProfileImageurl': '',
+      'ProfileImageurl': profileImageurl,
       'id': currentUser!.uid,
       'type': type,
       'phone': phone,
-      'latitude': latitude,
-      'longitude': longitude,
       'timestamp': FieldValue.serverTimestamp(),
     });
   }
@@ -84,8 +76,8 @@ class AuthController extends GetxController {
       type,
       cnic,
       phone,
-      latitude = " ",
-      longitude = " "}) async {
+      latitude = 0.00,
+      longitude = 0.00}) async {
     DocumentReference store =
         firestore.collection(usersCollection1).doc(currentUser!.uid);
     store.set({
@@ -97,9 +89,9 @@ class AuthController extends GetxController {
       'type': type,
       'Phone': phone,
       'CNIC': cnic,
-      'latitude': latitude,
-      'longitude': longitude,
       'timestamp': FieldValue.serverTimestamp(),
+      'longitude': longitude,
+      'latitude': latitude
     });
   }
 
@@ -108,7 +100,7 @@ class AuthController extends GetxController {
   signoutmethod(context, u_type) async {
     try {
       await auth.signOut();
-      Get.offAll(SplashScreen());
+      Get.offAll(() => const SplashScreen());
       // if (u_type == "Customer") {
       //   Get.offAll(LoginScreen(type: u_type));
       // } else {

@@ -7,8 +7,8 @@ class Tailor {
   String type;
   String phone;
   String cnic;
-  String latitude;
-  String longitude;
+  double latitude;
+  double longitude;
   String profile_url;
 
   Tailor({
@@ -33,8 +33,8 @@ class Tailor {
       profile_url: data['ProfileImageurl'],
       type: data['type'] ?? '',
       phone: data['phone'] ?? '',
-      latitude: data['latitude'] ?? '',
-      longitude: data['longitude'] ?? '',
+      latitude: data['latitude'],
+      longitude: data['longitude'],
       // latitude: (data['latitude'] ?? 0).toDouble(),
       // longitude: (data['longitude'] ?? 0).toDouble(),
     );

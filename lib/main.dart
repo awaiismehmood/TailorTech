@@ -1,8 +1,7 @@
+import 'package:dashboard/First_screen/first_screen.dart';
 import 'package:dashboard/consts/consts.dart';
 import 'package:dashboard/firebase_options.dart';
-import 'package:dashboard/view/splash_screen/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -33,7 +32,7 @@ class _MyAppState extends State<MyApp> {
             //to set appbar icon colours
             iconTheme: IconThemeData(color: darkFontGrey),
             elevation: 0.0,
-            backgroundColor: Colors.transparent),
+            backgroundColor: Colors.white),
         fontFamily: regular,
       ),
       home: SplashScreen(),

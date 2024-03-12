@@ -3,9 +3,14 @@ import 'package:dashboard/Model_Classes/tailor_class.dart';
 import 'package:dashboard/Tailor_views/Profile/profilepage.dart';
 import 'package:dashboard/Tailor_views/home_screen/home_screen.dart';
 import 'package:dashboard/consts/consts.dart';
+import 'package:dashboard/controllers/auth_controller.dart';
+//import 'package:dashboard/controllers/auth_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+//import 'package:google_maps_flutter/google_maps_flutter.dart';
+//import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:location/location.dart';
 
 import '../../controllers/home_controller.dart';
 
@@ -18,6 +23,9 @@ class Home_Tailor extends StatefulWidget {
 
 class _Home_TailorState extends State<Home_Tailor> {
   late Tailor tailor;
+  var controller = Get.put(AuthController());
+  Location _locationController = new Location();
+
   @override
   void initState() {
     super.initState();
@@ -25,6 +33,7 @@ class _Home_TailorState extends State<Home_Tailor> {
   }
 
   void fetchData() async {
+    getLocationUpdates();
     DocumentSnapshot doc = await FirebaseFirestore.instance
         .collection(usersCollection1)
         .doc(currentUser!.uid)
@@ -33,6 +42,8 @@ class _Home_TailorState extends State<Home_Tailor> {
     if (doc.exists) {
       setState(() {
         tailor = Tailor.fromFirestore1(doc);
+        print("Location:");
+        print(tailor.latitude);
       });
     } else {
       print('Tailor not found.');
@@ -106,5 +117,38 @@ class _Home_TailorState extends State<Home_Tailor> {
         ),
       ),
     );
+  }
+
+  Future<void> getLocationUpdates() async {
+    bool _serviceEnabled;
+    PermissionStatus _permissionGranted;
+
+    _serviceEnabled = await _locationController.serviceEnabled();
+    if (_serviceEnabled) {
+      _serviceEnabled = await _locationController.requestService();
+    } else {
+      return;
+    }
+
+    _permissionGranted = await _locationController.hasPermission();
+
+    if (_permissionGranted == PermissionStatus.denied) {
+      _permissionGranted = await _locationController.requestPermission();
+      if (_permissionGranted != PermissionStatus.granted) {
+        return;
+      }
+    }
+    _locationController.onLocationChanged
+        .listen((LocationData currentLocation) async {
+      if (currentLocation.latitude != null &&
+          currentLocation.longitude != null) {
+        CollectionReference collection =
+            FirebaseFirestore.instance.collection(usersCollection1);
+        await collection.doc(currentUser!.uid).update({
+          'longitude': currentLocation.longitude,
+          'latitude': currentLocation.latitude,
+        });
+      }
+    });
   }
 }

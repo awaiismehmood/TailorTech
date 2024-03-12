@@ -6,6 +6,7 @@ import 'package:dashboard/widgets_common/details_button.dart';
 import 'package:dashboard/widgets_common/bg_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+//import 'package:get/get_state_manager/src/simple/list_notifier.dart';
 
 class ProfilePage extends StatefulWidget {
   final Customer customer;
@@ -19,6 +20,12 @@ class _ProfilePageState extends State<ProfilePage> {
   var controller = Get.put(AuthController());
 
   @override
+  void dispose() {
+    super.dispose();
+    controller.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return bgWidget(Scaffold(
       body: SafeArea(
@@ -26,7 +33,7 @@ class _ProfilePageState extends State<ProfilePage> {
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: Align(
+              child: const Align(
                 alignment: Alignment.topRight,
                 child: Icon(
                   Icons.edit,

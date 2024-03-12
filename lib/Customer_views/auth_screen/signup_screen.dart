@@ -1,6 +1,6 @@
 import 'package:dashboard/consts/consts.dart';
 import 'package:dashboard/controllers/auth_controller.dart';
-import 'package:dashboard/view/home_screen/home.dart';
+import 'package:dashboard/Customer_views/home_screen/home.dart';
 import 'package:flutter/material.dart';
 import '../../widgets_common/applogo_widget.dart';
 import '../../widgets_common/bg_widgets.dart';
@@ -112,6 +112,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                           password: passwrodController.text,
                                           type: widget.type,
                                           phone: phoneController.text,
+                                          profileImageurl: " ",
                                         );
                                       }).then((value) {
                                         VxToast.show(context, msg: logedin);

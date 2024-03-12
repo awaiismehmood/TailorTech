@@ -1,12 +1,12 @@
 //import 'package:dashboard/Permissions/Location_Perm.dart';
 //import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dashboard/Model_Classes/tailor_class.dart';
-import 'package:dashboard/Tailor_views/order_list/order_list.dart';
+import 'package:dashboard/Tailor_views/order_confirmation/Orders.dart';
+import 'package:dashboard/Tailor_views/order_list/order_history.dart';
 import 'package:dashboard/consts/consts.dart';
 import 'package:dashboard/widgets_common/exercise_tile.dart';
 import 'package:dashboard/widgets_common/emotion_face.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class HomePage_Tailor extends StatefulWidget {
   final Tailor tailor;
@@ -215,7 +215,11 @@ class _HomePageTailorState extends State<HomePage_Tailor> {
                               children: [
                                 ExerciseTile(
                                   onpress: () {
-                                    Get.offAll(() => OrderList());
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                OrderHistory()));
                                   },
                                   icon: Icons.miscellaneous_services,
                                   exerciseName: "Order List",
@@ -224,7 +228,11 @@ class _HomePageTailorState extends State<HomePage_Tailor> {
                                 ),
                                 ExerciseTile(
                                   onpress: () {
-                                    Get.offAll(() => OrderList());
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                OrderAcceptScreen()));
                                   },
                                   icon: Icons.more,
                                   exerciseName: "Order Confirmation",

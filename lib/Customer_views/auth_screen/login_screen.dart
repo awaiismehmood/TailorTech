@@ -1,11 +1,10 @@
 import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dashboard/controllers/auth_controller.dart';
-import 'package:dashboard/view/auth_screen/signup_screen.dart';
+import 'package:dashboard/Customer_views/auth_screen/signup_screen.dart';
 import 'package:dashboard/consts/consts.dart';
 import 'package:dashboard/consts/lists.dart';
-import 'package:dashboard/view/home_screen/home.dart';
+import 'package:dashboard/Customer_views/home_screen/home.dart';
 import 'package:dashboard/widgets_common/applogo_widget.dart';
 import 'package:dashboard/widgets_common/bg_widgets.dart';
 import 'package:dashboard/widgets_common/button.dart';
