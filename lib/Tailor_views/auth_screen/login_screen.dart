@@ -54,7 +54,7 @@ class _LoginScreenTailorState extends State<LoginScreen_Tailor> {
                   ),
                   5.heightBox,
                   controller1.isloading.value
-                      ? CircularProgressIndicator(
+                      ? const CircularProgressIndicator(
                           valueColor: AlwaysStoppedAnimation(redColor),
                         )
                       : ourButton(

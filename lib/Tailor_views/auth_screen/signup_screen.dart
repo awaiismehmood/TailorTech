@@ -1,16 +1,16 @@
-import 'package:dashboard/Tailor_views/home_screen/home.dart';
 import 'package:dashboard/consts/consts.dart';
-import 'package:dashboard/controllers/auth_controller.dart';
 import 'package:flutter/material.dart';
-import '../../widgets_common/applogo_widget.dart';
-import '../../widgets_common/bg_widgets.dart';
-import '../../widgets_common/button.dart';
-import '../../widgets_common/cuton_textfield.dart';
 import 'package:get/get.dart';
+import 'package:dashboard/controllers/auth_controller.dart';
+import 'package:dashboard/view/verify_email.dart';
+import 'package:dashboard/widgets_common/applogo_widget.dart';
+import 'package:dashboard/widgets_common/bg_widgets.dart';
+import 'package:dashboard/widgets_common/button.dart';
+import 'package:dashboard/widgets_common/cuton_textfield.dart';
 
 class SignupScreen_Tailor extends StatefulWidget {
   final String type;
-  const SignupScreen_Tailor({required this.type, super.key});
+  const SignupScreen_Tailor({required this.type, Key? key}) : super(key: key);
 
   @override
   State<SignupScreen_Tailor> createState() => _SignupScreenTailorState();
@@ -20,8 +20,7 @@ class _SignupScreenTailorState extends State<SignupScreen_Tailor> {
   bool? isCheck = false;
   var controller = Get.put(AuthController());
 
-//textcontrollers
-
+  //textcontrollers
   var nameController = TextEditingController();
   var emailController = TextEditingController();
   var passwrodController = TextEditingController();
@@ -29,36 +28,46 @@ class _SignupScreenTailorState extends State<SignupScreen_Tailor> {
   var phoneController = TextEditingController();
   var cnicController = TextEditingController();
 
+  // Function to validate email format
+  bool isEmailValid(String email) {
+    final RegExp regex = RegExp(
+      r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
+      caseSensitive: false,
+      multiLine: false,
+    );
+    return regex.hasMatch(email);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return bgWidget(Scaffold(
-      //resizeToAvoidBottomInset: false,
-      body: SingleChildScrollView(
-        child: Center(
-          child: Column(
-            children: [
-              (context.screenHeight * 0.1).heightBox,
-              applogoWidget(),
-              10.heightBox,
-              "Join the $appname".text.fontFamily(bold).white.size(18).make(),
-              10.heightBox,
-              "AS Tailor".text.fontFamily(bold).white.size(18).make(),
-              10.heightBox,
-              Obx(
-                () => Column(
-                  children: [
-                    customTextField(name, nameHint, nameController, false),
-                    customTextField(email, emailHint, emailController, false),
-                    customTextField(
-                        password, passwordHint, passwrodController, true),
-                    customTextField(retypepass, retypepassHint,
-                        passwordRetypeController, true),
-                    customTextField(phone, phoneHint, phoneController, false),
-                    customTextField(Cnic, cnicHint, cnicController, false),
-                    5.heightBox,
-                    Row(
-                      children: [
-                        Checkbox(
+    return bgWidget(
+      Scaffold(
+        body: SingleChildScrollView(
+          child: Center(
+            child: Column(
+              children: [
+                (context.screenHeight * 0.1).heightBox,
+                applogoWidget(),
+                10.heightBox,
+                "Join the $appname".text.fontFamily(bold).white.size(18).make(),
+                10.heightBox,
+                "AS Tailor".text.fontFamily(bold).white.size(18).make(),
+                10.heightBox,
+                Obx(
+                  () => Column(
+                    children: [
+                      customTextField(name, nameHint, nameController, false),
+                      customTextField(email, emailHint, emailController, false),
+                      customTextField(
+                          password, passwordHint, passwrodController, true),
+                      customTextField(retypepass, retypepassHint,
+                          passwordRetypeController, true),
+                      customTextField(phone, phoneHint, phoneController, false),
+                      customTextField(Cnic, cnicHint, cnicController, false),
+                      5.heightBox,
+                      Row(
+                        children: [
+                          Checkbox(
                             checkColor: whiteColor,
                             activeColor: redColor,
                             value: isCheck,
@@ -66,106 +75,125 @@ class _SignupScreenTailorState extends State<SignupScreen_Tailor> {
                               setState(() {
                                 isCheck = newValue;
                               });
-                            }),
-                        5.widthBox,
-                        Expanded(
-                          child: RichText(
+                            },
+                          ),
+                          5.widthBox,
+                          Expanded(
+                            child: RichText(
                               text: const TextSpan(
-                            children: [
-                              TextSpan(
-                                text: "I agree to the ",
-                                style: TextStyle(
-                                    fontFamily: regular, color: fontGrey),
+                                children: [
+                                  TextSpan(
+                                    text: "I agree to the ",
+                                    style: TextStyle(
+                                      fontFamily: regular,
+                                      color: fontGrey,
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text: terms,
+                                    style: TextStyle(
+                                      fontFamily: regular,
+                                      color: redColor,
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text: " & ",
+                                    style: TextStyle(
+                                      fontFamily: regular,
+                                      color: fontGrey,
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text: priacyPol,
+                                    style: TextStyle(
+                                      fontFamily: regular,
+                                      color: redColor,
+                                    ),
+                                  ),
+                                ],
                               ),
-                              TextSpan(
-                                text: terms,
-                                style: TextStyle(
-                                    fontFamily: regular, color: redColor),
-                              ),
-                              TextSpan(
-                                text: " & ",
-                                style: TextStyle(
-                                    fontFamily: regular, color: fontGrey),
-                              ),
-                              TextSpan(
-                                text: priacyPol,
-                                style: TextStyle(
-                                    fontFamily: regular, color: redColor),
-                              ),
-                            ],
-                          )),
-                        )
-                      ],
-                    ),
-                    controller.isloading.value
-                        ? const CircularProgressIndicator(
-                            valueColor: AlwaysStoppedAnimation(redColor),
+                            ),
                           )
-                        : ourButton(
-                                onPress: () async {
-                                  if (isCheck != false) {
+                        ],
+                      ),
+                      controller.isloading.value
+                          ? const CircularProgressIndicator(
+                              valueColor: AlwaysStoppedAnimation(redColor),
+                            )
+                          : ourButton(
+                              onPress: () async {
+                                final email = emailController.text;
+                                final password = passwrodController.text;
+                                if (!isEmailValid(email)) {
+                                  // Show error message if email is not valid
+                                  VxToast.show(
+                                      context, msg: "Please enter a valid email address.");
+                                  return;
+                                }
+                                if (isCheck != false) {
                                     controller.isloading(true);
                                     try {
-                                      await controller
-                                          .signupMethod(emailController.text,
-                                              passwrodController.text, context)
-                                          .then((value) {
+                                      await controller.signupMethod(email, password, context).then((value) {
                                         return controller.storeTailorData(
-                                          email: emailController.text,
+                                          context: context,
+                                          email: email,
                                           name: nameController.text,
-                                          password: passwrodController.text,
+                                          password: password,
                                           type: widget.type,
                                           phone: phoneController.text,
                                           cnic: cnicController.text,
-                                        );
-                                      }).then((value) {
-                                        VxToast.show(context, msg: logedin);
-                                        Get.offAll(() => Home_Tailor());
+                                        ).then((value) {
+                                          // Only navigate if signup and data storage are successful
+                                          Get.offAll(() => const VerifyEmailScreen());
+                                        });
                                       });
                                     } catch (e) {
                                       auth.signOut();
+                                      // Show error message if an exception occurs during signup
                                       VxToast.show(context, msg: e.toString());
-                                      controller.isloading(false);
                                     }
+                                    controller.isloading(false);
                                   }
-                                },
-                                color: isCheck == true ? redColor : lightGrey,
-                                textcolor: whiteColor,
-                                tit: signup)
-                            .box
-                            .width(context.screenWidth)
-                            .make(),
-                    10.heightBox,
-                    RichText(
-                      text: const TextSpan(
-                        children: [
-                          TextSpan(
-                            text: already,
-                            style: TextStyle(fontFamily: bold, color: fontGrey),
-                          ),
-                          TextSpan(
-                            text: login,
-                            style: TextStyle(fontFamily: bold, color: redColor),
-                          ),
-                        ],
-                      ),
-                    ).onTap(() {
-                      Get.back();
-                    })
-                  ],
-                )
-                    .box
-                    .white
-                    .rounded
-                    .padding(const EdgeInsets.all(16))
-                    .width(context.screenWidth - 70)
-                    .shadowSm
-                    .make(),
-              ),
-            ],
+                              },
+                              color: isCheck == true ? redColor : lightGrey,
+                              textcolor: whiteColor,
+                              tit: signup,
+                            )
+                              .box
+                              .width(context.screenWidth)
+                              .make(),
+                      10.heightBox,
+                      RichText(
+                        text: const TextSpan(
+                          children: [
+                            TextSpan(
+                              text: already,
+                              style: TextStyle(fontFamily: bold, color: fontGrey),
+                            ),
+                            TextSpan(
+                              text: login,
+                              style: TextStyle(fontFamily: bold, color: redColor),
+                            ),
+                          ],
+                        ),
+                      ).onTap(() {
+                        Get.back();
+                      })
+                    ],
+                  )
+                  .box
+                  .white
+                  .rounded
+                  .padding(const EdgeInsets.all(16))
+                  .width(context.screenWidth - 70)
+                  .shadowSm
+                  .make(),
+                ),
+              ],
+            ),
           ),
         ),
       ),
-    ));
+    );
   }
 }

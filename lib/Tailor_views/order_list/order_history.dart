@@ -201,13 +201,14 @@ class _OrderHistoryState extends State<OrderHistory> {
               builder: (BuildContext context,
                   AsyncSnapshot<QuerySnapshot> snapshot) {
                 if (!snapshot.hasData) {
-                  return Center(
+                  return const Center(
                     child: CircularProgressIndicator(),
                   );
                 }
 
                 List<Orderr> orders =
                     snapshot.data!.docs.map((DocumentSnapshot document) {
+                  // ignore: unused_local_variable
                   Map<String, dynamic> data =
                       document.data() as Map<String, dynamic>;
                   return Orderr.fromDocument(document);
