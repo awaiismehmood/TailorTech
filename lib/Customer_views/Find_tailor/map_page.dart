@@ -1,6 +1,5 @@
 import 'dart:async';
-
-//import 'package:dashboard/Customer_views/Find_tailor/tailors_loc.dart';
+import 'dart:math' show atan2, cos, pi, sin, sqrt;
 import 'package:dashboard/Customer_views/Find_tailor/tailors_loc.dart';
 import 'package:dashboard/controllers/auth_controller.dart';
 import 'package:dashboard/Customer_views/Find_tailor/tailor_profile.dart';
@@ -77,6 +76,9 @@ class _MapPageState extends State<MapPage> {
       String tailorId = tailorLocations[i]['documentId'];
       double latitude = tailorLocations[i]['latitude']!;
       double longitude = tailorLocations[i]['longitude']!;
+      LatLng tailorLocation = LatLng(latitude, longitude);
+
+      double distance = _calculateDistance(_currentP!, tailorLocation);
 
       markers.add(
         Marker(
@@ -86,23 +88,26 @@ class _MapPageState extends State<MapPage> {
         ),
       );
 
-      markers.add(
-        Marker(
-          markerId: MarkerId(tailorId),
-          position: LatLng(latitude, longitude),
-          icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
-          onTap: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => TailorShow(
-                    orderId: widget.orderId,
-                    tailorId: tailorId,
-                  ),
-                ));
-          },
-        ),
-      );
+      if (distance < 5) {
+        markers.add(
+          Marker(
+            markerId: MarkerId(tailorId),
+            position: LatLng(latitude, longitude),
+            icon:
+                BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => TailorShow(
+                      orderId: widget.orderId,
+                      tailorId: tailorId,
+                    ),
+                  ));
+            },
+          ),
+        );
+      }
     }
 
     return markers;
@@ -160,5 +165,25 @@ class _MapPageState extends State<MapPage> {
         });
       }
     });
+  }
+
+  double _calculateDistance(LatLng p1, LatLng p2) {
+    const double earthRadius = 6371; // Radius of the Earth in kilometers
+
+    // Convert degrees to radians
+    double lat1 = p1.latitude * (pi / 180);
+    double lon1 = p1.longitude * (pi / 180);
+    double lat2 = p2.latitude * (pi / 180);
+    double lon2 = p2.longitude * (pi / 180);
+
+    // Haversine formula
+    double dLat = lat2 - lat1;
+    double dLon = lon2 - lon1;
+
+    double a = sin(dLat / 2) * sin(dLat / 2) +
+        cos(lat1) * cos(lat2) * sin(dLon / 2) * sin(dLon / 2);
+    double c = 2 * atan2(sqrt(a), sqrt(1 - a));
+
+    return earthRadius * c; // Distance in kilometers
   }
 }

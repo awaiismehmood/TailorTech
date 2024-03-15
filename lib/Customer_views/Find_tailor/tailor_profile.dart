@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dashboard/Customer_views/home_screen/home.dart';
+import 'package:dashboard/Model_Classes/tailor_class.dart';
 import 'package:dashboard/consts/consts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -16,6 +17,7 @@ class TailorShow extends StatefulWidget {
 }
 
 class _TailorShowState extends State<TailorShow> {
+  late Tailor tailor;
   final double coverHeight = 280;
 
   final double profileHeight = 144;
@@ -29,6 +31,12 @@ class _TailorShowState extends State<TailorShow> {
 
   final CarouselController carouselController = CarouselController();
   int currentIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchDetails(widget.tailorId);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,8 +80,8 @@ class _TailorShowState extends State<TailorShow> {
         const SizedBox(
           height: 50,
         ),
-        const Text(
-          "Tailor name",
+        Text(
+          tailor.name,
           style: TextStyle(
               fontSize: 28, fontWeight: FontWeight.bold, fontFamily: bold),
         ),
@@ -81,7 +89,7 @@ class _TailorShowState extends State<TailorShow> {
           height: 2,
         ),
         Text(
-          "only male Tailor",
+          "Type of tailor:" + tailor.type,
           style: TextStyle(
             fontSize: 20,
             color: Colors.black.withOpacity(0.4),
@@ -114,7 +122,7 @@ class _TailorShowState extends State<TailorShow> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Text(
-            'Rattings',
+            "Rattings",
             style: TextStyle(
                 fontSize: 30,
                 fontWeight: FontWeight.w500,
@@ -261,5 +269,21 @@ class _TailorShowState extends State<TailorShow> {
         .update({
       'expectedTailorId': tailorId,
     });
+  }
+
+  void fetchDetails(String id) async {
+    DocumentSnapshot doc = await FirebaseFirestore.instance
+        .collection(usersCollection1)
+        .doc(id)
+        .get();
+    if (doc.exists) {
+      setState(() {
+        tailor = Tailor.fromFirestore1(doc);
+        print("Location:");
+        print(tailor.latitude);
+      });
+    } else {
+      print('Tailor not found.');
+    }
   }
 }

@@ -1,6 +1,6 @@
 import 'package:dashboard/Model_Classes/customer_class.dart';
 import 'package:dashboard/Customer_views/measurements/measurements.dart';
-import 'package:dashboard/try_/order_place.dart';
+import 'package:dashboard/Customer_views/Find_tailor/order_place.dart';
 import 'package:dashboard/widgets_common/exercise_tile.dart';
 import 'package:dashboard/widgets_common/emotion_face.dart';
 import 'package:flutter/material.dart';
