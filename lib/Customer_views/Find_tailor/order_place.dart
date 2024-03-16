@@ -152,6 +152,7 @@ class _TailorInfoScreenState extends State<TailorInfoScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: whiteColor,
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(16.0),

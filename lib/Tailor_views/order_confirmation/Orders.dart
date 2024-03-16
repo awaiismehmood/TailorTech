@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dashboard/Model_Classes/customer_class.dart';
 import 'package:dashboard/Model_Classes/order_class.dart';
@@ -62,7 +61,7 @@ class _OrderListState extends State<OrderList> {
                   if (doc.data() != null) {
                     return Orderr.fromDocument(doc);
                   } else {
-                    return null; // or return null; depending on your needs
+                    return null;
                   }
                 })
                 .whereType<Orderr>()
@@ -133,18 +132,6 @@ class _OrderListState extends State<OrderList> {
 
   Future<void> deleteOrder(Orderr order) async {
     String orderId = order.getDocumentId() ?? '';
-    // Delete the order document
     await FirebaseFirestore.instance.collection('orders').doc(orderId).delete();
-    // Delete the subcollection associated with the order (e.g., order_items)
-    await FirebaseFirestore.instance
-        .collection('orders')
-        .doc(orderId)
-        .collection('order_items')
-        .get()
-        .then((snapshot) {
-      for (DocumentSnapshot ds in snapshot.docs) {
-        ds.reference.delete();
-      }
-    });
   }
 }
