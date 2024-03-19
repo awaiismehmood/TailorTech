@@ -28,6 +28,14 @@ class _SignupScreenTailorState extends State<SignupScreen_Tailor> {
   var phoneController = TextEditingController();
   var cnicController = TextEditingController();
 
+
+  bool isNumeric(String str) {
+  if (str == null) {
+    return false;
+  }
+  return double.tryParse(str) != null;
+}
+
   // Function to validate email format
   bool isEmailValid(String email) {
     final RegExp regex = RegExp(
@@ -121,47 +129,55 @@ class _SignupScreenTailorState extends State<SignupScreen_Tailor> {
                               valueColor: AlwaysStoppedAnimation(redColor),
                             )
                           : ourButton(
-                              onPress: () async {
-                                final email = emailController.text;
-                                final password = passwrodController.text;
-                                if (!isEmailValid(email)) {
-                                  // Show error message if email is not valid
-                                  VxToast.show(
-                                      context, msg: "Please enter a valid email address.");
-                                  return;
-                                }
-                                if (isCheck != false) {
-                                    controller.isloading(true);
-                                    try {
-                                      await controller.signupMethod(email, password, context).then((value) {
-                                        return controller.storeTailorData(
-                                          context: context,
-                                          email: email,
-                                          name: nameController.text,
-                                          password: password,
-                                          type: widget.type,
-                                          phone: phoneController.text,
-                                          cnic: cnicController.text,
-                                        ).then((value) {
-                                          // Only navigate if signup and data storage are successful
-                                          Get.offAll(() => const VerifyEmailScreen());
-                                        });
-                                      });
-                                    } catch (e) {
-                                      auth.signOut();
-                                      // Show error message if an exception occurs during signup
-                                      VxToast.show(context, msg: e.toString());
-                                    }
-                                    controller.isloading(false);
-                                  }
-                              },
-                              color: isCheck == true ? redColor : lightGrey,
-                              textcolor: whiteColor,
-                              tit: signup,
-                            )
-                              .box
-                              .width(context.screenWidth)
-                              .make(),
+  onPress: () async {
+    final email = emailController.text;
+    final password = passwrodController.text;
+    final phone = phoneController.text;
+
+    if (!isEmailValid(email)) {
+      // Show error message if email is not valid
+      VxToast.show(context, msg: "Please enter a valid email address.");
+      return;
+    }
+
+    if (phone.length != 11 || !isNumeric(phone)) {
+      // Show error message if phone number is not 11 digits or contains non-numeric characters
+      VxToast.show(context, msg: "Please enter a valid 11-digit phone number.");
+      return;
+    }
+
+    if (isCheck != false) {
+      controller.isloading(true);
+      try {
+        await controller.signupMethod(email, password, context).then((value) {
+          return controller.storeTailorData(
+            context: context,
+            email: email,
+            name: nameController.text,
+            password: password,
+            type: widget.type,
+            phone: phone,
+            cnic: cnicController.text,
+          ).then((value) {
+            // Only navigate if signup and data storage are successful
+            Get.offAll(() => const VerifyEmailScreen());
+          });
+        });
+      } catch (e) {
+        auth.signOut();
+        // Show error message if an exception occurs during signup
+        //VxToast.show(context, msg: e.toString());
+      }
+      controller.isloading(false);
+    }
+  },
+  color: isCheck == true ? redColor : lightGrey,
+  textcolor: whiteColor,
+  tit: signup,
+)
+.box
+.width(context.screenWidth)
+.make(),
                       10.heightBox,
                       RichText(
                         text: const TextSpan(

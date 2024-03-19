@@ -53,42 +53,43 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   5.heightBox,
                   controller.isloading.value
-                      ? CircularProgressIndicator(
+                      ? const CircularProgressIndicator(
                           valueColor: AlwaysStoppedAnimation(redColor),
                         )
                       : ourButton(
                               onPress: () async {
                                 controller.isloading(true);
 
-                                await controller
-                                    .loginMethod(context)
-                                    .then((value) async {
-                                  DocumentSnapshot? userSnapshot =
-                                      await FirebaseFirestore.instance
-                                          .collection(usersCollection)
-                                          .doc(currentUser!
-                                              .uid) // replace 'userId' with the actual user ID
-                                          .get();
-                                  final data = userSnapshot.data()
-                                      as Map<String, dynamic>;
-                                  final String u_type = data['type'];
-                                  if (value != null) {
-                                    if (u_type == widget.type) {
-                                      VxToast.show(context, msg: logedin);
-                                      Get.offAll(() => Home());
-                                    } else {
-                                      log("in else");
-                                      setState(() {
-                                        controller.isloading(false);
-                                      });
-                                      VxToast.show(context, msg: "Sorry");
-                                    }
+                                await controller.loginMethod(context).then((value) async {
+                                DocumentSnapshot? userSnapshot = await FirebaseFirestore.instance
+                                  .collection(usersCollection)
+                                  .doc(currentUser!.uid)
+                                  .get();
+                                final data = userSnapshot.data() as Map<String, dynamic>;
+                                final String uType = data['type'];
+                                if (value != null) {
+                                  if (uType == widget.type) {
+                                    // ignore: use_build_context_synchronously
+                                    VxToast.show(context, msg: logedin);
+                                    Get.offAll(() => const Home());
                                   } else {
-                                    setState(() {
-                                      controller.isloading(false);
-                                    });
+                                    log("in else");
+                                    VxToast.show(context, msg: "Sorry");
                                   }
+                                } else {
+                                  // If value is null, login failed
+                                  setState(() {
+                                    controller.isloading(false); // Stop loading indicator
+                                  });
+                                }
+                              }).catchError((error) {
+                                // Handle error from loginMethod
+                                setState(() {
+                                  controller.isloading(false); // Stop loading indicator
                                 });
+                                VxToast.show(context, msg: "Invalid Credentials");
+                              });
+
                               },
                               color: redColor,
                               textcolor: whiteColor,

@@ -24,6 +24,18 @@ class AuthController extends GetxController {
 
   //login method
 
+  // Future<UserCredential?> loginMethod(
+  //   context,
+  // ) async {
+  //   UserCredential? userCredential;
+  //   try {
+  //     userCredential = await auth.signInWithEmailAndPassword(
+  //         email: emailController.text, password: passwordController.text);
+  //   } on FirebaseAuthException catch (e) {
+  //     VxToast.show(context, msg: e.toString());
+  //   }
+  //   return userCredential;
+  // }
 
     Future<UserCredential?> loginMethod(context) async {
     UserCredential? userCredential;
@@ -42,20 +54,13 @@ class AuthController extends GetxController {
     return userCredential;
   }
 
-  // Future<UserCredential?> loginMethod(
-  //   context,
-  // ) async {
-  //   UserCredential? userCredential;
-  //   try {
-  //     userCredential = await auth.signInWithEmailAndPassword(
-  //         email: emailController.text, password: passwordController.text);
-  //   } on FirebaseAuthException catch (e) {
-  //     VxToast.show(context, msg: e.toString());
-  //   }
-  //   return userCredential;
-  // }
 
-  //signup method
+
+
+
+
+
+  // signup method
 
   // Future<UserCredential?> signupMethod(email, password, context) async {
   //   UserCredential? userCredential;
@@ -69,124 +74,127 @@ class AuthController extends GetxController {
   // }
 
 
-Future<void> signupMethod(
-    String email, String password, BuildContext context) async {
+Future<UserCredential?> signupMethod(email, password, context) async {
   try {
-    // Check if email is valid
-    if (!isEmailValid(email)) {
-      VxToast.show(context, msg: "Please enter a valid email address.");
-      return;
+    // Email validation
+    if (!isValidEmail(email)) {
+      throw FirebaseAuthException(
+          code: 'invalid-email',
+          message: 'The email address is not valid.');
     }
 
-    // Check if password meets criteria (at least 8 characters, including uppercase, lowercase, and digit)
-    if (!isPasswordValid(password)) {
-      VxToast.show(context, msg: "Password must be at least 8 characters long and contain uppercase, lowercase, and digit.");
-      return;
+    // Password validation
+    if (password.length < 8) {
+      throw FirebaseAuthException(
+          code: 'weak-password',
+          message: 'The password must be at least 8 characters.');
     }
 
-    await _auth.createUserWithEmailAndPassword(
+    // Check for at least one uppercase letter
+    if (!password.contains(RegExp(r'[A-Z]'))) {
+      throw FirebaseAuthException(
+          code: 'weak-password',
+          message: 'The password must contain at least one uppercase letter.');
+    }
+
+    // Check for at least one lowercase letter
+    if (!password.contains(RegExp(r'[a-z]'))) {
+      throw FirebaseAuthException(
+          code: 'weak-password',
+          message: 'The password must contain at least one lowercase letter.');
+    }
+
+    // Check for at least one digit
+    if (!password.contains(RegExp(r'[0-9]'))) {
+      throw FirebaseAuthException(
+          code: 'weak-password',
+          message: 'The password must contain at least one digit.');
+    }
+
+
+    UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
         email: email, password: password);
-    // No automatic login after signup, send email verification instead
-    await _auth.currentUser!.sendEmailVerification();
-    VxToast.show(context, msg: "Please check your email for verification.");
+
+    // Send email verification
+    await userCredential.user!.sendEmailVerification();
+
+    return userCredential;
   } on FirebaseAuthException catch (e) {
-    VxToast.show(context, msg: e.toString());
+    VxToast.show(context, msg: e.message ?? 'An error occurred');
+    return null;
   }
 }
 
-// Function to check if password meets criteria
-bool isPasswordValid(String password) {
-  // Check if password is at least 8 characters long
-  if (password.length < 8) {
-    return false;
-  }
-
-  // Check if password contains at least one uppercase letter
-  if (!password.contains(RegExp(r'[A-Z]'))) {
-    return false;
-  }
-
-  // Check if password contains at least one lowercase letter
-  if (!password.contains(RegExp(r'[a-z]'))) {
-    return false;
-  }
-
-  // Check if password contains at least one digit
-  if (!password.contains(RegExp(r'[0-9]'))) {
-    return false;
-  }
-
-  return true;
+// Email validation function
+bool isValidEmail(String email) {
+  RegExp emailRegExp =
+      RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+  return emailRegExp.hasMatch(email);
 }
 
-  // Function to check if email is valid using regex
-  bool isEmailValid(String email) {
-    // Regular expression for email validation
-    // This regex pattern matches most common email formats, but you can adjust it as needed
-    final RegExp regex = RegExp(
-        r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
-        caseSensitive: false,
-        multiLine: false);
-    return regex.hasMatch(email);
-  }
 
 
 
 
 
-  //storing data of costumer method
 
-// Validation function for phone number
-bool isPhoneNumberValid(String phoneNumber) {
-  // Regular expression to match valid Pakistani phone number formats
-  final RegExp regex = RegExp(
-    r'^\+92\d{10}$', // Match Pakistani phone numbers starting with +92 and followed by 10 digits
-    caseSensitive: false,
-    multiLine: false,
-  );
-  return regex.hasMatch(phoneNumber);
-}
 
-// Update storeuserData method with phone number validation
-storeuserData({
-  required BuildContext context, // Add BuildContext parameter
-  name,
-  password,
-  email,
-  type,
-  phone,
-  profileImageurl,
-}) async {
-  // Check if phone number is valid
-  if (!isPhoneNumberValid(phone)) {
-    // Display error message for invalid phone number
-    VxToast.show(context, msg: "Please enter a valid Pakistani phone number.");
-    return; // Optionally return or throw an error
-  }
 
-  // Rest of your code...
-}
+  //storing data od costumer method
 
-// Update storeTailorData method with phone number validation
-storeTailorData(
-    {required BuildContext context, // Add BuildContext parameter
+  storeuserData({
+    required BuildContext context,
     name,
     password,
     email,
     type,
-    cnic,
     phone,
-    latitude = 0.00,
-    longitude = 0.00}) async {
-  // Check if phone number is valid
-  if (!isPhoneNumberValid(phone)) {
-    // Display error message for invalid phone number
-    VxToast.show(context, msg: "Please enter a valid Pakistani phone number.");
-    return; // Optionally return or throw an error
+    profileImageurl,
+  }) async {
+    DocumentReference store =
+        firestore.collection(usersCollection).doc(currentUser!.uid);
+    store.set({
+      'name': name,
+      'password': password,
+      'email': email,
+      'ProfileImageurl': profileImageurl,
+      'id': currentUser!.uid,
+      'type': type,
+      'phone': phone,
+      'timestamp': FieldValue.serverTimestamp(),
+    });
   }
 
-  // Rest of your code...
-}
+//from map
+//to map
+
+  storeTailorData(
+      {
+      required BuildContext context,  
+      name,
+      password,
+      email,
+      type,
+      cnic,
+      phone,
+      latitude = 0.00,
+      longitude = 0.00}) async {
+    DocumentReference store =
+        firestore.collection(usersCollection1).doc(currentUser!.uid);
+    store.set({
+      'name': name,
+      'password': password,
+      'email': email,
+      'ProfileImageurl': ' ',
+      'id': currentUser!.uid,
+      'type': type,
+      'Phone': phone,
+      'CNIC': cnic,
+      'timestamp': FieldValue.serverTimestamp(),
+      'longitude': longitude,
+      'latitude': latitude
+    });
+  }
 
   //signout method
 

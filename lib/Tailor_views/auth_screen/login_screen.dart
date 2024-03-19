@@ -11,6 +11,7 @@ import 'package:dashboard/widgets_common/cuton_textfield.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
+// ignore: camel_case_types
 class LoginScreen_Tailor extends StatefulWidget {
   final String type;
   const LoginScreen_Tailor({required this.type, super.key});
@@ -58,24 +59,23 @@ class _LoginScreenTailorState extends State<LoginScreen_Tailor> {
                           valueColor: AlwaysStoppedAnimation(redColor),
                         )
                       : ourButton(
-                              onPress: () async {
-                                controller1.isloading(true);
-
-                                await controller1
-                                    .loginMethod(context)
-                                    .then((value) async {
+                            onPress: () async {
+                              controller1.isloading(true);
+                              try {
+                                await controller1.loginMethod(context).then((value) async {
                                   DocumentSnapshot? userSnapshot =
                                       await FirebaseFirestore.instance
                                           .collection(usersCollection1)
                                           .doc(currentUser!.uid)
                                           .get();
-                                  final data = userSnapshot.data()
-                                      as Map<String, dynamic>;
-                                  final String u_type = data['type'];
+                                  final data =
+                                      userSnapshot.data() as Map<String, dynamic>;
+                                  final String uType = data['type'];
                                   if (value != null) {
-                                    if (u_type == widget.type) {
+                                    if (uType == widget.type) {
+                                      // ignore: use_build_context_synchronously
                                       VxToast.show(context, msg: logedin);
-                                      Get.offAll(() => Home_Tailor());
+                                      Get.offAll(() => const Home_Tailor());
                                     } else {
                                       setState(() {
                                         controller1.isloading(false);
@@ -87,7 +87,15 @@ class _LoginScreenTailorState extends State<LoginScreen_Tailor> {
                                     });
                                   }
                                 });
-                              },
+                              } catch (e) {
+                                setState(() {
+                                  controller1.isloading(false); // Stop loading indicator on error
+                                });
+                                // ignore: use_build_context_synchronously
+                                 //VxToast.show(context, msg: e.toString());
+                              }
+                            },
+
                               color: redColor,
                               textcolor: whiteColor,
                               tit: login)
