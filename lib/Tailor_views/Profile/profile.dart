@@ -275,7 +275,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         style: TextStyle(fontSize: 14),
                       ),
                       onTap: () {
-                        controller.signoutmethod(context);
+                        controller.signoutmethod(context, "Tailor");
                         // Add functionality for Sign Out
                       },
                     ),

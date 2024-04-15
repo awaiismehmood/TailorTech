@@ -110,7 +110,7 @@ class AuthController extends GetxController {
     return emailRegExp.hasMatch(email);
   }
 
-  //storing data od costumer method
+//storing data od costumer method
 
   storeuserData({
     name,
@@ -181,9 +181,9 @@ class AuthController extends GetxController {
     });
   }
 
-  //signout method
+//signout method
 
-  signoutmethod(context) async {
+  signoutmethod(context, u_type) async {
     try {
       await auth.signOut();
       Get.offAll(() => const SplashScreen());

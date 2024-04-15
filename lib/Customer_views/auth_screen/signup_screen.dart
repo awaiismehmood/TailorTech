@@ -20,7 +20,8 @@ class _SignupScreenState extends State<SignupScreen> {
   bool? isCheck = false;
   var controller = Get.put(AuthController());
 
-  //textcontrollers
+//textcontrollers
+
   var nameController = TextEditingController();
   var emailController = TextEditingController();
   var passwrodController = TextEditingController();

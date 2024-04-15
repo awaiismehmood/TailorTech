@@ -12,6 +12,7 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
 // ignore: camel_case_types
+// ignore: camel_case_types
 class LoginScreen_Tailor extends StatefulWidget {
   final String type;
   const LoginScreen_Tailor({required this.type, super.key});

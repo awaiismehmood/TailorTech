@@ -70,7 +70,8 @@ class _ProfilePageState extends State<ProfilePage> {
                         side: BorderSide(
                       color: whiteColor,
                     )),
-                    onPressed: () => controller.signoutmethod(context),
+                    onPressed: () =>
+                        controller.signoutmethod(context, "Customer"),
                     child: logedout.text.fontFamily(semibold).white.make(),
                   ),
                 ],

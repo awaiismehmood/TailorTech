@@ -74,9 +74,8 @@ class _ProfilePage_TailorState extends State<ProfilePage_Tailor> {
                         side: BorderSide(
                       color: whiteColor,
                     )),
-                    onPressed: () => controller.signoutmethod(
-                      context,
-                    ),
+                    onPressed: () =>
+                        controller.signoutmethod(context, "Tailor"),
                     child: logedout.text.fontFamily(semibold).white.make(),
                   ),
                 ],

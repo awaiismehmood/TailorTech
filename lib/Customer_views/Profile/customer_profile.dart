@@ -248,7 +248,7 @@ class _ProfileScreenCustomerState extends State<ProfileScreenCustomer> {
                           style: TextStyle(fontSize: 14),
                         ),
                         onTap: () {
-                          controller.signoutmethod(context);
+                          controller.signoutmethod(context, "Customer");
                         },
                       ),
                     ],

@@ -56,10 +56,12 @@ class _OrderHistoryState extends State<OrderHistory> {
               builder: (BuildContext context,
                   AsyncSnapshot<QuerySnapshot> snapshot) {
                 if (!snapshot.hasData) {
-                  return Center(
+                  return const Center(
                     child: CircularProgressIndicator(),
                   );
                 }
+
+
 
                 List<Orderr> orders = snapshot.data!.docs
                     .map((DocumentSnapshot document) {
@@ -67,6 +69,7 @@ class _OrderHistoryState extends State<OrderHistory> {
                     })
                     .where((orders) => orders.tailorId == currentUser?.uid)
                     .toList();
+
 
                 List<Orderr> filteredOrders = _filterOrders(orders);
 
