@@ -5,7 +5,7 @@ Widget ourButton({onPress, color, textcolor, String? tit}) {
   return ElevatedButton(
       style: ElevatedButton.styleFrom(
           // ignore: deprecated_member_use
-          primary: color,
+          backgroundColor: color,
           padding: const EdgeInsets.all(12)),
       onPressed: onPress,
       child: tit!.text.color(textcolor).fontFamily(bold).make());

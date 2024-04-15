@@ -4,7 +4,6 @@ import 'package:dashboard/Customer_views/Find_tailor/order_place.dart';
 import 'package:dashboard/widgets_common/exercise_tile.dart';
 import 'package:dashboard/widgets_common/emotion_face.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 import '../../consts/consts.dart';
 
@@ -216,7 +215,11 @@ class _HomePageState extends State<HomePage> {
                               children: [
                                 ExerciseTile(
                                   onpress: () {
-                                    Get.off(() => Measurements());
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                MeasurementScreen()));
                                   },
                                   icon: Icons.miscellaneous_services,
                                   exerciseName: "Measurements",
@@ -225,7 +228,11 @@ class _HomePageState extends State<HomePage> {
                                 ),
                                 ExerciseTile(
                                   onpress: () {
-                                    Get.offAll(TailorInfoScreen());
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                TailorInfoScreen()));
                                   },
                                   icon: Icons.more,
                                   exerciseName: "find tailor",

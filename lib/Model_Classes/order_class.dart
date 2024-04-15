@@ -10,6 +10,8 @@ class Orderr {
   String expId;
   String customerId;
   String status;
+  double ratting;
+  double price;
 
   Orderr({
     this.id,
@@ -21,6 +23,8 @@ class Orderr {
     required this.expId,
     required this.customerId,
     required this.status,
+    required this.ratting,
+    required this.price,
   });
 
   Map<String, dynamic> toMap() {
@@ -33,6 +37,8 @@ class Orderr {
       'expectedTailorId': expId,
       'customerId': customerId,
       'status': status,
+      'ratting': ratting,
+      'price': price,
     };
   }
 
@@ -48,6 +54,8 @@ class Orderr {
       customerId: data['customerId'],
       status: data['status'] ?? "",
       id: doc.id,
+      ratting: data['ratting'],
+      price: data['price'],
     );
   }
 

@@ -27,7 +27,10 @@ class OrderCard extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => DetailScreen(order: order),
+            builder: (context) => DetailScreen(
+              order: order,
+              getCustomer: customer,
+            ),
           ),
         );
       },
@@ -46,9 +49,12 @@ class OrderCard extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 child: CircleAvatar(
                   radius: 60,
-                  backgroundImage: AssetImage(
-                      "assets/images/Tailor2.jpg"), // Adjust the avatar radius as needed
-                  // backgroundImage: NetworkImage(customer.profileImageUrl),
+                  backgroundImage: customer.profileImageUrl != " "
+                      ? NetworkImage(customer.profileImageUrl)
+                      : null,
+                  child: customer.profileImageUrl == " "
+                      ? Icon(Icons.person)
+                      : null,
                 ),
               ),
               Text(
@@ -74,7 +80,8 @@ class OrderCard extends StatelessWidget {
                         print('Accepted');
                       },
                       style: ElevatedButton.styleFrom(
-                        primary: Colors.green.shade200, // Green accent color
+                        backgroundColor:
+                            Colors.green.shade200, // Green accent color
                         padding: const EdgeInsets.symmetric(
                             vertical: 15), // Adjust padding as needed
                       ),
@@ -95,7 +102,8 @@ class OrderCard extends StatelessWidget {
                         print('Declined');
                       },
                       style: ElevatedButton.styleFrom(
-                        primary: Colors.red.shade200, // Red accent color
+                        backgroundColor:
+                            Colors.red.shade200, // Red accent color
                         padding: const EdgeInsets.symmetric(
                             vertical: 15), // Adjust padding as needed
                       ),

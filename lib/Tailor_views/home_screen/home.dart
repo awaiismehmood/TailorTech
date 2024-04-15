@@ -1,9 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dashboard/Model_Classes/tailor_class.dart';
-import 'package:dashboard/Tailor_views/Profile/profilepage.dart';
+// import 'package:dashboard/Tailor_views/Profile/profilepage.dart';
 import 'package:dashboard/Tailor_views/home_screen/home_screen.dart';
 import 'package:dashboard/consts/consts.dart';
 import 'package:dashboard/controllers/auth_controller.dart';
+import 'package:dashboard/Tailor_views/Profile/profile.dart';
 //import 'package:dashboard/controllers/auth_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -67,7 +68,7 @@ class _Home_TailorState extends State<Home_Tailor> {
       HomePage_Tailor(
         tailor: tailor,
       ),
-      ProfilePage_Tailor(
+      EditProfileScreen(
         tailor: tailor,
       ),
     ];

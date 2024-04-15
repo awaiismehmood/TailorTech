@@ -13,8 +13,6 @@ enum OrderStatus {
 class OrderHistory extends StatefulWidget {
   const OrderHistory({Key? key}) : super(key: key);
 
-  static const routeName = '/';
-
   @override
   _OrderHistoryState createState() => _OrderHistoryState();
 }
@@ -43,18 +41,13 @@ class _OrderHistoryState extends State<OrderHistory> {
       ),
       body: Column(
         children: [
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Expanded(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  _buildFilterButton('All', OrderStatus.all),
-                  _buildFilterButton('Completed', OrderStatus.completed),
-                  _buildFilterButton('In Process', OrderStatus.Running),
-                ],
-              ),
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              _buildFilterButton('All', OrderStatus.all),
+              _buildFilterButton('Completed', OrderStatus.completed),
+              _buildFilterButton('In Process', OrderStatus.Running),
+            ],
           ),
           Expanded(
             child: StreamBuilder(
@@ -70,8 +63,6 @@ class _OrderHistoryState extends State<OrderHistory> {
 
                 List<Orderr> orders = snapshot.data!.docs
                     .map((DocumentSnapshot document) {
-                      // Map<String, dynamic> data =
-                      //     document.data() as Map<String, dynamic>;
                       return Orderr.fromDocument(document);
                     })
                     .where((orders) => orders.tailorId == currentUser?.uid)
@@ -90,10 +81,13 @@ class _OrderHistoryState extends State<OrderHistory> {
                         trailing: Text('Status: ${order.status}'),
                         onTap: () {
                           if (order.status != 'completed') {
-                            Navigator.restorablePushNamed(
-                              context,
-                              SampleItemDetailsView.routeName,
-                            );
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => SampleItemDetailsView(
+                                          isTailor: true,
+                                          order: order,
+                                        )));
                           }
                         },
                       ),

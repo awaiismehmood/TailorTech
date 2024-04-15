@@ -1,9 +1,9 @@
+import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dashboard/Customer_views/home_screen/home.dart';
 import 'package:dashboard/Model_Classes/tailor_class.dart';
 import 'package:dashboard/consts/consts.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 
@@ -19,16 +19,7 @@ class TailorShow extends StatefulWidget {
 class _TailorShowState extends State<TailorShow> {
   late Tailor tailor;
   final double coverHeight = 280;
-
   final double profileHeight = 144;
-
-  List imageList = [
-    {"id": 1, "image_path": 'assets/images/slider_1.png'},
-    {"id": 2, "image_path": 'assets/images/slider_2.png'},
-    {"id": 3, "image_path": 'assets/images/slider_3.png'},
-    {"id": 4, "image_path": 'assets/images/slider_4.png'},
-  ];
-
   final CarouselController carouselController = CarouselController();
   int currentIndex = 0;
 
@@ -43,31 +34,22 @@ class _TailorShowState extends State<TailorShow> {
     return Scaffold(
       backgroundColor: whiteColor,
       body: ListView(
-        physics: NeverScrollableScrollPhysics(),
         padding: EdgeInsets.zero,
         children: <Widget>[
           buildTop(),
           buildContent(),
-
-          SizedBox(
-            height: 70,
-          ),
-
+          const SizedBox(height: 70),
           ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                  // ignore: deprecated_member_use
-                  primary: Colors.red,
-                  padding: const EdgeInsets.all(12)),
-              onPressed: () {
-                _confirmOrder(widget.tailorId);
-                Get.offAll(Home());
-              },
-              child:
-                  "Place Order".text.color(whiteColor).fontFamily(bold).make()),
-          // Padding(
-          //   padding: const EdgeInsets.all(8.0),
-          //   child: sliderImage(),
-          // ),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.red,
+              padding: const EdgeInsets.all(12),
+            ),
+            onPressed: () {
+              _confirmOrder(widget.tailorId);
+              Get.offAll(() => const Home());
+            },
+            child: "Place Order".text.color(whiteColor).fontFamily(bold).make(),
+          ),
         ],
       ),
     );
@@ -77,38 +59,35 @@ class _TailorShowState extends State<TailorShow> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        const SizedBox(
-          height: 50,
-        ),
+        SizedBox(height: 50),
         Text(
           tailor.name,
-          style: TextStyle(
+          style: const TextStyle(
               fontSize: 28, fontWeight: FontWeight.bold, fontFamily: bold),
         ),
-        const SizedBox(
-          height: 2,
-        ),
+        const SizedBox(height: 2),
         Text(
-          "Type of tailor:" + tailor.type,
-          style: TextStyle(
-            fontSize: 20,
-            color: Colors.black.withOpacity(0.4),
-          ),
+          "Type of tailor: ${tailor.T_type}",
+          style: TextStyle(fontSize: 20, color: Colors.black.withOpacity(0.4)),
         ),
-        const SizedBox(
-          height: 16,
-        ),
-        // Divider(
-        //   color: whiteColor,
-        // ),
-        const SizedBox(
-          height: 10,
-        ),
-
+        const SizedBox(height: 16),
         buildAbout(),
-        SizedBox(
-          height: 16,
-        )
+        const SizedBox(height: 16),
+        Text(
+          "Price Range:",
+          style: TextStyle(
+              fontSize: 20, fontWeight: FontWeight.bold, fontFamily: bold),
+        ),
+        const SizedBox(height: 8),
+        Text(
+          "Min Price: \$${tailor.minPrice.toStringAsFixed(2)}",
+          style: TextStyle(fontSize: 16, fontFamily: semibold),
+        ),
+        const SizedBox(height: 8),
+        Text(
+          "Max Price: \$${tailor.maxPrice.toStringAsFixed(2)}",
+          style: TextStyle(fontSize: 16, fontFamily: semibold),
+        ),
       ],
     );
   }
@@ -122,20 +101,28 @@ class _TailorShowState extends State<TailorShow> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Text(
-            "Rattings",
+            "Details",
             style: TextStyle(
                 fontSize: 30,
                 fontWeight: FontWeight.w500,
                 fontFamily: semibold),
           ),
-          SizedBox(
-            height: 10,
+          Text(
+            tailor.details,
+            style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w200,
+                fontFamily: semibold),
           ),
-          rattings(),
-          // Text(
-          //   'blah blah blha...',
-          //   style: TextStyle(fontSize: 18, height: 1.4),
-          // ),
+          Text(
+            "Ratings",
+            style: TextStyle(
+                fontSize: 30,
+                fontWeight: FontWeight.w500,
+                fontFamily: semibold),
+          ),
+          SizedBox(height: 10),
+          ratings(),
         ],
       ),
     );
@@ -155,87 +142,34 @@ class _TailorShowState extends State<TailorShow> {
     );
   }
 
-  // Widget buildCoverImage() => Container(
-  //       color: Colors.grey,
-  //       child: Image.asset(
-  //         "assets/images/Tailor12.jpg",
-  //         width: double.infinity,
-  //         height: coverHeight,
-  //         fit: BoxFit.cover,
-  //       ),
-  //     );
-
   Widget buildProfileImage() => CircleAvatar(
         radius: profileHeight / 2,
         backgroundColor: whiteColor,
-        backgroundImage: AssetImage("assets/images/Tailor.jpg"),
+        backgroundImage: NetworkImage(tailor.profile_url),
       );
 
   Widget sliderImage() {
-    return Column(
-      children: [
-        Stack(
-          children: [
-            InkWell(
-              onTap: () {
-                print(currentIndex);
-              },
-              child: CarouselSlider(
-                items: imageList
-                    .map(
-                      (item) => Image.asset(
-                        item['image_path'],
-                        fit: BoxFit.contain,
-                        width: double.infinity,
-                      ),
-                    )
-                    .toList(),
-                carouselController: carouselController,
-                options: CarouselOptions(
-                    scrollPhysics: const BouncingScrollPhysics(),
-                    autoPlay: true,
-                    aspectRatio: 1.5,
-                    autoPlayInterval: const Duration(seconds: 4),
-                    viewportFraction: 1,
-                    onPageChanged: (index, reason) {
-                      setState(() {
-                        currentIndex = index;
-                      });
-                    }),
-              ),
-            ),
-            Positioned(
-              bottom: 10,
-              left: 0,
-              right: 0,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: imageList.asMap().entries.map((entry) {
-                  return GestureDetector(
-                    onTap: () => carouselController.animateToPage(entry.key),
-                    child: Container(
-                      width: currentIndex == entry.key ? 17 : 7,
-                      height: 7.0,
-                      margin: const EdgeInsets.symmetric(
-                        horizontal: 3.0,
-                      ),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: currentIndex == entry.key
-                              ? Colors.red
-                              : Colors.teal),
-                    ),
-                  );
-                }).toList(),
-              ),
-            ),
-          ],
-        ),
-      ],
+    return CarouselSlider(
+      items: tailor.images
+          .map((url) => Image.network(url, fit: BoxFit.contain))
+          .toList(),
+      carouselController: carouselController,
+      options: CarouselOptions(
+        scrollPhysics: const BouncingScrollPhysics(),
+        autoPlay: true,
+        aspectRatio: 1.5,
+        autoPlayInterval: const Duration(seconds: 4),
+        viewportFraction: 1,
+        onPageChanged: (index, reason) {
+          setState(() {
+            currentIndex = index;
+          });
+        },
+      ),
     );
   }
 
-  Widget rattings() {
+  Widget ratings() {
     return Container(
       width: double.infinity,
       child: Column(
@@ -243,26 +177,21 @@ class _TailorShowState extends State<TailorShow> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           RatingBar.builder(
-              initialRating: 3,
-              minRating: 1,
-              direction: Axis.horizontal,
-              allowHalfRating: true,
-              itemPadding: EdgeInsets.symmetric(horizontal: 4),
-              itemBuilder: (context, _) => Icon(
-                    Icons.star,
-                    color: redColor,
-                  ),
-              onRatingUpdate: (ratting) {
-                print(ratting);
-                print(widget.tailorId);
-              })
+            initialRating: tailor.ratting,
+            minRating: 1,
+            direction: Axis.horizontal,
+            allowHalfRating: true,
+            itemPadding: EdgeInsets.symmetric(horizontal: 4),
+            itemBuilder: (context, _) => Icon(Icons.star, color: redColor),
+            ignoreGestures: true,
+            onRatingUpdate: (rating) {},
+          ),
         ],
       ),
     );
   }
 
   void _confirmOrder(String tailorId) async {
-    // Update the tailorId field in the order
     await FirebaseFirestore.instance
         .collection('orders')
         .doc(widget.orderId)
@@ -279,8 +208,6 @@ class _TailorShowState extends State<TailorShow> {
     if (doc.exists) {
       setState(() {
         tailor = Tailor.fromFirestore1(doc);
-        print("Location:");
-        print(tailor.latitude);
       });
     } else {
       print('Tailor not found.');

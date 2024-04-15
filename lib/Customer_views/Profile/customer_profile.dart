@@ -1,0 +1,283 @@
+import 'package:dashboard/Customer_views/Profile/order_content.dart';
+import 'package:dashboard/Model_Classes/customer_class.dart';
+import 'package:dashboard/consts/colors.dart';
+import 'package:dashboard/consts/consts.dart';
+import 'package:dashboard/controllers/auth_controller.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+class ProfileScreenCustomer extends StatefulWidget {
+  final Customer customer;
+  const ProfileScreenCustomer({required this.customer, super.key});
+  @override
+  _ProfileScreenCustomerState createState() => _ProfileScreenCustomerState();
+}
+
+class _ProfileScreenCustomerState extends State<ProfileScreenCustomer> {
+  var controller = Get.put(AuthController());
+  // double _rating = 3.0; // Initial rating value
+
+  // // Define CNIC and Phone number variables
+  // String _cnic = '12345-6789012-3'; // Example CNIC
+  // String _phoneNumber = '+1234567890'; // Example phone number
+  // String _email = 'johndoe@example.com'; // Example email
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        // appBar: AppBar(
+        //   title: Text('My Profile'),
+        //   backgroundColor: Colors.red,
+        //   foregroundColor: Colors.white,
+        //   elevation: 0,
+        // ),
+        body: Container(
+          decoration: BoxDecoration(
+            color: Colors.red,
+          ),
+          child: SafeArea(
+            child: ListView(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    'My Profile',
+                    style: TextStyle(
+                        color: whiteColor, fontFamily: semibold, fontSize: 25),
+                  ),
+                ),
+                Card(
+                  elevation: 4,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: ListTile(
+                    leading: CircleAvatar(
+                      radius: 30,
+                      backgroundImage: widget.customer.profileImageUrl != " "
+                          ? NetworkImage(widget.customer.profileImageUrl)
+                          : null,
+                      child: widget.customer.profileImageUrl == " "
+                          ? Icon(Icons.person)
+                          : null,
+                    ),
+                    title: Text(
+                      widget.customer.name,
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    subtitle: Text(
+                      widget.customer.email,
+                      style: TextStyle(fontSize: 14),
+                    ),
+                    // trailing: IconButton(
+                    //   icon: Icon(Icons.edit),
+                    //   onPressed: () {
+                    //     // EditProfileScreen(tailor: widget.tailor);
+                    //   },
+                    // ),
+                    contentPadding: EdgeInsets.symmetric(vertical: 4),
+                  ),
+                ),
+                SizedBox(height: 10), // Reduced the space
+                // New "View My History" section
+                Card(
+                  elevation: 4,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ListTile(
+                        tileColor: Colors.red[200],
+                        title: Text(
+                          'View My History',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                      // Sample content for history can be added here
+                      ListTile(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      customerOrderHistory()));
+                        },
+                        title: Text(
+                          'History Content',
+                          style: TextStyle(fontSize: 14),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 20),
+                Card(
+                  elevation: 4,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ListTile(
+                        tileColor: Colors.red[200],
+                        title: Text(
+                          'Account',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                      // ListTile(
+                      //   title: Text(
+                      //     'CNIC',
+                      //     style: TextStyle(
+                      //       fontWeight: FontWeight.bold,
+                      //       fontSize: 14,
+                      //     ),
+                      //   ),
+                      //   subtitle: Text(
+                      //     widget.customer.cnic,
+                      //     style: TextStyle(
+                      //       fontSize: 12,
+                      //     ),
+                      //   ),
+                      // ),
+                      ListTile(
+                        title: Text(
+                          'Phone Number',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14,
+                          ),
+                        ),
+                        subtitle: Text(
+                          widget.customer.phone,
+                          style: TextStyle(
+                            fontSize: 12,
+                          ),
+                        ),
+                      ),
+                      // ListTile(
+                      //   title: Text(
+                      //     'Rating',
+                      //     style: TextStyle(
+                      //       fontWeight: FontWeight.bold,
+                      //       fontSize: 14,
+                      //     ),
+                      //   ),
+                      //   subtitle: Row(
+                      //     children: [
+                      //       RatingBar(
+                      //         rating: _rating,
+                      //         onRatingChanged: (rating) {
+                      //           setState(() {
+                      //             _rating = rating;
+                      //           });
+                      //         },
+                      //       ),
+                      //       SizedBox(width: 10),
+                      //       Text(
+                      //         '$_rating',
+                      //         style: TextStyle(
+                      //           fontWeight: FontWeight.bold,
+                      //           fontSize: 12,
+                      //         ),
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 20),
+                Card(
+                  elevation: 4,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ListTile(
+                        tileColor: Colors.red[200],
+                        title: Text(
+                          'Settings',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                      ListTile(
+                        leading: Icon(Icons.chat),
+                        title: Text(
+                          'Chat',
+                          style: TextStyle(fontSize: 14),
+                        ),
+                        onTap: () {
+                          // Add functionality for Chat
+                        },
+                      ),
+                      // ListTile(
+                      //   leading: Icon(Icons.notifications),
+                      //   title: Text(
+                      //     'Notifications',
+                      //     style: TextStyle(fontSize: 14),
+                      //   ),
+                      //   onTap: () {
+                      //     // Add functionality for Notifications
+                      //   },
+                      // ),
+                      ListTile(
+                        leading: Icon(Icons.exit_to_app),
+                        title: Text(
+                          'Sign Out',
+                          style: TextStyle(fontSize: 14),
+                        ),
+                        onTap: () {
+                          controller.signoutmethod(context);
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+// class RatingBar extends StatelessWidget {
+//   final double rating;
+//   final Function(double) onRatingChanged;
+//   RatingBar({required this.rating, required this.onRatingChanged});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Row(
+//       children: [
+//         Icon(Icons.star, color: rating >= 1 ? Colors.red : Colors.grey),
+//         Icon(Icons.star, color: rating >= 2 ? Colors.red : Colors.grey),
+//         Icon(Icons.star, color: rating >= 3 ? Colors.red : Colors.grey),
+//         Icon(Icons.star, color: rating >= 4 ? Colors.red : Colors.grey),
+//         Icon(Icons.star, color: rating == 5 ? Colors.red : Colors.grey),
+//       ],
+//     );
+//   }
+// }

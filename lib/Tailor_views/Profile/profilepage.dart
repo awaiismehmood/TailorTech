@@ -1,4 +1,5 @@
 import 'package:dashboard/Model_Classes/tailor_class.dart';
+import 'package:dashboard/Tailor_views/Profile/edit_profile.dart';
 import 'package:dashboard/consts/consts.dart';
 import 'package:dashboard/consts/lists.dart';
 import 'package:dashboard/controllers/auth_controller.dart';
@@ -27,11 +28,20 @@ class _ProfilePage_TailorState extends State<ProfilePage_Tailor> {
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: Align(
                 alignment: Alignment.topRight,
-                child: Icon(
-                  Icons.edit,
-                  color: whiteColor,
+                child: IconButton(
+                  icon: Icon(
+                    Icons.edit,
+                    color: whiteColor,
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => EditProfilePage()),
+                    );
+                  },
                 ),
-              ).onTap(() {}),
+              ),
             ),
 
             Padding(
@@ -39,10 +49,11 @@ class _ProfilePage_TailorState extends State<ProfilePage_Tailor> {
               child: Row(
                 children: [
                   //user details section
-                  Image.asset(
-                    imgProfile2,
+                  Image.network(
+                    widget.tailor.profile_url,
                     width: 85,
                     fit: BoxFit.cover,
+                    height: 90,
                   ).box.roundedFull.clip(Clip.antiAlias).make(),
                   10.widthBox,
                   Expanded(
@@ -63,8 +74,9 @@ class _ProfilePage_TailorState extends State<ProfilePage_Tailor> {
                         side: BorderSide(
                       color: whiteColor,
                     )),
-                    onPressed: () =>
-                        controller.signoutmethod(context, widget.tailor.type),
+                    onPressed: () => controller.signoutmethod(
+                      context,
+                    ),
                     child: logedout.text.fontFamily(semibold).white.make(),
                   ),
                 ],

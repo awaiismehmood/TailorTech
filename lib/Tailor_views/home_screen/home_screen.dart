@@ -1,6 +1,9 @@
 //import 'package:dashboard/Permissions/Location_Perm.dart';
 //import 'package:cloud_firestore/cloud_firestore.dart';
+//import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dashboard/Model_Classes/tailor_class.dart';
+import 'package:dashboard/Tailor_views/Profile/tailor_profile_setup.dart';
+//import 'package:dashboard/Tailor_views/Profile/tailor_profile_setup.dart';
 import 'package:dashboard/Tailor_views/order_confirmation/Orders.dart';
 import 'package:dashboard/Tailor_views/order_list/order_history.dart';
 import 'package:dashboard/consts/consts.dart';
@@ -17,11 +20,42 @@ class HomePage_Tailor extends StatefulWidget {
 }
 
 class _HomePageTailorState extends State<HomePage_Tailor> {
+  bool profileSetup = false;
+  Future<void> checkProfileSetup() async {
+    // // Fetch the tailor document from Firestore
+    // var snapshot = await FirebaseFirestore.instance
+    //     .collection('tailors')
+    //     .doc(currentUser?.uid) // Assuming you have an id field in your Tailor class
+    //     .get();
+
+    // // Get the value of profileSetup field
+    // bool isProfileSetup = snapshot.get('profileSetup') ?? false;
+    setState(() {
+      profileSetup = widget.tailor.profileSetup;
+    });
+  }
+
+  @override
+  void initState() {
+    checkProfileSetup();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     DateTime currentDate = DateTime.now();
     String formattedDate =
         "${currentDate.day}-${currentDate.month}-${currentDate.year}";
+    if (!profileSetup) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return TailorProfileSetupPage(tailor: widget.tailor);
+          },
+        );
+      });
+    }
     return Scaffold(
       backgroundColor: redColor,
       body: SafeArea(

@@ -34,6 +34,8 @@ class _TailorInfoScreenState extends State<TailorInfoScreen> {
         expId: '',
         customerId: currentUser!.uid,
         status: '',
+        ratting: 0.00,
+        price: double.parse(priceController.text),
       );
 
       DocumentReference orderRef = await FirebaseFirestore.instance
@@ -84,6 +86,7 @@ class _TailorInfoScreenState extends State<TailorInfoScreen> {
   List<File> clothesImages = [];
   List<File> designImages = [];
   TextEditingController detailsController = TextEditingController();
+  TextEditingController priceController = TextEditingController();
 
   Future<void> _pickImage(
       ImageSource source, List<File> imageList, int maxImages) async {
@@ -213,6 +216,38 @@ class _TailorInfoScreenState extends State<TailorInfoScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
+                          'Price:',
+                          style: TextStyle(
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black87,
+                          ),
+                        ),
+                        SizedBox(height: 8.0),
+                        TextField(
+                          controller: priceController,
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            hintText: 'Enter price',
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(height: 16.0),
+                Card(
+                  elevation: 4.0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
                           'Clothes Section (Up to 4 Images):',
                           style: TextStyle(
                               fontSize: 18.0,
@@ -226,7 +261,7 @@ class _TailorInfoScreenState extends State<TailorInfoScreen> {
                           onPressed: () =>
                               _pickImage(ImageSource.gallery, clothesImages, 4),
                           style: ElevatedButton.styleFrom(
-                            primary: Colors.red,
+                            backgroundColor: Colors.red,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10.0)),
                           ),
@@ -266,7 +301,7 @@ class _TailorInfoScreenState extends State<TailorInfoScreen> {
                           onPressed: () =>
                               _pickImage(ImageSource.gallery, designImages, 2),
                           style: ElevatedButton.styleFrom(
-                            primary: Colors.red,
+                            backgroundColor: Colors.red,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10.0)),
                           ),
@@ -320,7 +355,7 @@ class _TailorInfoScreenState extends State<TailorInfoScreen> {
                     print('Placing Order...');
                   },
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.red,
+                    backgroundColor: Colors.red,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.0)),
                   ),
@@ -350,7 +385,7 @@ class _TailorInfoScreenState extends State<TailorInfoScreen> {
         });
       },
       style: ElevatedButton.styleFrom(
-        primary: selectedTailorType == type ? Colors.red : Colors.grey,
+        backgroundColor: selectedTailorType == type ? Colors.red : Colors.grey,
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
       ),

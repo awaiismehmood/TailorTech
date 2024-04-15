@@ -53,7 +53,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   5.heightBox,
                   controller.isloading.value
-                      ? CircularProgressIndicator(
+                      ? const CircularProgressIndicator(
                           valueColor: AlwaysStoppedAnimation(redColor),
                         )
                       : ourButton(
@@ -66,28 +66,36 @@ class _LoginScreenState extends State<LoginScreen> {
                                   DocumentSnapshot? userSnapshot =
                                       await FirebaseFirestore.instance
                                           .collection(usersCollection)
-                                          .doc(currentUser!
-                                              .uid) // replace 'userId' with the actual user ID
+                                          .doc(currentUser!.uid)
                                           .get();
                                   final data = userSnapshot.data()
                                       as Map<String, dynamic>;
-                                  final String u_type = data['type'];
+                                  final String uType = data['type'];
                                   if (value != null) {
-                                    if (u_type == widget.type) {
+                                    if (uType == widget.type) {
+                                      // ignore: use_build_context_synchronously
                                       VxToast.show(context, msg: logedin);
-                                      Get.offAll(() => Home());
+                                      Get.offAll(() => const Home());
                                     } else {
                                       log("in else");
-                                      setState(() {
-                                        controller.isloading(false);
-                                      });
+                                      // ignore: use_build_context_synchronously
                                       VxToast.show(context, msg: "Sorry");
                                     }
                                   } else {
+                                    // If value is null, login failed
                                     setState(() {
-                                      controller.isloading(false);
+                                      controller.isloading(
+                                          false); // Stop loading indicator
                                     });
                                   }
+                                }).catchError((error) {
+                                  // Handle error from loginMethod
+                                  setState(() {
+                                    controller.isloading(
+                                        false); // Stop loading indicator
+                                  });
+                                  VxToast.show(context,
+                                      msg: "Invalid Credentials");
                                 });
                               },
                               color: redColor,
