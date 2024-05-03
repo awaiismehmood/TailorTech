@@ -3,6 +3,7 @@ import 'package:dashboard/Model_Classes/customer_class.dart';
 import 'package:dashboard/consts/colors.dart';
 import 'package:dashboard/consts/consts.dart';
 import 'package:dashboard/controllers/auth_controller.dart';
+import 'package:dashboard/services/chatt/chat_home.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -15,12 +16,6 @@ class ProfileScreenCustomer extends StatefulWidget {
 
 class _ProfileScreenCustomerState extends State<ProfileScreenCustomer> {
   var controller = Get.put(AuthController());
-  // double _rating = 3.0; // Initial rating value
-
-  // // Define CNIC and Phone number variables
-  // String _cnic = '12345-6789012-3'; // Example CNIC
-  // String _phoneNumber = '+1234567890'; // Example phone number
-  // String _email = 'johndoe@example.com'; // Example email
 
   @override
   Widget build(BuildContext context) {
@@ -228,6 +223,11 @@ class _ProfileScreenCustomerState extends State<ProfileScreenCustomer> {
                           style: TextStyle(fontSize: 14),
                         ),
                         onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => chatHome()));
+
                           // Add functionality for Chat
                         },
                       ),

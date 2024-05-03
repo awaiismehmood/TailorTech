@@ -62,8 +62,6 @@ class Tailor {
       ratting: data['ratting'],
       minPrice: data['minPrice'],
       maxPrice: data['maxPrice'],
-      // latitude: (data['latitude'] ?? 0).toDouble(),
-      // longitude: (data['longitude'] ?? 0).toDouble(),
     );
   }
 }

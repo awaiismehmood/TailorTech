@@ -1,5 +1,6 @@
 import 'package:dashboard/Model_Classes/tailor_class.dart';
 import 'package:dashboard/Tailor_views/Profile/edit_profile.dart';
+import 'package:dashboard/Tailor_views/chat/chat_home.dart';
 import 'package:dashboard/controllers/auth_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:dots_indicator/dots_indicator.dart';
@@ -15,15 +16,6 @@ class EditProfileScreen extends StatefulWidget {
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
   var controller = Get.put(AuthController());
-  // double _rating = 3.0; // Initial rating value
-
-  // Define CNIC and Phone number variables
-  // final String _cnic = widget.tailor.cnic; // Example CNIC
-  // String _phoneNumber = widget.tailor.phone; // Example phone number
-  // String _email = widget.tailor.email; // Example email
-
-  // Example catalog items (image URLs)
-  // final List<String> _catalogItems = widget.tailor.images;
 
   final PageController _controller = PageController();
   int _currentPosition = 0;
@@ -255,6 +247,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         style: TextStyle(fontSize: 14),
                       ),
                       onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => chatHomeT()),
+                        );
                         // Add functionality for Chat
                       },
                     ),
