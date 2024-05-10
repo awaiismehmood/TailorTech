@@ -91,7 +91,7 @@ class _MeasurementScreenState extends State<MeasurementScreen> {
     );
 
     // URL of your API endpoint
-    var url = Uri.parse('http://192.168.18.253:5000/measurements');
+    var url = Uri.parse('http://192.168.100.201:5000/measurements');
 
     try {
       // Create a multipart request
