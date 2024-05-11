@@ -16,6 +16,13 @@ class MeasurementScreen extends StatefulWidget {
 class _MeasurementScreenState extends State<MeasurementScreen> {
   File? _imageFile;
   final picker = ImagePicker();
+  TextEditingController _heightController = TextEditingController();
+
+  @override
+  void dispose() {
+    _heightController.dispose(); // Dispose controller
+    super.dispose();
+  }
 
   Future<void> _getImage(ImageSource source) async {
     final pickedFile = await picker.pickImage(source: source);
@@ -78,7 +85,7 @@ class _MeasurementScreenState extends State<MeasurementScreen> {
   }
 
   Future<void> _sendMeasurementRequest(
-      BuildContext context, String imagePath) async {
+      BuildContext context, String imagePath, String height) async {
     // Show circular progress indicator dialog
     showDialog(
       context: context,
@@ -91,7 +98,7 @@ class _MeasurementScreenState extends State<MeasurementScreen> {
     );
 
     // URL of your API endpoint
-    var url = Uri.parse('http://192.168.100.201:5000/measurements');
+    var url = Uri.parse('http://192.168.100.8:5000/measurements');
 
     try {
       // Create a multipart request
@@ -107,8 +114,10 @@ class _MeasurementScreenState extends State<MeasurementScreen> {
         length,
         filename: imageFile.path.split('/').last,
       );
+
       // Add the image file to the request
       request.files.add(multipartFile);
+      request.fields['height'] = height;
 
       // Send the request
       var response = await request.send();
@@ -228,6 +237,7 @@ class _MeasurementScreenState extends State<MeasurementScreen> {
             MaterialPageRoute(
                 builder: (context) => measurementsShow(
                       responseData: relevantData,
+                      height: height,
                     )),
           );
         } catch (e) {
@@ -382,10 +392,25 @@ class _MeasurementScreenState extends State<MeasurementScreen> {
                 ],
               ),
               SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: TextFormField(
+                  controller: _heightController,
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                    labelText: 'Enter Your Height (in inches)',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
                   if (_imageFile != null) {
-                    _sendMeasurementRequest(context, _imageFile!.path);
+                    String height = _heightController.text;
+                    _sendMeasurementRequest(context, _imageFile!.path, height);
                   } else {
                     print('No image selected.');
                   }
