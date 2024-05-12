@@ -89,7 +89,7 @@ class DetailScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 SizedBox(
-                  width: 150,
+                  width: 300, //150,
                   child: ElevatedButton(
                     onPressed: () {
                       deleteOrder(order);
@@ -100,18 +100,35 @@ class DetailScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(
-                  width: 150,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      // Handle button tap
-                    },
-                    child: Text(
-                      'Chat',
-                      style: TextStyle(fontSize: 16.0),
-                    ),
-                  ),
-                ),
+                // SizedBox(
+                //   width: 150,
+                //   child: ElevatedButton(
+                //     onPressed: () {
+                //       showDialog(
+                //           context: context,
+                //           builder: (BuildContext context) {
+                //             return AlertDialog(
+                //               title: Text("Message Tailor"),
+                //               content: Text(
+                //                   "Only customers can message tailors first."),
+                //               actions: [
+                //                 TextButton(
+                //                   onPressed: () {
+                //                     Navigator.of(context)
+                //                         .pop(); // Close the dialog
+                //                   },
+                //                   child: Text("OK"),
+                //                 ),
+                //               ],
+                //             );
+                //           });
+                //     },
+                //     child: Text(
+                //       'Chat',
+                //       style: TextStyle(fontSize: 16.0),
+                //     ),
+                //   ),
+                // ),
               ],
             ),
             SizedBox(height: 10.0),

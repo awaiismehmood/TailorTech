@@ -143,6 +143,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                         phone: phoneController.text,
                                         profileImageurl: " ",
                                         online: false,
+                                        chatList: [],
                                       );
                                     }).then((value) {
                                       // VxToast.show(context, msg: logedin);

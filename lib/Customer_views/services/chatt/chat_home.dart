@@ -1,7 +1,8 @@
 import 'dart:developer';
 
-import 'package:dashboard/services/chatt/chat_page.dart';
-import 'package:dashboard/services/chatt/chat_service.dart';
+import 'package:dashboard/Customer_views/services/chatt/chat_page.dart';
+import 'package:dashboard/Customer_views/services/chatt/chat_service.dart';
+import 'package:dashboard/consts/consts.dart';
 import 'package:dashboard/widgets_common/user_tile.dart';
 import 'package:flutter/material.dart';
 
@@ -14,10 +15,11 @@ class chatHome extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: whiteColor,
         appBar: AppBar(
-          title: Text("Home"),
-          backgroundColor: Colors.white,
-          foregroundColor: Colors.grey,
+          title: Text("Chat Home"),
+          backgroundColor: redColor,
+          foregroundColor: whiteColor,
           elevation: 0,
         ),
         body: _buildUserList(),
@@ -27,7 +29,7 @@ class chatHome extends StatelessWidget {
 
   Widget _buildUserList() {
     return StreamBuilder(
-      stream: _chatService.getUserStream(),
+      stream: _chatService.getUserStream(currentUser!.uid),
       builder: (context, snapshot) {
         // error
 

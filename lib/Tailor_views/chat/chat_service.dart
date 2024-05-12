@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dashboard/consts/consts.dart';
-import 'package:dashboard/services/chatt/models/message.dart';
+import 'package:dashboard/Customer_views/services/chatt/models/message.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class chatServiceT {
@@ -11,19 +11,44 @@ class chatServiceT {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   //get user stream
-  Stream<List<Map<String, dynamic>>> getUserStream() {
+  Stream<List<Map<String, dynamic>>> getUserStream(String currentUserId) {
     log("iam in chat service");
+    // Get the chat list of the current user
     return _firestore.collection(usersCollection).snapshots().map((snapshot) {
-      return snapshot.docs.map((doc) {
-        //go through each indivisual user
+      // Fetch chat list of current user
+      return getUserChatList(currentUserId).then((chatlist) {
+        // Map each document in the snapshot
+        return snapshot.docs.where((doc) {
+          final userId =
+              doc.id; // Assuming the user ID is stored as the document ID
 
-        final user = doc.data();
+          // Check if the user ID is in the chat list
+          return chatlist.contains(userId);
+        }).map((doc) {
+          // Return user data
+          final user = doc.data();
+          return user;
+        }).toList();
+      });
+    }).asyncMap((event) =>
+        event); // Convert Future<List<Map<String, dynamic>>> to Stream<List<Map<String, dynamic>>>
+  }
 
-        //retrun user
+  Future<List<String>> getUserChatList(String userId) async {
+    try {
+      // Get the chat list of the user from Firestore
+      DocumentSnapshot userSnapshot =
+          await _firestore.collection(usersCollection1).doc(userId).get();
 
-        return user;
-      }).toList();
-    });
+      // Extract the chat list or initialize an empty list if it doesn't exist
+      List<String> chatList = List<String>.from(
+          (userSnapshot.data() as Map<String, dynamic>?)?['chatlist'] ?? []);
+
+      return chatList;
+    } catch (e) {
+      print(e.toString());
+      return []; // Return an empty list if an error occurs
+    }
   }
   //send messages
 

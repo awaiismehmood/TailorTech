@@ -156,8 +156,7 @@ class _SignupScreenTailorState extends State<SignupScreen_Tailor> {
                                     await controller
                                         .signupMethod(email, password, context)
                                         .then((value) {
-                                      return controller
-                                          .storeTailorData(
+                                      return controller.storeTailorData(
                                         context: context,
                                         email: emailController.text,
                                         name: nameController.text,
@@ -167,8 +166,8 @@ class _SignupScreenTailorState extends State<SignupScreen_Tailor> {
                                         cnic: cnicController.text,
                                         profileSetup: false,
                                         online: false,
-                                      )
-                                          .then((value) {
+                                        chatList: [],
+                                      ).then((value) {
                                         // Only navigate if signup and data storage are successful
                                         Get.offAll(
                                             () => const VerifyEmailScreen());

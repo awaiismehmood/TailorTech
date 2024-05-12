@@ -121,6 +121,7 @@ class AuthController extends GetxController {
     profileImageurl,
     online,
     required BuildContext context,
+    List<String>? chatList,
   }) async {
     DocumentReference store =
         firestore.collection(usersCollection).doc(currentUser!.uid);
@@ -134,6 +135,7 @@ class AuthController extends GetxController {
       'type': type,
       'phone': phone,
       'timestamp': FieldValue.serverTimestamp(),
+      'chatlist': chatList,
     });
   }
 
@@ -155,6 +157,7 @@ class AuthController extends GetxController {
     ratting = 0.00,
     minPrice = 0.0,
     maxPrice = 0.00,
+    List<String>? chatList,
   }) async {
     DocumentReference store =
         firestore.collection(usersCollection1).doc(currentUser!.uid);
@@ -178,6 +181,7 @@ class AuthController extends GetxController {
       'ratting': ratting,
       'minPrice': minPrice,
       'maxPrice': maxPrice,
+      'chatlist': chatList,
     });
   }
 

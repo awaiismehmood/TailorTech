@@ -8,18 +8,19 @@ class Customer {
   String type;
   String phone;
   String profileImageUrl;
+  List<String> chatList;
   final bool online;
 
-  Customer({
-    required this.id,
-    required this.online,
-    required this.name,
-    required this.password,
-    required this.email,
-    required this.type,
-    required this.phone,
-    required this.profileImageUrl,
-  });
+  Customer(
+      {required this.id,
+      required this.online,
+      required this.name,
+      required this.password,
+      required this.email,
+      required this.type,
+      required this.phone,
+      required this.profileImageUrl,
+      required this.chatList});
 
   factory Customer.fromFirestore(DocumentSnapshot doc) {
     Map data = doc.data() as Map<String, dynamic>;
@@ -32,6 +33,7 @@ class Customer {
       type: data['type'] ?? '',
       phone: data['phone'] ?? '',
       profileImageUrl: data['ProfileImageurl'] ?? '',
+      chatList: List<String>.from(data['chatlist'] ?? []),
     );
   }
 }

@@ -3,7 +3,7 @@ import 'package:dashboard/Model_Classes/customer_class.dart';
 import 'package:dashboard/consts/colors.dart';
 import 'package:dashboard/consts/consts.dart';
 import 'package:dashboard/controllers/auth_controller.dart';
-import 'package:dashboard/services/chatt/chat_home.dart';
+import 'package:dashboard/Customer_views/services/chatt/chat_home.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dashboard/Customer_views/home_screen/home.dart';
+import 'package:dashboard/Customer_views/services/chatt/chat_home.dart';
 import 'package:dashboard/Model_Classes/customer_class.dart';
 import 'package:dashboard/Model_Classes/order_class.dart';
 import 'package:dashboard/Tailor_views/home_screen/home.dart';
-import 'package:dashboard/chat/features/chat/screens/mobile_chat_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
@@ -182,13 +182,21 @@ class _SampleItemDetailsViewState extends State<SampleItemDetailsView> {
           SizedBox(
             width: double.infinity,
             child: ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => MobileChatScreen(
-                            name: "Customer",
-                            uid: widget.order.tailorId.toString())));
+              onPressed: () async {
+                try {
+                  // Assuming you have the tailor's ID available
+                  String tailorId = widget.order.expId;
+                  // Get the current customer's ID
+                  String customerId = currentUser!.uid;
+                  // Add tailor's ID to the customer's chat list
+                  await addToChatList(customerId, tailorId);
+                  // Navigate to the chat page
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => chatHome()));
+                } catch (e) {
+                  print("Error: $e");
+                  // Handle error
+                }
               },
               child: Text(
                 'Chat',
@@ -317,5 +325,75 @@ class _SampleItemDetailsViewState extends State<SampleItemDetailsView> {
     String orderId = order.getDocumentId() ?? '';
     await FirebaseFirestore.instance.collection('orders').doc(orderId).delete();
     Get.offAll(() => Home());
+  }
+
+  Future<void> addToChatList(String customerId, String tailorId) async {
+    try {
+      // Get the current chat list of the customer
+      DocumentSnapshot customerSnapshot = await FirebaseFirestore.instance
+          .collection(usersCollection)
+          .doc(customerId)
+          .get();
+
+      if (customerSnapshot.exists) {
+        // Extract chatList and cast it to List<String>
+        List<String> currentChatList = List<String>.from(
+            (customerSnapshot.data() as Map<String, dynamic>?)?['chatlist']
+                    ?.cast<String>() ??
+                []);
+
+        // Add tailor's ID only if it's not already in the list
+        if (!currentChatList.contains(tailorId)) {
+          currentChatList.add(tailorId);
+
+          // Update the document with the modified chat list
+          await FirebaseFirestore.instance
+              .collection(usersCollection)
+              .doc(customerId)
+              .update({'chatlist': currentChatList});
+
+          addToTailorChatList(customerId, tailorId);
+        }
+      } else {
+        throw Exception('Customer not found');
+      }
+    } catch (e) {
+      print(e.toString());
+      throw e; // Re-throw the exception for handling in calling function
+    }
+  }
+
+  Future<void> addToTailorChatList(String customerId, String tailorId) async {
+    try {
+      // Get the current chat list of the customer
+      DocumentSnapshot TailorSnapshot = await FirebaseFirestore.instance
+          .collection(usersCollection1)
+          .doc(tailorId)
+          .get();
+
+      if (TailorSnapshot.exists) {
+        // Extract chatList and cast it to List<String>
+        List<String> currentChatList = List<String>.from(
+            (TailorSnapshot.data() as Map<String, dynamic>?)?['chatlist']
+                    ?.cast<String>() ??
+                []);
+
+        // Add tailor's ID only if it's not already in the list
+        if (!currentChatList.contains(customerId)) {
+          currentChatList.add(customerId);
+
+          // Update the document with the modified chat list
+          await FirebaseFirestore.instance
+              .collection(usersCollection1)
+              .doc(tailorId)
+              .update({'chatlist': currentChatList});
+        }
+      } else {
+        throw Exception('Customer not found');
+      }
+    } catch (e) {
+      print(e.toString());
+      throw e; // Re-throw the exception for handling in calling function
+    }
   }
 }

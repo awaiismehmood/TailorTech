@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:dashboard/Tailor_views/chat/chat_page%20.dart';
 import 'package:dashboard/Tailor_views/chat/chat_service.dart';
+import 'package:dashboard/consts/consts.dart';
 import 'package:dashboard/widgets_common/user_tile.dart';
 import 'package:flutter/material.dart';
 
@@ -27,7 +28,7 @@ class chatHomeT extends StatelessWidget {
 
   Widget _buildUserList() {
     return StreamBuilder(
-      stream: _chatService.getUserStream(),
+      stream: _chatService.getUserStream(currentUser!.uid),
       builder: (context, snapshot) {
         // error
 

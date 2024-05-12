@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
-import 'package:dashboard/chat/colors.dart';
 import 'package:dashboard/consts/consts.dart';
 import 'package:dashboard/Customer_views/measurements/save_measurements.dart';
 
@@ -91,7 +90,7 @@ class _MeasurementScreenState extends State<MeasurementScreen> {
     );
 
     // URL of your API endpoint
-    var url = Uri.parse('http://192.168.18.253:5000/measurements');
+    var url = Uri.parse('http://192.168.100.105:5000/measurements');
 
     try {
       // Create a multipart request
@@ -361,7 +360,7 @@ class _MeasurementScreenState extends State<MeasurementScreen> {
                     ),
                     child: Text(
                       'Upload Image',
-                      style: TextStyle(color: blackcolor),
+                      style: TextStyle(color: Colors.black),
                     ),
                   ),
                   ElevatedButton(
@@ -376,7 +375,7 @@ class _MeasurementScreenState extends State<MeasurementScreen> {
                     ),
                     child: Text(
                       'Take Picture',
-                      style: TextStyle(color: blackcolor),
+                      style: TextStyle(color: Colors.black),
                     ),
                   ),
                 ],

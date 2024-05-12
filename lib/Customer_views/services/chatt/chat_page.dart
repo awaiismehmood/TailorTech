@@ -2,8 +2,8 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dashboard/consts/consts.dart';
-import 'package:dashboard/services/chatt/chat_bubble.dart';
-import 'package:dashboard/services/chatt/chat_service.dart';
+import 'package:dashboard/Customer_views/services/chatt/chat_bubble.dart';
+import 'package:dashboard/Customer_views/services/chatt/chat_service.dart';
 import 'package:flutter/material.dart';
 
 class chatPage extends StatelessWidget {

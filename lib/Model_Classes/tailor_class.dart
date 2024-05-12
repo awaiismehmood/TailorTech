@@ -19,27 +19,28 @@ class Tailor {
   double ratting;
   double minPrice;
   double maxPrice;
+  List<String> chatList;
 
-  Tailor({
-    required this.id,
-    required this.online,
-    required this.details,
-    required this.T_type,
-    required this.images,
-    required this.profileSetup,
-    required this.name,
-    required this.password,
-    required this.email,
-    required this.type,
-    required this.phone,
-    required this.cnic,
-    required this.profile_url,
-    required this.latitude,
-    required this.longitude,
-    required this.ratting,
-    required this.minPrice,
-    required this.maxPrice,
-  });
+  Tailor(
+      {required this.id,
+      required this.online,
+      required this.details,
+      required this.T_type,
+      required this.images,
+      required this.profileSetup,
+      required this.name,
+      required this.password,
+      required this.email,
+      required this.type,
+      required this.phone,
+      required this.cnic,
+      required this.profile_url,
+      required this.latitude,
+      required this.longitude,
+      required this.ratting,
+      required this.minPrice,
+      required this.maxPrice,
+      required this.chatList});
 
   factory Tailor.fromFirestore1(DocumentSnapshot doc) {
     Map data = doc.data() as Map<String, dynamic>;
@@ -62,6 +63,7 @@ class Tailor {
       ratting: data['ratting'],
       minPrice: data['minPrice'],
       maxPrice: data['maxPrice'],
+      chatList: List<String>.from(data['chatlist'] ?? []),
     );
   }
 }
