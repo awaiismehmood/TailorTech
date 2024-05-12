@@ -3,7 +3,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dashboard/controllers/auth_controller.dart';
 import 'package:dashboard/Customer_views/auth_screen/signup_screen.dart';
 import 'package:dashboard/consts/consts.dart';
-import 'package:dashboard/consts/lists.dart';
 import 'package:dashboard/Customer_views/home_screen/home.dart';
 import 'package:dashboard/widgets_common/applogo_widget.dart';
 import 'package:dashboard/widgets_common/bg_widgets.dart';
@@ -66,56 +65,56 @@ class _LoginScreenState extends State<LoginScreen> {
                           valueColor: AlwaysStoppedAnimation(redColor),
                         )
                       : Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: ourButton(
-                                onPress: () async {
-                                  controller.isloading(true);
-                        
-                                  await controller
-                                      .loginMethod(context)
-                                      .then((value) async {
-                                    DocumentSnapshot? userSnapshot =
-                                        await FirebaseFirestore.instance
-                                            .collection(usersCollection)
-                                            .doc(currentUser!.uid)
-                                            .get();
-                                    final data = userSnapshot.data()
-                                        as Map<String, dynamic>;
-                                    final String uType = data['type'];
-                                    if (value != null) {
-                                      if (uType == widget.type) {
-                                        // ignore: use_build_context_synchronously
-                                        VxToast.show(context, msg: logedin);
-                                        Get.offAll(() => const Home());
+                          padding: const EdgeInsets.all(8.0),
+                          child: ourButton(
+                                  onPress: () async {
+                                    controller.isloading(true);
+
+                                    await controller
+                                        .loginMethod(context)
+                                        .then((value) async {
+                                      DocumentSnapshot? userSnapshot =
+                                          await FirebaseFirestore.instance
+                                              .collection(usersCollection)
+                                              .doc(currentUser!.uid)
+                                              .get();
+                                      final data = userSnapshot.data()
+                                          as Map<String, dynamic>;
+                                      final String uType = data['type'];
+                                      if (value != null) {
+                                        if (uType == widget.type) {
+                                          // ignore: use_build_context_synchronously
+                                          VxToast.show(context, msg: logedin);
+                                          Get.offAll(() => const Home());
+                                        } else {
+                                          log("in else");
+                                          // ignore: use_build_context_synchronously
+                                          VxToast.show(context, msg: "Sorry");
+                                        }
                                       } else {
-                                        log("in else");
-                                        // ignore: use_build_context_synchronously
-                                        VxToast.show(context, msg: "Sorry");
+                                        // If value is null, login failed
+                                        setState(() {
+                                          controller.isloading(
+                                              false); // Stop loading indicator
+                                        });
                                       }
-                                    } else {
-                                      // If value is null, login failed
+                                    }).catchError((error) {
+                                      // Handle error from loginMethod
                                       setState(() {
                                         controller.isloading(
                                             false); // Stop loading indicator
                                       });
-                                    }
-                                  }).catchError((error) {
-                                    // Handle error from loginMethod
-                                    setState(() {
-                                      controller.isloading(
-                                          false); // Stop loading indicator
+                                      VxToast.show(context,
+                                          msg: "Invalid Credentials");
                                     });
-                                    VxToast.show(context,
-                                        msg: "Invalid Credentials");
-                                  });
-                                },
-                                color: redColor,
-                                textcolor: whiteColor,
-                                tit: login)
-                            .box
-                            .width(context.screenWidth)
-                            .make(),
-                      ),
+                                  },
+                                  color: redColor,
+                                  textcolor: whiteColor,
+                                  tit: login)
+                              .box
+                              .width(context.screenWidth)
+                              .make(),
+                        ),
                   5.heightBox,
                   create.text.color(fontGrey).make(),
                   5.heightBox,
@@ -142,8 +141,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         .make(),
                   ),
                   10.heightBox,
-                  
-                  
                 ],
               )
                   .box

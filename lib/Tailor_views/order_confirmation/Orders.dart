@@ -6,7 +6,6 @@ import 'package:dashboard/consts/consts.dart';
 import 'package:dashboard/controllers/order_controller.dart';
 import 'package:dashboard/widgets_common/order_card.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:get/get.dart';
 
 class OrderAcceptScreen extends StatefulWidget {
@@ -25,40 +24,42 @@ class _OrderAcceptScreenState extends State<OrderAcceptScreen> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
-            leading: IconButton(
+          leading: IconButton(
             icon: Icon(Icons.arrow_back), // Add the back arrow icon
             onPressed: () {
               Navigator.of(context).pop(); // Handle the back button press
             },
-  ),
+          ),
           title: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Colors.white70, // You can change the border color here
-                    width: 2.0, // You can adjust the border width here
-                  ),
-                  borderRadius: const BorderRadius.all(Radius.circular(10)),
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: Colors.white70, // You can change the border color here
+                  width: 2.0, // You can adjust the border width here
                 ),
-                child: const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-                  child: Text(
-                    'Orders',
-                    style: TextStyle(
-                      color: whiteColor,
-                      fontFamily: 'Roboto',
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
+                borderRadius: const BorderRadius.all(Radius.circular(10)),
+              ),
+              child: const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                child: Text(
+                  'Orders',
+                  style: TextStyle(
+                    color: whiteColor,
+                    fontFamily: 'Roboto',
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
             ),
-          
-          backgroundColor: Colors.red, // Set the background color of the app bar
+          ),
+
+          backgroundColor:
+              Colors.red, // Set the background color of the app bar
           elevation: 10, // Adjust the elevation to add drop shadow
-          shadowColor: Colors.grey.withOpacity(0.5), // Set the color of the drop shadow
+          shadowColor:
+              Colors.grey.withOpacity(0.5), // Set the color of the drop shadow
         ),
         body: Stack(
           children: [

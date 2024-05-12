@@ -3,7 +3,6 @@ import 'package:dashboard/Tailor_views/auth_screen/signup_screen.dart';
 import 'package:dashboard/Tailor_views/home_screen/home.dart';
 import 'package:dashboard/controllers/auth_controller.dart';
 import 'package:dashboard/consts/consts.dart';
-import 'package:dashboard/consts/lists.dart';
 import 'package:dashboard/widgets_common/applogo_widget.dart';
 import 'package:dashboard/widgets_common/bg_widgets.dart';
 import 'package:dashboard/widgets_common/button.dart';
@@ -69,54 +68,55 @@ class _LoginScreenTailorState extends State<LoginScreen_Tailor> {
                           valueColor: AlwaysStoppedAnimation(redColor),
                         )
                       : Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: ourButton(
-                                onPress: () async {
-                                  controller1.isloading(true);
-                                  try {
-                                    await controller1
-                                        .loginMethod(context)
-                                        .then((value) async {
-                                      DocumentSnapshot? userSnapshot =
-                                          await FirebaseFirestore.instance
-                                              .collection(usersCollection1)
-                                              .doc(currentUser!.uid)
-                                              .get();
-                                      final data = userSnapshot.data()
-                                          as Map<String, dynamic>;
-                                      final String uType = data['type'];
-                                      if (value != null) {
-                                        if (uType == widget.type) {
-                                          // ignore: use_build_context_synchronously
-                                          VxToast.show(context, msg: logedin);
-                                          Get.offAll(() => const Home_Tailor());
+                          padding: const EdgeInsets.all(8.0),
+                          child: ourButton(
+                                  onPress: () async {
+                                    controller1.isloading(true);
+                                    try {
+                                      await controller1
+                                          .loginMethod(context)
+                                          .then((value) async {
+                                        DocumentSnapshot? userSnapshot =
+                                            await FirebaseFirestore.instance
+                                                .collection(usersCollection1)
+                                                .doc(currentUser!.uid)
+                                                .get();
+                                        final data = userSnapshot.data()
+                                            as Map<String, dynamic>;
+                                        final String uType = data['type'];
+                                        if (value != null) {
+                                          if (uType == widget.type) {
+                                            // ignore: use_build_context_synchronously
+                                            VxToast.show(context, msg: logedin);
+                                            Get.offAll(
+                                                () => const Home_Tailor());
+                                          } else {
+                                            setState(() {
+                                              controller1.isloading(false);
+                                            });
+                                          }
                                         } else {
                                           setState(() {
                                             controller1.isloading(false);
                                           });
                                         }
-                                      } else {
-                                        setState(() {
-                                          controller1.isloading(false);
-                                        });
-                                      }
-                                    });
-                                  } catch (e) {
-                                    setState(() {
-                                      controller1.isloading(
-                                          false); // Stop loading indicator on error
-                                    });
-                                    // ignore: use_build_context_synchronously
-                                    //VxToast.show(context, msg: e.toString());
-                                  }
-                                },
-                                color: redColor,
-                                textcolor: whiteColor,
-                                tit: login)
-                            .box
-                            .width(context.screenWidth)
-                            .make(),
-                      ),
+                                      });
+                                    } catch (e) {
+                                      setState(() {
+                                        controller1.isloading(
+                                            false); // Stop loading indicator on error
+                                      });
+                                      // ignore: use_build_context_synchronously
+                                      //VxToast.show(context, msg: e.toString());
+                                    }
+                                  },
+                                  color: redColor,
+                                  textcolor: whiteColor,
+                                  tit: login)
+                              .box
+                              .width(context.screenWidth)
+                              .make(),
+                        ),
                   5.heightBox,
                   create.text.color(fontGrey).make(),
                   5.heightBox,
@@ -143,7 +143,6 @@ class _LoginScreenTailorState extends State<LoginScreen_Tailor> {
                         .make(),
                   ),
                   10.heightBox,
-                  
                 ],
               )
                   .box

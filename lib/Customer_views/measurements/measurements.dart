@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
-import 'package:dashboard/chat/colors.dart';
 import 'package:dashboard/consts/consts.dart';
 import 'package:dashboard/Customer_views/measurements/save_measurements.dart';
 
@@ -285,37 +284,36 @@ class _MeasurementScreenState extends State<MeasurementScreen> {
         backgroundColor: redColor, // Red app bar background color
         elevation: 10, // Add elevation for drop shadow
         title: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Colors.white70, // You can change the border color here
-                    width: 2.0, // You can adjust the border width here
-                  ),
-                  borderRadius: const BorderRadius.all(Radius.circular(10)),
-                ),
-                child: const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-                  child: Text(
-                    'Measurement Screen',
-                    style: TextStyle(
-                      color: whiteColor,
-                      fontFamily: 'Roboto',
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: Colors.white70, // You can change the border color here
+                width: 2.0, // You can adjust the border width here
+              ),
+              borderRadius: const BorderRadius.all(Radius.circular(10)),
+            ),
+            child: const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+              child: Text(
+                'Measurement Screen',
+                style: TextStyle(
+                  color: whiteColor,
+                  fontFamily: 'Roboto',
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
             ),
+          ),
+        ),
       ),
       backgroundColor: whiteColor, // White page background with 70% opacity
       body: SafeArea(
         child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children:[
-
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
               const Center(
                 child: Padding(
                   padding: EdgeInsets.only(top: 10),
@@ -382,44 +380,44 @@ class _MeasurementScreenState extends State<MeasurementScreen> {
                 ),
               ),
               SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      _getImage(ImageSource.gallery);
-                    },
-                    style: ElevatedButton.styleFrom(
+              Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+                ElevatedButton(
+                  onPressed: () {
+                    _getImage(ImageSource.gallery);
+                  },
+                  style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(24),
-                    ),                
+                    ),
                     backgroundColor: redColor,
-                    side: BorderSide(color: Colors.grey,width: 2,),
+                    side: BorderSide(
+                      color: Colors.grey,
+                      width: 2,
+                    ),
                   ),
                   child: const Text(
                     'Upload Photo',
                     style: TextStyle(color: whiteColor),
                   ),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      _getImage(ImageSource.camera);
-                    },
-                   style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(24),
-                        ), 
-                        backgroundColor: whiteColor,
-                        side: BorderSide(color: redColor),
-                      ),
-                      child: const Text(
-                        'Take Photo',
-                        style: TextStyle(color: redColor),
-                      ),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    _getImage(ImageSource.camera);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(24),
                     ),
+                    backgroundColor: whiteColor,
+                    side: BorderSide(color: redColor),
+                  ),
+                  child: const Text(
+                    'Take Photo',
+                    style: TextStyle(color: redColor),
+                  ),
+                ),
               ]),
-              
-              
+
               const SizedBox(height: 20),
               // Padding(
               //   padding: const EdgeInsets.all(24.0),
@@ -437,7 +435,7 @@ class _MeasurementScreenState extends State<MeasurementScreen> {
               //       ),
               //       backgroundColor: redColor,
               //       side: const BorderSide(color: Colors.grey,width: 2,),
-                    
+
               //     ),
               //     child: const Text(
               //       'Measure',
@@ -445,7 +443,7 @@ class _MeasurementScreenState extends State<MeasurementScreen> {
               //     )
               //   )
               // ),
-              
+
               SizedBox(height: 20),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -482,11 +480,8 @@ class _MeasurementScreenState extends State<MeasurementScreen> {
                   style: TextStyle(color: Colors.red),
                 ),
               ),
-             ] )
-              
-          ),
-        ),
-      );
-
+            ])),
+      ),
+    );
   }
 }

@@ -6,7 +6,6 @@ import 'package:dashboard/Tailor_views/Profile/tailor_profile_setup.dart';
 //import 'package:dashboard/Tailor_views/Profile/tailor_profile_setup.dart';
 import 'package:dashboard/Tailor_views/order_confirmation/Orders.dart';
 import 'package:dashboard/Tailor_views/order_list/order_history.dart';
-import 'package:dashboard/consts/consts.dart';
 import 'package:dashboard/widgets_common/exercise_tile.dart';
 
 import 'package:flutter/material.dart';
@@ -59,144 +58,146 @@ class _HomePageTailorState extends State<HomePage_Tailor> {
       });
     }
     return Scaffold(
-  // Set the background color to transparent
-  backgroundColor: Colors.transparent,
-  body: Stack(
-    children: [
-     Positioned.fill(
-        child: Image.asset(
-          'assets/images/bgo.png', // Replace with your asset image path
-          fit: BoxFit.cover,
-        ),
-      ),
-      SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.only(top: 20),
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                child: Column(
-                  children: [
-                    // Greeting row
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      // Set the background color to transparent
+      backgroundColor: Colors.transparent,
+      body: Stack(
+        children: [
+          Positioned.fill(
+            child: Image.asset(
+              'assets/images/bgo.png', // Replace with your asset image path
+              fit: BoxFit.cover,
+            ),
+          ),
+          SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.only(top: 20),
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                    child: Column(
                       children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        // Greeting row
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                              "Hi ${widget.tailor.name}",
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 24,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 8,
-                            ),
-                            Text(
-                              formattedDate,
-                              style: const TextStyle(color: Colors.white),
-                            )
-                          ],
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 25,
-                    ),
-                    Container(
-                      height: 250, // Adjust the height as needed
-                      width: 300, // Adjust the width as needed
-                      child: Lottie.network(
-                        "https://lottie.host/fd284540-408b-4dca-9b6b-789aab683b3f/ZzPOpxSu1X.json",
-                        fit: BoxFit.contain,
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                  ],
-                ),
-              ),
-              const SizedBox(
-                height: 25,
-              ),
-              Expanded(
-                child: ClipRRect(
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    topRight: Radius.circular(20),
-                  ),
-                  child: Container(
-                    padding: const EdgeInsets.all(25),
-                    color: Colors.grey[200], // Adjust opacity as needed
-                    child: Center(
-                      child: Column(
-                        children: [
-                          const Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "Menu",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20,
-                                ),
-                              ),
-                              Icon(Icons.more_horiz),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          Expanded(
-                            child: ListView(
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                ExerciseTile(
-                                  onpress: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => OrderHistory(),
-                                      ),
-                                    );
-                                  },
-                                  icon: Icons.list_alt,
-                                  exerciseName: "Order List",
-                                  numberOfExercises: 10,
-                                  color: Colors.orange,
+                                Text(
+                                  "Hi ${widget.tailor.name}",
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
-                                ExerciseTile(
-                                  onpress: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => OrderAcceptScreen(),
-                                      ),
-                                    );
-                                  },
-                                  icon: Icons.check_circle,
-                                  exerciseName: "Order Confirmation",
-                                  numberOfExercises: 10,
-                                  color: Colors.red,
+                                const SizedBox(
+                                  height: 8,
                                 ),
+                                Text(
+                                  formattedDate,
+                                  style: const TextStyle(color: Colors.white),
+                                )
                               ],
                             ),
-                          )
-                        ],
-                      ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 25,
+                        ),
+                        Container(
+                          height: 250, // Adjust the height as needed
+                          width: 300, // Adjust the width as needed
+                          child: Lottie.network(
+                            "https://lottie.host/fd284540-408b-4dca-9b6b-789aab683b3f/ZzPOpxSu1X.json",
+                            fit: BoxFit.contain,
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                      ],
                     ),
                   ),
-                ),
-              )
-            ],
+                  const SizedBox(
+                    height: 25,
+                  ),
+                  Expanded(
+                    child: ClipRRect(
+                      borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(20),
+                        topRight: Radius.circular(20),
+                      ),
+                      child: Container(
+                        padding: const EdgeInsets.all(25),
+                        color: Colors.grey[200], // Adjust opacity as needed
+                        child: Center(
+                          child: Column(
+                            children: [
+                              const Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "Menu",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20,
+                                    ),
+                                  ),
+                                  Icon(Icons.more_horiz),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              Expanded(
+                                child: ListView(
+                                  children: [
+                                    ExerciseTile(
+                                      onpress: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                OrderHistory(),
+                                          ),
+                                        );
+                                      },
+                                      icon: Icons.list_alt,
+                                      exerciseName: "Order List",
+                                      numberOfExercises: 10,
+                                      color: Colors.orange,
+                                    ),
+                                    ExerciseTile(
+                                      onpress: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                OrderAcceptScreen(),
+                                          ),
+                                        );
+                                      },
+                                      icon: Icons.check_circle,
+                                      exerciseName: "Order Confirmation",
+                                      numberOfExercises: 10,
+                                      color: Colors.red,
+                                    ),
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
           ),
-        ),
+        ],
       ),
-    ],
-  ),
-);
-
+    );
   }
 }
