@@ -7,7 +7,9 @@ import 'measurement_class.dart';
 
 class measurementsShow extends StatefulWidget {
   final Map<String, dynamic> responseData;
-  const measurementsShow({super.key, required this.responseData});
+  final String height;
+  const measurementsShow(
+      {super.key, required this.responseData, required this.height});
 
   @override
   _measurementsShowState createState() => _measurementsShowState();
@@ -21,7 +23,7 @@ class _measurementsShowState extends State<measurementsShow> {
   void initState() {
     super.initState();
     customerMeasurements = CustomerMeasurements(
-      height: 70,
+      height: double.tryParse(widget.height) ?? 0.0,
       waist: widget.responseData['waist'],
       belly: widget.responseData['belly'],
       chest: widget.responseData['chest'],
@@ -44,7 +46,7 @@ class _measurementsShowState extends State<measurementsShow> {
           children: [
             Row(
               children: [
-                Expanded(
+                const Expanded(
                   child: Text(
                     'My Measurements',
                     style: TextStyle(
@@ -67,12 +69,12 @@ class _measurementsShowState extends State<measurementsShow> {
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Container(
-              margin: EdgeInsets.only(bottom: 20.0),
-              child: Text(
+              margin: const EdgeInsets.only(bottom: 20.0),
+              child: const Text(
                 'wahab',
                 style: TextStyle(
                   fontSize: 24.0,
@@ -103,7 +105,7 @@ class _measurementsShowState extends State<measurementsShow> {
           });
           // Save measurements to profile or perform any other action here
           print('Measurements saved: $customerMeasurements');
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
             content: Text('Measurements saved!'),
           ));
         },
