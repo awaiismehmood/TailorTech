@@ -44,152 +44,155 @@ class _SignupScreenState extends State<SignupScreen> {
       Scaffold(
         body: SingleChildScrollView(
           child: Center(
-            child: Column(
-              children: [
-                (context.screenHeight * 0.1).heightBox,
-                applogoWidget(),
-                10.heightBox,
-                "Join the $appname".text.fontFamily(bold).white.size(18).make(),
-                10.heightBox,
-                Obx(
-                  () => Column(
-                    children: [
-                      customTextField(name, nameHint, nameController, false),
-                      customTextField(email, emailHint, emailController, false),
-                      customTextField(
-                          password, passwordHint, passwrodController, true),
-                      customTextField(retypepass, retypepassHint,
-                          passwordRetypeController, true),
-                      customTextField(phone, phoneHint, phoneController, false),
-                      5.heightBox,
-                      Row(
-                        children: [
-                          Checkbox(
-                            checkColor: whiteColor,
-                            activeColor: redColor,
-                            value: isCheck,
-                            onChanged: (newValue) {
-                              setState(() {
-                                isCheck = newValue;
-                              });
-                            },
-                          ),
-                          5.widthBox,
-                          Expanded(
-                            child: RichText(
-                              text: const TextSpan(
-                                children: [
-                                  TextSpan(
-                                    text: "I agree to the ",
-                                    style: TextStyle(
-                                      fontFamily: regular,
-                                      color: fontGrey,
-                                    ),
-                                  ),
-                                  TextSpan(
-                                    text: terms,
-                                    style: TextStyle(
-                                      fontFamily: regular,
-                                      color: redColor,
-                                    ),
-                                  ),
-                                  TextSpan(
-                                    text: " & ",
-                                    style: TextStyle(
-                                      fontFamily: regular,
-                                      color: fontGrey,
-                                    ),
-                                  ),
-                                  TextSpan(
-                                    text: priacyPol,
-                                    style: TextStyle(
-                                      fontFamily: regular,
-                                      color: redColor,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                      controller.isloading.value
-                          ? const CircularProgressIndicator(
-                              valueColor: AlwaysStoppedAnimation(redColor),
-                            )
-                          : ourButton(
-                              onPress: () async {
-                                final email = emailController.text;
-                                final password = passwrodController.text;
-                                if (!isEmailValid(email)) {
-                                  // Show error message if email is not valid
-                                  VxToast.show(context,
-                                      msg:
-                                          "Please enter a valid email address.");
-                                  return;
-                                }
-                                if (isCheck != false) {
-                                  controller.isloading(true);
-                                  try {
-                                    await controller
-                                        .signupMethod(email, password, context)
-                                        .then((value) {
-                                      return controller.storeuserData(
-                                        context: context,
-                                        email: emailController.text,
-                                        name: nameController.text,
-                                        password: passwrodController.text,
-                                        type: widget.type,
-                                        phone: phoneController.text,
-                                        profileImageurl: " ",
-                                        online: false,
-                                      );
-                                    }).then((value) {
-                                      // VxToast.show(context, msg: logedin);
-                                      Get.offAll(
-                                          () => const VerifyEmailScreen_cust());
-                                    });
-                                  } catch (e) {
-                                    auth.signOut();
-                                    // VxToast.show(context, msg: e.toString());
-                                  }
-                                  controller.isloading(false);
-                                }
-                              },
-                              color: isCheck == true ? redColor : lightGrey,
-                              textcolor: whiteColor,
-                              tit: signup,
-                            ).box.width(context.screenWidth).make(),
-                      10.heightBox,
-                      RichText(
-                        text: const TextSpan(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  (context.screenHeight * 0.1).heightBox,
+                  applogoWidget(),
+                  10.heightBox,
+                  "Join $appname".text.fontFamily(bold).white.size(18).make(),
+                  10.heightBox,
+                  Obx(
+                    () => Column(
+                      children: [
+                        customTextField(name, nameHint, nameController, false),
+                        customTextField(email, emailHint, emailController, false),
+                        customTextField(
+                            password, passwordHint, passwrodController, true),
+                        customTextField(retypepass, retypepassHint,
+                            passwordRetypeController, true),
+                        customTextField(phone, phoneHint, phoneController, false),
+                        5.heightBox,
+                        Row(
                           children: [
-                            TextSpan(
-                              text: already,
-                              style:
-                                  TextStyle(fontFamily: bold, color: fontGrey),
+                            Checkbox(
+                              checkColor: whiteColor,
+                              activeColor: redColor,
+                              value: isCheck,
+                              onChanged: (newValue) {
+                                setState(() {
+                                  isCheck = newValue;
+                                });
+                              },
                             ),
-                            TextSpan(
-                              text: login,
-                              style:
-                                  TextStyle(fontFamily: bold, color: redColor),
-                            ),
+                            5.widthBox,
+                            Expanded(
+                              child: RichText(
+                                text: const TextSpan(
+                                  children: [
+                                    TextSpan(
+                                      text: "I agree to the ",
+                                      style: TextStyle(
+                                        fontFamily: regular,
+                                        color: fontGrey,
+                                      ),
+                                    ),
+                                    TextSpan(
+                                      text: terms,
+                                      style: TextStyle(
+                                        fontFamily: regular,
+                                        color: redColor,
+                                      ),
+                                    ),
+                                    TextSpan(
+                                      text: " & ",
+                                      style: TextStyle(
+                                        fontFamily: regular,
+                                        color: fontGrey,
+                                      ),
+                                    ),
+                                    TextSpan(
+                                      text: priacyPol,
+                                      style: TextStyle(
+                                        fontFamily: regular,
+                                        color: redColor,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            )
                           ],
                         ),
-                      ).onTap(() {
-                        Get.back();
-                      })
-                    ],
-                  )
-                      .box
-                      .white
-                      .rounded
-                      .padding(const EdgeInsets.all(16))
-                      .width(context.screenWidth - 70)
-                      .shadowSm
-                      .make(),
-                ),
-              ],
+                        controller.isloading.value
+                            ? const CircularProgressIndicator(
+                                valueColor: AlwaysStoppedAnimation(redColor),
+                              )
+                            : ourButton(
+                                onPress: () async {
+                                  final email = emailController.text;
+                                  final password = passwrodController.text;
+                                  if (!isEmailValid(email)) {
+                                    // Show error message if email is not valid
+                                    VxToast.show(context,
+                                        msg:
+                                            "Please enter a valid email address.");
+                                    return;
+                                  }
+                                  if (isCheck != false) {
+                                    controller.isloading(true);
+                                    try {
+                                      await controller
+                                          .signupMethod(email, password, context)
+                                          .then((value) {
+                                        return controller.storeuserData(
+                                          context: context,
+                                          email: emailController.text,
+                                          name: nameController.text,
+                                          password: passwrodController.text,
+                                          type: widget.type,
+                                          phone: phoneController.text,
+                                          profileImageurl: " ",
+                                          online: false,
+                                        );
+                                      }).then((value) {
+                                        // VxToast.show(context, msg: logedin);
+                                        Get.offAll(
+                                            () => const VerifyEmailScreen_cust());
+                                      });
+                                    } catch (e) {
+                                      auth.signOut();
+                                      // VxToast.show(context, msg: e.toString());
+                                    }
+                                    controller.isloading(false);
+                                  }
+                                },
+                                color: isCheck == true ? redColor : lightGrey,
+                                textcolor: whiteColor,
+                                tit: signup,
+                              ).box.width(context.screenWidth).make(),
+                        10.heightBox,
+                        RichText(
+                          text: const TextSpan(
+                            children: [
+                              TextSpan(
+                                text: already,
+                                style:
+                                    TextStyle(fontFamily: bold, color: fontGrey),
+                              ),
+                              TextSpan(
+                                text: login,
+                                style:
+                                    TextStyle(fontFamily: bold, color: redColor),
+                              ),
+                            ],
+                          ),
+                        ).onTap(() {
+                          Get.back();
+                        })
+                      ],
+                    )
+                        .box
+                        .white
+                        .rounded
+                        .padding(const EdgeInsets.all(16))
+                        .width(context.screenWidth - 70)
+                        .shadowSm
+                        .make(),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

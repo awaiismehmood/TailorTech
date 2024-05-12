@@ -22,239 +22,259 @@ class _ProfileScreenCustomerState extends State<ProfileScreenCustomer> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        // appBar: AppBar(
-        //   title: Text('My Profile'),
-        //   backgroundColor: Colors.red,
-        //   foregroundColor: Colors.white,
-        //   elevation: 0,
-        // ),
-        body: Container(
-          decoration: BoxDecoration(
-            color: Colors.red,
-          ),
-          child: SafeArea(
-            child: ListView(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
+      appBar: AppBar(
+        backgroundColor: redColor, // Red app bar background color
+        elevation: 10, // Add elevation for drop shadow
+        title: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Colors.white70, // You can change the border color here
+                    width: 2.0, // You can adjust the border width here
+                  ),
+                  borderRadius: const BorderRadius.all(Radius.circular(10)),
+                ),
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
                   child: Text(
-                    'My Profile',
+                    'My Profile ',
                     style: TextStyle(
-                        color: whiteColor, fontFamily: semibold, fontSize: 25),
-                  ),
-                ),
-                Card(
-                  elevation: 4,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  child: ListTile(
-                    leading: CircleAvatar(
-                      radius: 30,
-                      backgroundImage: widget.customer.profileImageUrl != " "
-                          ? NetworkImage(widget.customer.profileImageUrl)
-                          : null,
-                      child: widget.customer.profileImageUrl == " "
-                          ? Icon(Icons.person)
-                          : null,
+                      color: whiteColor,
+                      fontFamily: 'Roboto',
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
                     ),
-                    title: Text(
-                      widget.customer.name,
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
+                  ),
+                ),
+              ),
+            ),
+      ),
+        body: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+            decoration: const BoxDecoration(
+              color: whiteColor,
+            ),
+            child: SafeArea(
+              child: ListView(
+                children: [
+                  
+                  Card(
+                    elevation: 4,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
                     ),
-                    subtitle: Text(
-                      widget.customer.email,
-                      style: TextStyle(fontSize: 14),
-                    ),
-                    // trailing: IconButton(
-                    //   icon: Icon(Icons.edit),
-                    //   onPressed: () {
-                    //     // EditProfileScreen(tailor: widget.tailor);
-                    //   },
-                    // ),
-                    contentPadding: EdgeInsets.symmetric(vertical: 4),
-                  ),
-                ),
-                SizedBox(height: 10), // Reduced the space
-                // New "View My History" section
-                Card(
-                  elevation: 4,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      ListTile(
-                        tileColor: Colors.red[200],
-                        title: Text(
-                          'View My History',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                            color: Colors.white,
-                          ),
+                    child: ListTile(
+                      leading: CircleAvatar(
+                        radius: 30,
+                        backgroundImage: widget.customer.profileImageUrl != " "
+                            ? NetworkImage(widget.customer.profileImageUrl)
+                            : null,
+                        child: widget.customer.profileImageUrl == " "
+                            ? Icon(Icons.person)
+                            : null,
+                      ),
+                      title: Text(
+                        widget.customer.name,
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
-                      // Sample content for history can be added here
-                      ListTile(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      customerOrderHistory()));
-                        },
-                        title: Text(
-                          'History Content',
-                          style: TextStyle(fontSize: 14),
-                        ),
+                      subtitle: Text(
+                        widget.customer.email,
+                        style: TextStyle(fontSize: 14),
                       ),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 20),
-                Card(
-                  elevation: 4,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      ListTile(
-                        tileColor: Colors.red[200],
-                        title: Text(
-                          'Account',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                          ),
-                        ),
-                      ),
-                      // ListTile(
-                      //   title: Text(
-                      //     'CNIC',
-                      //     style: TextStyle(
-                      //       fontWeight: FontWeight.bold,
-                      //       fontSize: 14,
-                      //     ),
-                      //   ),
-                      //   subtitle: Text(
-                      //     widget.customer.cnic,
-                      //     style: TextStyle(
-                      //       fontSize: 12,
-                      //     ),
-                      //   ),
-                      // ),
-                      ListTile(
-                        title: Text(
-                          'Phone Number',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14,
-                          ),
-                        ),
-                        subtitle: Text(
-                          widget.customer.phone,
-                          style: TextStyle(
-                            fontSize: 12,
-                          ),
-                        ),
-                      ),
-                      // ListTile(
-                      //   title: Text(
-                      //     'Rating',
-                      //     style: TextStyle(
-                      //       fontWeight: FontWeight.bold,
-                      //       fontSize: 14,
-                      //     ),
-                      //   ),
-                      //   subtitle: Row(
-                      //     children: [
-                      //       RatingBar(
-                      //         rating: _rating,
-                      //         onRatingChanged: (rating) {
-                      //           setState(() {
-                      //             _rating = rating;
-                      //           });
-                      //         },
-                      //       ),
-                      //       SizedBox(width: 10),
-                      //       Text(
-                      //         '$_rating',
-                      //         style: TextStyle(
-                      //           fontWeight: FontWeight.bold,
-                      //           fontSize: 12,
-                      //         ),
-                      //       ),
-                      //     ],
-                      //   ),
-                      // ),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 20),
-                Card(
-                  elevation: 4,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      ListTile(
-                        tileColor: Colors.red[200],
-                        title: Text(
-                          'Settings',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                          ),
-                        ),
-                      ),
-                      ListTile(
-                        leading: Icon(Icons.chat),
-                        title: Text(
-                          'Chat',
-                          style: TextStyle(fontSize: 14),
-                        ),
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => chatHome()));
-
-                          // Add functionality for Chat
-                        },
-                      ),
-                      // ListTile(
-                      //   leading: Icon(Icons.notifications),
-                      //   title: Text(
-                      //     'Notifications',
-                      //     style: TextStyle(fontSize: 14),
-                      //   ),
-                      //   onTap: () {
-                      //     // Add functionality for Notifications
+                      // trailing: IconButton(
+                      //   icon: Icon(Icons.edit),
+                      //   onPressed: () {
+                      //     // EditProfileScreen(tailor: widget.tailor);
                       //   },
                       // ),
-                      ListTile(
-                        leading: Icon(Icons.exit_to_app),
-                        title: Text(
-                          'Sign Out',
-                          style: TextStyle(fontSize: 14),
-                        ),
-                        onTap: () {
-                          controller.signoutmethod(context, "Customer");
-                        },
-                      ),
-                    ],
+                      contentPadding: EdgeInsets.symmetric(vertical: 4),
+                    ),
                   ),
-                ),
-              ],
+                  SizedBox(height: 10), // Reduced the space
+                  // New "View My History" section
+                  Card(
+                    elevation: 4,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const ListTile(
+                          tileColor: redColor,
+                          title: Text(
+                            'View My History',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                        // Sample content for history can be added here
+                        ListTile(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const customerOrderHistory()));
+                          },
+                          title: const Text(
+                            'History Content',
+                            style: TextStyle(fontSize: 14),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  Card(
+                    elevation: 4,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const ListTile(
+                          tileColor: redColor,
+                          title: Text(
+                            'Account',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                              color: whiteColor
+                            ),
+                          ),
+                        ),
+                        // ListTile(
+                        //   title: Text(
+                        //     'CNIC',
+                        //     style: TextStyle(
+                        //       fontWeight: FontWeight.bold,
+                        //       fontSize: 14,
+                        //     ),
+                        //   ),
+                        //   subtitle: Text(
+                        //     widget.customer.cnic,
+                        //     style: TextStyle(
+                        //       fontSize: 12,
+                        //     ),
+                        //   ),
+                        // ),
+                        ListTile(
+                          title: const Text(
+                            'Phone Number',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14,
+                            ),
+                          ),
+                          subtitle: Text(
+                            widget.customer.phone,
+                            style: const TextStyle(
+                              fontSize: 12,
+                            ),
+                          ),
+                        ),
+                        // ListTile(
+                        //   title: Text(
+                        //     'Rating',
+                        //     style: TextStyle(
+                        //       fontWeight: FontWeight.bold,
+                        //       fontSize: 14,
+                        //     ),
+                        //   ),
+                        //   subtitle: Row(
+                        //     children: [
+                        //       RatingBar(
+                        //         rating: _rating,
+                        //         onRatingChanged: (rating) {
+                        //           setState(() {
+                        //             _rating = rating;
+                        //           });
+                        //         },
+                        //       ),
+                        //       SizedBox(width: 10),
+                        //       Text(
+                        //         '$_rating',
+                        //         style: TextStyle(
+                        //           fontWeight: FontWeight.bold,
+                        //           fontSize: 12,
+                        //         ),
+                        //       ),
+                        //     ],
+                        //   ),
+                        // ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  Card(
+                    elevation: 4,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const ListTile(
+                          tileColor: redColor,
+                          title: Text(
+                            'Settings',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                              color: whiteColor
+                            ),
+                          ),
+                        ),
+                        ListTile(
+                          leading: Icon(Icons.chat),
+                          title: const Text(
+                            'Chat',
+                            style: TextStyle(fontSize: 14),
+                          ),
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => chatHome()));
+          
+                            // Add functionality for Chat
+                          },
+                        ),
+                        // ListTile(
+                        //   leading: Icon(Icons.notifications),
+                        //   title: Text(
+                        //     'Notifications',
+                        //     style: TextStyle(fontSize: 14),
+                        //   ),
+                        //   onTap: () {
+                        //     // Add functionality for Notifications
+                        //   },
+                        // ),
+                        ListTile(
+                          leading: const Icon(Icons.exit_to_app),
+                          title: const Text(
+                            'Sign Out',
+                            style: TextStyle(fontSize: 14),
+                          ),
+                          onTap: () {
+                            controller.signoutmethod(context, "Customer");
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

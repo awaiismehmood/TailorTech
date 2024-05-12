@@ -151,31 +151,53 @@ class _TailorInfoScreenState extends State<TailorInfoScreen> {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: whiteColor,
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Center(
+@override
+Widget build(BuildContext context) {
+  return SafeArea(
+    child: Scaffold(
+      appBar: AppBar(
+        backgroundColor: redColor, // Red app bar background color
+        elevation: 10, // Add elevation for drop shadow
+        title: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Colors.white70, // You can change the border color here
+                    width: 2.0, // You can adjust the border width here
+                  ),
+                  borderRadius: const BorderRadius.all(Radius.circular(10)),
+                ),
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
                   child: Text(
-                    "Tell Us about Your Order",
+                    'Tell us about your order',
                     style: TextStyle(
-                      fontSize: 30,
-                      fontFamily: bold,
+                      color: whiteColor,
+                      fontFamily: 'Roboto',
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
                     ),
-                    textAlign: TextAlign.center,
                   ),
                 ),
-                SizedBox(
-                  height: 20,
-                ),
-                Card(
+              ),
+            ),
+      ),
+      backgroundColor: whiteColor,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              
+              const SizedBox(
+                height: 20,
+              ),
+              Container(
+                color: whiteColor,
+                child: Card(
+                  
                   elevation: 4.0,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10.0),
@@ -185,14 +207,14 @@ class _TailorInfoScreenState extends State<TailorInfoScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                           'Select Tailor Type:',
                           style: TextStyle(
                               fontSize: 18.0,
                               fontWeight: FontWeight.bold,
                               color: Colors.black87),
                         ),
-                        SizedBox(height: 8.0),
+                        const SizedBox(height: 8.0),
                         Row(
                           children: [
                             _buildTailorTypeButton('Male'),
@@ -204,8 +226,11 @@ class _TailorInfoScreenState extends State<TailorInfoScreen> {
                     ),
                   ),
                 ),
-                SizedBox(height: 16.0),
-                Card(
+              ),
+              const SizedBox(height: 16.0),
+              Container(
+                color: whiteColor,
+                child: Card(
                   elevation: 4.0,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10.0),
@@ -215,7 +240,7 @@ class _TailorInfoScreenState extends State<TailorInfoScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                           'Price:',
                           style: TextStyle(
                             fontSize: 18.0,
@@ -223,21 +248,24 @@ class _TailorInfoScreenState extends State<TailorInfoScreen> {
                             color: Colors.black87,
                           ),
                         ),
-                        SizedBox(height: 8.0),
+                        const SizedBox(height: 8.0),
                         TextField(
                           controller: priceController,
                           keyboardType: TextInputType.number,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             border: OutlineInputBorder(),
-                            hintText: 'Enter price',
+                            hintText: 'PKR 2000',
                           ),
                         ),
                       ],
                     ),
                   ),
                 ),
-                SizedBox(height: 16.0),
-                Card(
+              ),
+              SizedBox(height: 16.0),
+              Container(
+                color: whiteColor,
+                child: Card(
                   elevation: 4.0,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10.0),
@@ -247,7 +275,7 @@ class _TailorInfoScreenState extends State<TailorInfoScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                           'Clothes Section (Up to 4 Images):',
                           style: TextStyle(
                               fontSize: 18.0,
@@ -260,24 +288,27 @@ class _TailorInfoScreenState extends State<TailorInfoScreen> {
                         ElevatedButton(
                           onPressed: () =>
                               _pickImage(ImageSource.gallery, clothesImages, 4),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.red,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.0)),
-                          ),
-                          child: Text(
-                            'Add Clothes Image',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
-                          ),
+                     style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(24),
+                          ), 
+                          backgroundColor: whiteColor,
+                          side: BorderSide(color: redColor),
+                        ),
+                        child: const Text(
+                          'Add clothes Photo',
+                          style: TextStyle(color: redColor),
+                        ),
                         ),
                       ],
                     ),
                   ),
                 ),
-                SizedBox(height: 16.0),
-                Card(
+              ),
+              SizedBox(height: 16.0),
+              Container(
+                color: whiteColor,
+                child: Card(
                   elevation: 4.0,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10.0),
@@ -287,7 +318,7 @@ class _TailorInfoScreenState extends State<TailorInfoScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                           'Expected Design Section (Up to 2 Images):',
                           style: TextStyle(
                               fontSize: 18.0,
@@ -301,23 +332,26 @@ class _TailorInfoScreenState extends State<TailorInfoScreen> {
                           onPressed: () =>
                               _pickImage(ImageSource.gallery, designImages, 2),
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.red,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.0)),
-                          ),
-                          child: Text(
-                            'Add Design Image',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(24),
+                                ), 
+                                backgroundColor: whiteColor,
+                                side: BorderSide(color: redColor),
+                              ),
+                              child: const Text(
+                                'Add Design Photo',
+                                style: TextStyle(color: redColor),
+                              ),
+                              ),
                       ],
                     ),
                   ),
                 ),
-                SizedBox(height: 16.0),
-                Card(
+              ),
+              SizedBox(height: 16.0),
+              Container(
+                color: whiteColor,
+                child: Card(
                   elevation: 4.0,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10.0),
@@ -327,7 +361,7 @@ class _TailorInfoScreenState extends State<TailorInfoScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                           'Details about the Design:',
                           style: TextStyle(
                               fontSize: 18.0,
@@ -338,7 +372,7 @@ class _TailorInfoScreenState extends State<TailorInfoScreen> {
                         TextField(
                           controller: detailsController,
                           maxLines: 4,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             hintText: 'Enter details here...',
                           ),
@@ -347,53 +381,64 @@ class _TailorInfoScreenState extends State<TailorInfoScreen> {
                     ),
                   ),
                 ),
-                SizedBox(height: 16.0),
-                ElevatedButton(
-                  onPressed: () {
-                    // Handle place order logic here
-                    _placeOrder();
-                    print('Placing Order...');
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.red,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0)),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Text(
-                      'Place Order',
-                      style: TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 16.0),
+              Center(
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.8, // 80% of screen width
+                  child: ElevatedButton(
+                    onPressed: () {
+                      // Handle place order logic here
+                      _placeOrder();
+                      print('Placing Order...');
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.red,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(24.0),
+                      ),
+                    ),
+                    child: const Padding(
+                      padding: EdgeInsets.all(16.0),
+                      child: Text(
+                        'Place Order',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ),
                   ),
                 ),
-                SizedBox(height: 16.0),
-              ],
-            ),
+              ),
+              SizedBox(height: 16.0),
+            ],
           ),
         ),
       ),
-    );
-  }
+    ),
+  );
+}
 
-  Widget _buildTailorTypeButton(String type) {
-    return ElevatedButton(
-      onPressed: () {
-        setState(() {
-          selectedTailorType = type;
-        });
-      },
-      style: ElevatedButton.styleFrom(
-        backgroundColor: selectedTailorType == type ? Colors.red : Colors.grey,
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-      ),
-      child: Text(
-        type,
-        style: TextStyle(
-            color: selectedTailorType == type ? Colors.white : Colors.black),
-      ),
-    );
-  }
+Widget _buildTailorTypeButton(String type) {
+  return ElevatedButton(
+    onPressed: () {
+      setState(() {
+        selectedTailorType = type;
+      });
+    },
+
+    style: ElevatedButton.styleFrom(
+      backgroundColor: selectedTailorType == type ? Colors.red : Colors.white,
+      side: const BorderSide(color: redColor),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+    ),
+    child: Text(
+      type,
+      
+      style: TextStyle(
+          color: selectedTailorType == type ? Colors.white : redColor),
+    ),
+  );
+}
 }

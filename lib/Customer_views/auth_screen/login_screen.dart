@@ -40,15 +40,24 @@ class _LoginScreenState extends State<LoginScreen> {
             Obx(
               () => Column(
                 children: [
-                  customTextField(
-                      email, emailHint, controller.emailController, false),
-                  customTextField(password, passwordHint,
-                      controller.passwordController, true),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: customTextField(
+                        email, emailHint, controller.emailController, false),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: customTextField(password, passwordHint,
+                        controller.passwordController, true),
+                  ),
                   Align(
                     alignment: Alignment.centerRight,
-                    child: TextButton(
-                      onPressed: () {},
-                      child: forgetPass.text.make(),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: TextButton(
+                        onPressed: () {},
+                        child: forgetPass.text.make(),
+                      ),
                     ),
                   ),
                   5.heightBox,
@@ -56,95 +65,85 @@ class _LoginScreenState extends State<LoginScreen> {
                       ? const CircularProgressIndicator(
                           valueColor: AlwaysStoppedAnimation(redColor),
                         )
-                      : ourButton(
-                              onPress: () async {
-                                controller.isloading(true);
-
-                                await controller
-                                    .loginMethod(context)
-                                    .then((value) async {
-                                  DocumentSnapshot? userSnapshot =
-                                      await FirebaseFirestore.instance
-                                          .collection(usersCollection)
-                                          .doc(currentUser!.uid)
-                                          .get();
-                                  final data = userSnapshot.data()
-                                      as Map<String, dynamic>;
-                                  final String uType = data['type'];
-                                  if (value != null) {
-                                    if (uType == widget.type) {
-                                      // ignore: use_build_context_synchronously
-                                      VxToast.show(context, msg: logedin);
-                                      Get.offAll(() => const Home());
+                      : Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ourButton(
+                                onPress: () async {
+                                  controller.isloading(true);
+                        
+                                  await controller
+                                      .loginMethod(context)
+                                      .then((value) async {
+                                    DocumentSnapshot? userSnapshot =
+                                        await FirebaseFirestore.instance
+                                            .collection(usersCollection)
+                                            .doc(currentUser!.uid)
+                                            .get();
+                                    final data = userSnapshot.data()
+                                        as Map<String, dynamic>;
+                                    final String uType = data['type'];
+                                    if (value != null) {
+                                      if (uType == widget.type) {
+                                        // ignore: use_build_context_synchronously
+                                        VxToast.show(context, msg: logedin);
+                                        Get.offAll(() => const Home());
+                                      } else {
+                                        log("in else");
+                                        // ignore: use_build_context_synchronously
+                                        VxToast.show(context, msg: "Sorry");
+                                      }
                                     } else {
-                                      log("in else");
-                                      // ignore: use_build_context_synchronously
-                                      VxToast.show(context, msg: "Sorry");
+                                      // If value is null, login failed
+                                      setState(() {
+                                        controller.isloading(
+                                            false); // Stop loading indicator
+                                      });
                                     }
-                                  } else {
-                                    // If value is null, login failed
+                                  }).catchError((error) {
+                                    // Handle error from loginMethod
                                     setState(() {
                                       controller.isloading(
                                           false); // Stop loading indicator
                                     });
-                                  }
-                                }).catchError((error) {
-                                  // Handle error from loginMethod
-                                  setState(() {
-                                    controller.isloading(
-                                        false); // Stop loading indicator
+                                    VxToast.show(context,
+                                        msg: "Invalid Credentials");
                                   });
-                                  VxToast.show(context,
-                                      msg: "Invalid Credentials");
-                                });
-                              },
-                              color: redColor,
-                              textcolor: whiteColor,
-                              tit: login)
-                          .box
-                          .width(context.screenWidth)
-                          .make(),
+                                },
+                                color: redColor,
+                                textcolor: whiteColor,
+                                tit: login)
+                            .box
+                            .width(context.screenWidth)
+                            .make(),
+                      ),
                   5.heightBox,
                   create.text.color(fontGrey).make(),
                   5.heightBox,
-                  ourButton(
-                          onPress: () {
-                            /*Get.to(() => const SignupScreen(
-                                  type: widget.type,
-                                ));*/
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    SignupScreen(type: widget.type),
-                              ),
-                            );
-                          },
-                          color: lightGolden,
-                          textcolor: redColor,
-                          tit: signup)
-                      .box
-                      .width(context.screenWidth)
-                      .make(),
-                  10.heightBox,
-                  loginWith.text.color(fontGrey).make(),
-                  5.heightBox,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: List.generate(
-                        3,
-                        (index) => Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: CircleAvatar(
-                                backgroundColor: lightGrey,
-                                radius: 15,
-                                child: Image.asset(
-                                  socialIconList[index],
-                                  width: 30,
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ourButton(
+                            onPress: () {
+                              /*Get.to(() => const SignupScreen(
+                                    type: widget.type,
+                                  ));*/
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      SignupScreen(type: widget.type),
                                 ),
-                              ),
-                            )),
-                  )
+                              );
+                            },
+                            color: lightGolden,
+                            textcolor: redColor,
+                            tit: signup)
+                        .box
+                        .width(context.screenWidth)
+                        .make(),
+                  ),
+                  10.heightBox,
+                  
+                  
                 ],
               )
                   .box

@@ -1,6 +1,7 @@
 import 'package:dashboard/Model_Classes/tailor_class.dart';
 import 'package:dashboard/Tailor_views/Profile/edit_profile.dart';
 import 'package:dashboard/Tailor_views/chat/chat_home.dart';
+import 'package:dashboard/consts/colors.dart';
 import 'package:dashboard/controllers/auth_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:dots_indicator/dots_indicator.dart';
@@ -36,249 +37,281 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
-          title: Text('My Profile'),
-          backgroundColor: Colors.red,
-          foregroundColor: Colors.white,
-          elevation: 0,
-        ),
-        body: Container(
-          decoration: BoxDecoration(
-            color: Colors.red,
-          ),
-          child: ListView(
-            children: [
-              Card(
-                elevation: 4,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                child: ListTile(
-                  leading: CircleAvatar(
-                    radius: 30,
-                    backgroundImage: widget.tailor.profile_url != " "
-                        ? NetworkImage(widget.tailor.profile_url)
-                        : null,
-                    child: widget.tailor.profile_url == " "
-                        ? Icon(Icons.person)
-                        : null,
+
+          title: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Colors.white70, // You can change the border color here
+                    width: 2.0, // You can adjust the border width here
                   ),
-                  title: Text(
-                    widget.tailor.name,
+                  borderRadius: const BorderRadius.all(Radius.circular(10)),
+                ),
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                  child: Text(
+                    'My-Profile',
                     style: TextStyle(
-                      fontSize: 18,
+                      color: whiteColor,
+                      fontFamily: 'Roboto',
+                      fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  subtitle: Text(
-                    widget.tailor.email,
-                    style: TextStyle(fontSize: 14),
+                ),
+              ),
+            ),
+          backgroundColor: redColor,
+          foregroundColor: whiteColor,
+          elevation: 0,
+          
+        ),
+
+
+        body: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+            decoration: const BoxDecoration(
+              color: Colors.white70,
+            ),
+            child: ListView(
+              children: [
+                Card(
+                  elevation: 4,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
                   ),
-                  trailing: IconButton(
-                    icon: Icon(Icons.edit),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => EditProfilePage()),
-                      );
-                    },
-                  ),
-                  contentPadding: EdgeInsets.symmetric(vertical: 4),
-                ),
-              ),
-              SizedBox(height: 10), // Reduced the space
-              Card(
-                elevation: 4,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    ListTile(
-                      tileColor: Colors.red[200],
-                      title: Text(
-                        'Catalog',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                          color: Colors.white,
-                        ),
+                  child: ListTile(
+                    leading: CircleAvatar(
+                      radius: 30,
+                      backgroundImage: widget.tailor.profile_url != " "
+                          ? NetworkImage(widget.tailor.profile_url)
+                          : null,
+                      child: widget.tailor.profile_url == " "
+                          ? const Icon(Icons.person)
+                          : null,
+                    ),
+                    title: Text(
+                      widget.tailor.name,
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                    ListTile(
-                      title: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(height: 10),
-                          Container(
-                            height: 200,
-                            width: double.infinity,
-                            child: PageView.builder(
-                              controller: _controller,
-                              itemCount: widget.tailor.images.length,
-                              scrollDirection: Axis.horizontal,
-                              physics: BouncingScrollPhysics(),
-                              itemBuilder: (context, index) {
-                                return Image.network(
-                                  widget.tailor.images[index],
-                                  fit: BoxFit.cover,
-                                );
-                              },
-                            ),
-                          ),
-                          SizedBox(height: 1),
-                          Center(
-                            child: DotsIndicator(
-                              dotsCount: widget.tailor.images.length,
-                              position: _currentPosition,
-                              decorator: DotsDecorator(
-                                color: Colors.grey,
-                                activeColor: Colors.blue,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+                    subtitle: Text(
+                      widget.tailor.email,
+                      style: TextStyle(fontSize: 14),
                     ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 20),
-              Card(
-                elevation: 4,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    ListTile(
-                      tileColor: Colors.red[200],
-                      title: Text(
-                        'Account',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ),
-                    ListTile(
-                      title: Text(
-                        'CNIC',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14,
-                        ),
-                      ),
-                      subtitle: Text(
-                        widget.tailor.cnic,
-                        style: TextStyle(
-                          fontSize: 12,
-                        ),
-                      ),
-                    ),
-                    ListTile(
-                      title: Text(
-                        'Phone Number',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14,
-                        ),
-                      ),
-                      subtitle: Text(
-                        widget.tailor.phone,
-                        style: TextStyle(
-                          fontSize: 12,
-                        ),
-                      ),
-                    ),
-                    ListTile(
-                      title: Text(
-                        'Rating',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14,
-                        ),
-                      ),
-                      subtitle: Row(
-                        children: [
-                          RatingBar(
-                            rating: widget.tailor.ratting,
-                            onRatingChanged: (double ratting) {},
-                          ),
-                          SizedBox(width: 10),
-                          Text(
-                            widget.tailor.ratting.toString(),
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 12,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 20),
-              Card(
-                elevation: 4,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    ListTile(
-                      tileColor: Colors.red[200],
-                      title: Text(
-                        'Settings',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ),
-                    ListTile(
-                      leading: Icon(Icons.chat),
-                      title: Text(
-                        'Chat',
-                        style: TextStyle(fontSize: 14),
-                      ),
-                      onTap: () {
+                    trailing: IconButton(
+                      icon: Icon(Icons.edit),
+                      onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => chatHomeT()),
+                          MaterialPageRoute(
+                              builder: (context) => EditProfilePage()),
                         );
-                        // Add functionality for Chat
                       },
                     ),
-                    // ListTile(
-                    //   leading: Icon(Icons.notifications),
-                    //   title: Text(
-                    //     'Notifications',
-                    //     style: TextStyle(fontSize: 14),
-                    //   ),
-                    //   onTap: () {
-                    //     // Add functionality for Notifications
-                    //   },
-                    // ),
-                    ListTile(
-                      leading: Icon(Icons.exit_to_app),
-                      title: Text(
-                        'Sign Out',
-                        style: TextStyle(fontSize: 14),
-                      ),
-                      onTap: () {
-                        controller.signoutmethod(context, "Tailor");
-                        // Add functionality for Sign Out
-                      },
-                    ),
-                  ],
+                    contentPadding: EdgeInsets.symmetric(vertical: 4),
+                  ),
                 ),
-              ),
-            ],
+                SizedBox(height: 10), // Reduced the space
+                Card(
+                  elevation: 4,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const ListTile(
+                        tileColor: redColor,
+                        title: Text(
+                          'Catalog',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                      ListTile(
+                        title: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(height: 10),
+                            Container(
+                              height: 200,
+                              width: double.infinity,
+                              child: PageView.builder(
+                                controller: _controller,
+                                itemCount: widget.tailor.images.length,
+                                scrollDirection: Axis.horizontal,
+                                physics: BouncingScrollPhysics(),
+                                itemBuilder: (context, index) {
+                                  return Image.network(
+                                    widget.tailor.images[index],
+                                    fit: BoxFit.cover,
+                                  );
+                                },
+                              ),
+                            ),
+                            SizedBox(height: 1),
+                            Center(
+                              child: DotsIndicator(
+                                dotsCount: widget.tailor.images.length,
+                                position: _currentPosition,
+                                decorator: const DotsDecorator(
+                                  color: Colors.grey,
+                                  activeColor: Colors.blue,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 20),
+                Card(
+                  elevation: 4,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const ListTile(
+                        tileColor: redColor,
+                        title: Text(
+                          'Account',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                      ListTile(
+                        title: const Text(
+                          'CNIC',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14,
+                          ),
+                        ),
+                        subtitle: Text(
+                          widget.tailor.cnic,
+                          style: const TextStyle(
+                            fontSize: 12,
+                          ),
+                        ),
+                      ),
+                      ListTile(
+                        title: const Text(
+                          'Phone Number',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14,
+                          ),
+                        ),
+                        subtitle: Text(
+                          widget.tailor.phone,
+                          style: const TextStyle(
+                            fontSize: 12,
+                          ),
+                        ),
+                      ),
+                      ListTile(
+                        title: const Text(
+                          'Rating',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14,
+                          ),
+                        ),
+                        subtitle: Row(
+                          children: [
+                            RatingBar(
+                              rating: widget.tailor.ratting,
+                              onRatingChanged: (double ratting) {},
+                            ),
+                            SizedBox(width: 10),
+                            Text(
+                              widget.tailor.ratting.toString(),
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 12,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 20),
+                Card(
+                  elevation: 4,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const ListTile(
+                        tileColor: redColor,
+                        title: Text(
+                          'Settings',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            color: whiteColor,
+                          ),
+                        ),
+                      ),
+                      ListTile(
+                        leading: const Icon(Icons.chat),
+                        title: const Text(
+                          'Chat',
+                          style: TextStyle(fontSize: 14),
+                        ),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => chatHomeT()),
+                          );
+                          // Add functionality for Chat
+                        },
+                      ),
+                      // ListTile(
+                      //   leading: Icon(Icons.notifications),
+                      //   title: Text(
+                      //     'Notifications',
+                      //     style: TextStyle(fontSize: 14),
+                      //   ),
+                      //   onTap: () {
+                      //     // Add functionality for Notifications
+                      //   },
+                      // ),
+                      ListTile(
+                        leading: Icon(Icons.exit_to_app),
+                        title: const Text(
+                          'Sign Out',
+                          style: TextStyle(fontSize: 14),
+                        ),
+                        onTap: () {
+                          controller.signoutmethod(context, "Tailor");
+                          // Add functionality for Sign Out
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

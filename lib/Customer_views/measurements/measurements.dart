@@ -224,6 +224,7 @@ class _MeasurementScreenState extends State<MeasurementScreen> {
 
           // Navigate to the next screen
           Navigator.push(
+            // ignore: use_build_context_synchronously
             context,
             MaterialPageRoute(
                 builder: (context) => measurementsShow(
@@ -234,8 +235,10 @@ class _MeasurementScreenState extends State<MeasurementScreen> {
           // Handle errors
           print('Error saving measurement data to Firebase: $e');
           // Dismiss the progress dialog
+          // ignore: use_build_context_synchronously
           Navigator.of(context).pop();
           // Show error toast
+          // ignore: use_build_context_synchronously
           VxToast.show(context,
               msg: 'Error saving measurement data to Firebase: $e',
               showTime: 5000);
@@ -256,8 +259,10 @@ class _MeasurementScreenState extends State<MeasurementScreen> {
       // Handle errors
       print('Error sending measurement request: $e');
       // Dismiss the progress dialog
+      // ignore: use_build_context_synchronously
       Navigator.of(context).pop();
       // Show error toast
+      // ignore: use_build_context_synchronously
       VxToast.show(context,
           msg: 'Error sending measurement request: $e', showTime: 5000);
     }
@@ -266,23 +271,44 @@ class _MeasurementScreenState extends State<MeasurementScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: redColor,
+      appBar: AppBar(
+        backgroundColor: redColor, // Red app bar background color
+        elevation: 10, // Add elevation for drop shadow
+        title: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Colors.white70, // You can change the border color here
+                    width: 2.0, // You can adjust the border width here
+                  ),
+                  borderRadius: const BorderRadius.all(Radius.circular(10)),
+                ),
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                  child: Text(
+                    'Measurement Screen',
+                    style: TextStyle(
+                      color: whiteColor,
+                      fontFamily: 'Roboto',
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+      ),
+      backgroundColor: whiteColor, // White page background with 70% opacity
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  'Measurement Screen',
-                  style: TextStyle(
-                      color: whiteColor, fontSize: 30, fontFamily: bold),
-                ),
-              ),
-              Center(
+            children:[
+
+              const Center(
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 20),
+                  padding: EdgeInsets.only(top: 10),
                   child: Text(
                     "Sample Image",
                     style: TextStyle(
@@ -295,7 +321,7 @@ class _MeasurementScreenState extends State<MeasurementScreen> {
                   _showImageDialog(true);
                 },
                 child: Container(
-                  margin: EdgeInsets.all(20),
+                  margin: const EdgeInsets.all(20),
                   child: Card(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20),
@@ -331,7 +357,7 @@ class _MeasurementScreenState extends State<MeasurementScreen> {
                                 _imageFile!,
                                 fit: BoxFit.cover,
                               )
-                            : Center(
+                            : const Center(
                                 child: Text(
                                   'Tap the buttons below \n      to Select Image',
                                   style: TextStyle(
@@ -348,61 +374,67 @@ class _MeasurementScreenState extends State<MeasurementScreen> {
               SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
+                children: [
                   ElevatedButton(
                     onPressed: () {
                       _getImage(ImageSource.gallery);
                     },
                     style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      backgroundColor: whiteColor,
-                    ),
-                    child: Text(
-                      'Upload Image',
-                      style: TextStyle(color: blackcolor),
-                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(24),
+                    ),                
+                    backgroundColor: redColor,
+                    side: BorderSide(color: Colors.grey,width: 2,),
+                  ),
+                  child: const Text(
+                    'Upload Photo',
+                    style: TextStyle(color: whiteColor),
+                  ),
                   ),
                   ElevatedButton(
                     onPressed: () {
                       _getImage(ImageSource.camera);
                     },
-                    style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
+                   style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(24),
+                        ), 
+                        backgroundColor: whiteColor,
+                        side: BorderSide(color: redColor),
                       ),
-                      backgroundColor: whiteColor,
+                      child: const Text(
+                        'Take Photo',
+                        style: TextStyle(color: redColor),
+                      ),
                     ),
-                    child: Text(
-                      'Take Picture',
-                      style: TextStyle(color: blackcolor),
+              ]),
+              
+              
+              const SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.all(24.0),
+                child: ElevatedButton(
+                  onPressed: () {
+                    if (_imageFile != null) {
+                      _sendMeasurementRequest(context, _imageFile!.path);
+                    } else {
+                      print('No image selected.');
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(24),
                     ),
+                    backgroundColor: redColor,
+                    side: const BorderSide(color: Colors.grey,width: 2,),
+                    
                   ),
-                ],
-              ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  if (_imageFile != null) {
-                    _sendMeasurementRequest(context, _imageFile!.path);
-                  } else {
-                    print('No image selected.');
-                  }
-                },
-                style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  backgroundColor: Colors.white,
-                  side: BorderSide(color: Colors.red),
-                ),
-                child: Text(
-                  'Measure',
-                  style: TextStyle(color: Colors.red),
+                  child: const Text(
+                    'Measure',
+                    style: TextStyle(color: whiteColor),
                 ),
               ),
-            ],
+              )],
           ),
         ),
       ),

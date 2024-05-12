@@ -8,9 +8,11 @@ import 'package:dashboard/Tailor_views/order_confirmation/Orders.dart';
 import 'package:dashboard/Tailor_views/order_list/order_history.dart';
 import 'package:dashboard/consts/consts.dart';
 import 'package:dashboard/widgets_common/exercise_tile.dart';
-import 'package:dashboard/widgets_common/emotion_face.dart';
-import 'package:flutter/material.dart';
 
+import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
+
+// ignore: camel_case_types
 class HomePage_Tailor extends StatefulWidget {
   final Tailor tailor;
   const HomePage_Tailor({super.key, required this.tailor});
@@ -57,8 +59,17 @@ class _HomePageTailorState extends State<HomePage_Tailor> {
       });
     }
     return Scaffold(
-      backgroundColor: redColor,
-      body: SafeArea(
+  // Set the background color to transparent
+  backgroundColor: Colors.transparent,
+  body: Stack(
+    children: [
+     Positioned.fill(
+        child: Image.asset(
+          'assets/images/bgo.png', // Replace with your asset image path
+          fit: BoxFit.cover,
+        ),
+      ),
+      SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(top: 20),
           child: Column(
@@ -67,7 +78,7 @@ class _HomePageTailorState extends State<HomePage_Tailor> {
                 padding: const EdgeInsets.symmetric(horizontal: 25.0),
                 child: Column(
                   children: [
-                    //greeting row
+                    // Greeting row
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -76,7 +87,7 @@ class _HomePageTailorState extends State<HomePage_Tailor> {
                           children: [
                             Text(
                               "Hi ${widget.tailor.name}",
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 24,
                                 fontWeight: FontWeight.bold,
@@ -87,130 +98,24 @@ class _HomePageTailorState extends State<HomePage_Tailor> {
                             ),
                             Text(
                               formattedDate,
-                              style: TextStyle(color: Colors.white),
+                              style: const TextStyle(color: Colors.white),
                             )
                           ],
                         ),
-                        Container(
-                          decoration: BoxDecoration(
-                              color: redColor,
-                              borderRadius: BorderRadius.circular(12)),
-                          padding: const EdgeInsets.all(12),
-                          child: const Icon(
-                            Icons.notifications,
-                            color: Colors.white,
-                          ),
-                        ),
                       ],
                     ),
-
-                    // search bar
-
                     const SizedBox(
                       height: 25,
                     ),
                     Container(
-                      decoration: BoxDecoration(
-                          color: darkFontGrey,
-                          borderRadius: BorderRadius.circular(12)),
-                      padding: EdgeInsets.all(12),
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.search,
-                            color: Colors.white,
-                          ),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          Text(
-                            "Search",
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ],
+                      height: 250, // Adjust the height as needed
+                      width: 300, // Adjust the width as needed
+                      child: Lottie.network(
+                        "https://lottie.host/fd284540-408b-4dca-9b6b-789aab683b3f/ZzPOpxSu1X.json",
+                        fit: BoxFit.contain,
                       ),
                     ),
-                    SizedBox(
-                      height: 25,
-                    ),
-
-                    // how do you feel
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "How do you feel",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Icon(
-                          Icons.more_horiz,
-                          color: Colors.white,
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 25,
-                    ),
-
-                    // 4 different
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        //bad
-                        Column(
-                          children: [
-                            EmotionFace(emotionFace: "😃"),
-                            SizedBox(
-                              height: 8,
-                            ),
-                            Text(
-                              "Happy",
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ],
-                        ),
-                        Column(
-                          children: [
-                            EmotionFace(emotionFace: "😞"),
-                            SizedBox(
-                              height: 8,
-                            ),
-                            Text(
-                              "Sad",
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ],
-                        ),
-                        Column(
-                          children: [
-                            EmotionFace(emotionFace: "🙃"),
-                            SizedBox(
-                              height: 8,
-                            ),
-                            Text(
-                              "Confused",
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ],
-                        ),
-                        Column(
-                          children: [
-                            EmotionFace(emotionFace: "😇"),
-                            SizedBox(
-                              height: 8,
-                            ),
-                            Text(
-                              "blessed",
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
+                    const SizedBox(height: 20),
                   ],
                 ),
               ),
@@ -220,22 +125,24 @@ class _HomePageTailorState extends State<HomePage_Tailor> {
               Expanded(
                 child: ClipRRect(
                   borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(20),
-                      topRight: Radius.circular(20)),
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20),
+                  ),
                   child: Container(
-                    padding: EdgeInsets.all(25),
-                    color: Colors.grey[200],
+                    padding: const EdgeInsets.all(25),
+                    color: Colors.grey[200], // Adjust opacity as needed
                     child: Center(
                       child: Column(
                         children: [
-                          //Exercises
                           const Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
                                 "Menu",
                                 style: TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 20),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20,
+                                ),
                               ),
                               Icon(Icons.more_horiz),
                             ],
@@ -243,19 +150,19 @@ class _HomePageTailorState extends State<HomePage_Tailor> {
                           const SizedBox(
                             height: 20,
                           ),
-                          //list view of exercises
                           Expanded(
                             child: ListView(
                               children: [
                                 ExerciseTile(
                                   onpress: () {
                                     Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                OrderHistory()));
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => OrderHistory(),
+                                      ),
+                                    );
                                   },
-                                  icon: Icons.miscellaneous_services,
+                                  icon: Icons.list_alt,
                                   exerciseName: "Order List",
                                   numberOfExercises: 10,
                                   color: Colors.orange,
@@ -263,12 +170,13 @@ class _HomePageTailorState extends State<HomePage_Tailor> {
                                 ExerciseTile(
                                   onpress: () {
                                     Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                OrderAcceptScreen()));
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => OrderAcceptScreen(),
+                                      ),
+                                    );
                                   },
-                                  icon: Icons.more,
+                                  icon: Icons.check_circle,
                                   exerciseName: "Order Confirmation",
                                   numberOfExercises: 10,
                                   color: Colors.red,
@@ -286,6 +194,9 @@ class _HomePageTailorState extends State<HomePage_Tailor> {
           ),
         ),
       ),
-    );
+    ],
+  ),
+);
+
   }
 }
