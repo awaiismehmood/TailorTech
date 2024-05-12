@@ -15,10 +15,11 @@ class chatHomeT extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: whiteColor,
         appBar: AppBar(
-          title: Text("Home"),
-          backgroundColor: Colors.white,
-          foregroundColor: Colors.grey,
+          title: Text("Chat Home"),
+          backgroundColor: redColor,
+          foregroundColor: whiteColor,
           elevation: 0,
         ),
         body: _buildUserList(),

@@ -1,6 +1,7 @@
 //icons
 const icAdd = "assets/icons/add.png";
-const T_logo = "assets/icons/logo.jpg";
+// ignore: constant_identifier_names
+const T_logo = "assets/iconWhite.jpeg";
 const icAppLogo = "assets/icons/app_logo.png";
 const icAppleLogo = "assets/icons/apple_logo.png";
 const icArrow = "assets/icons/arrow.png";

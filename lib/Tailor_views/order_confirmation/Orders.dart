@@ -24,9 +24,63 @@ class _OrderAcceptScreenState extends State<OrderAcceptScreen> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
-          title: const Center(child: Text('Orders')),
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back), // Add the back arrow icon
+            onPressed: () {
+              Navigator.of(context).pop(); // Handle the back button press
+            },
+          ),
+          title: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: Colors.white70, // You can change the border color here
+                  width: 2.0, // You can adjust the border width here
+                ),
+                borderRadius: const BorderRadius.all(Radius.circular(10)),
+              ),
+              child: const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                child: Text(
+                  'Orders',
+                  style: TextStyle(
+                    color: whiteColor,
+                    fontFamily: 'Roboto',
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+          ),
+
+          backgroundColor:
+              Colors.red, // Set the background color of the app bar
+          elevation: 10, // Adjust the elevation to add drop shadow
+          shadowColor:
+              Colors.grey.withOpacity(0.5), // Set the color of the drop shadow
         ),
-        body: OrderList(),
+        body: Stack(
+          children: [
+            // Background image
+            Center(
+              child: Opacity(
+                opacity: 0.6, // Adjust the opacity level as needed
+                child: SizedBox(
+                  width: 300, // Set the width of the image
+                  height: 300, // Set the height of the image
+                  child: Image.asset(
+                    'assets/images/order_vector.jpg', // Path to your background image asset
+                    fit: BoxFit.contain,
+                  ),
+                ),
+              ),
+            ),
+            // Order list
+            OrderList(),
+          ],
+        ),
       ),
     );
   }
@@ -40,69 +94,62 @@ class OrderList extends StatefulWidget {
 }
 
 class _OrderListState extends State<OrderList> {
-  // final OrderController orderController = Get.find<OrderController>();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: StreamBuilder<QuerySnapshot>(
-          stream: FirebaseFirestore.instance
-              .collection('orders')
-              .where('expectedTailorId', isEqualTo: currentUser?.uid)
-              .snapshots(),
-          builder: (context, snapshot) {
-            if (!snapshot.hasData) {
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-            // Extract orders from the snapshot
-            List<Orderr> orders = snapshot.data!.docs
-                .map((doc) {
-                  if (doc.data() != null) {
-                    return Orderr.fromDocument(doc);
-                  } else {
-                    return null;
-                  }
-                })
-                .whereType<Orderr>()
-                .toList();
-            log("Cleared till now 1");
-            return ListView.builder(
-              itemCount: orders.length,
-              itemBuilder: (context, index) {
-                return FutureBuilder<Customer>(
-                    future: getCustomerData(orders[index].customerId),
-                    builder: (context, customerSnapshot) {
-                      if (customerSnapshot.connectionState ==
-                          ConnectionState.waiting) {
-                        return CircularProgressIndicator();
-                      }
-                      if (customerSnapshot.hasError) {
-                        return Text('Error: ${customerSnapshot.error}');
-                      }
-                      Customer customer = customerSnapshot.data!;
-                      log("Cleared till now");
+    return StreamBuilder<QuerySnapshot>(
+      stream: FirebaseFirestore.instance
+          .collection('orders')
+          .where('expectedTailorId', isEqualTo: currentUser?.uid)
+          .snapshots(),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+        // Extract orders from the snapshot
+        List<Orderr> orders = snapshot.data!.docs
+            .map((doc) => Orderr.fromDocument(doc))
+            .where((order) => order.tailorId == currentUser?.uid)
+            .toList();
+        log("Cleared till now 1");
+        return ListView.builder(
+          itemCount: orders.length,
+          itemBuilder: (context, index) {
+            return FutureBuilder<Customer>(
+              future: getCustomerData(orders[index].customerId),
+              builder: (context, customerSnapshot) {
+                if (customerSnapshot.connectionState ==
+                    ConnectionState.waiting) {
+                  return CircularProgressIndicator();
+                }
+                if (customerSnapshot.hasError) {
+                  return Text('Error: ${customerSnapshot.error}');
+                }
+                Customer customer = customerSnapshot.data!;
+                log("Cleared till now");
 
-                      return OrderCard(
-                        order: orders[index],
-                        customer: customer,
-                        onRemoveClicked: () {
-                          // Remove the clicked card from the list
-                          setState(() {
-                            orders.removeAt(index);
-                          });
-                        },
-                        acceptOrder: () {
-                          acceptOrder(orders[index].expId, orders[index]);
-                        },
-                        deleteOrder: () {
-                          deleteOrder(orders[index]);
-                        },
-                      );
+                return OrderCard(
+                  order: orders[index],
+                  customer: customer,
+                  onRemoveClicked: () {
+                    // Remove the clicked card from the list
+                    setState(() {
+                      orders.removeAt(index);
                     });
+                  },
+                  acceptOrder: () {
+                    acceptOrder(orders[index].expId, orders[index]);
+                  },
+                  deleteOrder: () {
+                    deleteOrder(orders[index]);
+                  },
+                );
               },
             );
-          }),
+          },
+        );
+      },
     );
   }
 

@@ -74,167 +74,197 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: whiteColor,
-      appBar: AppBar(
-        backgroundColor: redColor,
-        title: const Text('Edit Profile'),
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(
-              height: 20,
-            ),
-            GestureDetector(
-              onTap: _selectProfileImage,
-              child: Center(
-                child: Stack(
-                  children: [
-                    Container(
-                      width: 120,
-                      height: 120,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.grey[200],
-                        border: Border.all(color: Colors.transparent),
-                      ),
-                      child: _selectedProfileImage != null
-                          ? CircleAvatar(
-                              radius: 56,
-                              backgroundImage:
-                                  FileImage(_selectedProfileImage!),
-                            )
-                          : Icon(
-                              Icons.person,
-                              size: 80,
-                              color: Colors.grey[400],
-                            ),
-                    ),
-                    Positioned(
-                      bottom: 0,
-                      right: 0,
-                      child: Container(
-                        width: 40,
-                        height: 40,
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: redColor,
-                        ),
-                        child: const Icon(
-                          Icons.add,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ],
+    return Padding(
+      padding: const EdgeInsets.all(0.0),
+      child: Scaffold(
+        backgroundColor: Colors.white70,
+        appBar: AppBar(
+          backgroundColor: redColor,
+          title: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: Colors.white70, // You can change the border color here
+                  width: 2.0, // You can adjust the border width here
+                ),
+                borderRadius: const BorderRadius.all(Radius.circular(10)),
+              ),
+              child: const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                child: Text(
+                  'Edit Profile',
+                  style: TextStyle(
+                    color: whiteColor,
+                    fontFamily: 'Roboto',
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ),
-            const SizedBox(height: 20),
-            TextFormField(
-              controller: _nameController,
-              decoration: InputDecoration(labelText: 'Name'),
-            ),
-            const SizedBox(height: 20),
-            TextFormField(
-              controller: _detailsController,
-              decoration: InputDecoration(labelText: 'Details'),
-            ),
-            const SizedBox(height: 20),
-            TextFormField(
-              controller: _minPriceController,
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(labelText: 'Min Price'),
-            ),
-            const SizedBox(height: 20),
-            TextFormField(
-              controller: _maxPriceController,
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(labelText: 'Max Price'),
-            ),
-            const SizedBox(height: 20),
-            DropdownButtonFormField<String>(
-              value: _selectedTailorType,
-              items: ['Male Tailor', 'Female Tailor']
-                  .map((type) => DropdownMenuItem(
-                        child: Text(type),
-                        value: type,
-                      ))
-                  .toList(),
-              onChanged: (value) {
-                setState(() {
-                  _selectedTailorType = value!;
-                });
-              },
-              decoration: const InputDecoration(labelText: 'Tailor Type'),
-            ),
-            SizedBox(height: 20),
-            const Text(
-              'Upload Images of Pre-built Clothes:',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 10),
-            ElevatedButton(
-              onPressed: _selectImages,
-              child: Text('Select Images'),
-            ),
-            const SizedBox(height: 10),
-            _selectedImages.isEmpty
-                ? Text('No images selected')
-                : Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+          ),
+        ),
+        body: SingleChildScrollView(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(
+                height: 20,
+              ),
+              GestureDetector(
+                onTap: _selectProfileImage,
+                child: Center(
+                  child: Stack(
                     children: [
-                      const Text('Selected Images:'),
-                      const SizedBox(height: 10),
-                      Wrap(
-                        spacing: 8.0,
-                        runSpacing: 8.0,
-                        children: _selectedImages.map((image) {
-                          return SizedBox(
-                            height: 100,
-                            width: 100,
-                            child: Image.file(
-                              image,
-                              height: 100,
-                              width: 100,
-                              fit: BoxFit.cover,
-                            ),
-                          );
-                        }).toList(),
+                      Container(
+                        width: 120,
+                        height: 120,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.grey[200],
+                          border: Border.all(color: Colors.transparent),
+                        ),
+                        child: _selectedProfileImage != null
+                            ? CircleAvatar(
+                                radius: 56,
+                                backgroundImage:
+                                    FileImage(_selectedProfileImage!),
+                              )
+                            : Icon(
+                                Icons.person,
+                                size: 80,
+                                color: Colors.grey[400],
+                              ),
+                      ),
+                      Positioned(
+                        bottom: 0,
+                        right: 0,
+                        child: Container(
+                          width: 40,
+                          height: 40,
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: redColor,
+                          ),
+                          child: const Icon(
+                            Icons.add,
+                            color: Colors.white,
+                          ),
+                        ),
                       ),
                     ],
                   ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                if (_nameController.text.isNotEmpty &&
-                    _detailsController.text.isNotEmpty &&
-                    _selectedTailorType.isNotEmpty &&
-                    _selectedImages.isNotEmpty &&
-                    _selectedImages.length <= 5) {
-                  // All mandatory fields are filled, proceed with saving the profile
-                  _saveProfile();
-                } else {
-                  // Show a snackbar indicating that all fields are mandatory
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text(
-                          'Please fill in all fields and select between 1 and 5 images.'),
-                      duration: Duration(seconds: 3),
-                    ),
-                  );
-                }
-              },
-              style: ElevatedButton.styleFrom(
-                foregroundColor: Colors.white,
-                backgroundColor: Colors.blue, // text color
+                ),
               ),
-              child: const Text('Save'),
-            ),
-          ],
+              const SizedBox(height: 20),
+              TextFormField(
+                controller: _nameController,
+                decoration: InputDecoration(labelText: 'Name'),
+              ),
+              const SizedBox(height: 20),
+              TextFormField(
+                controller: _detailsController,
+                decoration: InputDecoration(labelText: 'Details'),
+              ),
+              const SizedBox(height: 20),
+              TextFormField(
+                controller: _minPriceController,
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(labelText: 'Min Price'),
+              ),
+              const SizedBox(height: 20),
+              TextFormField(
+                controller: _maxPriceController,
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(labelText: 'Max Price'),
+              ),
+              const SizedBox(height: 20),
+              DropdownButtonFormField<String>(
+                value: _selectedTailorType,
+                items: ['Male Tailor', 'Female Tailor']
+                    .map((type) => DropdownMenuItem(
+                          child: Text(type),
+                          value: type,
+                        ))
+                    .toList(),
+                onChanged: (value) {
+                  setState(() {
+                    _selectedTailorType = value!;
+                  });
+                },
+                decoration: const InputDecoration(labelText: 'Tailor Type'),
+              ),
+              SizedBox(height: 20),
+              const Text(
+                'Upload Images of Pre-built Clothes:',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 10),
+              ElevatedButton(
+                onPressed: _selectImages,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: redColor, // Background color
+                  foregroundColor: Colors.white, // Text color
+                ),
+                child: const Text('Select Images'),
+              ),
+              const SizedBox(height: 10),
+              _selectedImages.isEmpty
+                  ? Text('No images selected')
+                  : Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text('Selected Images:'),
+                        const SizedBox(height: 10),
+                        Wrap(
+                          spacing: 8.0,
+                          runSpacing: 8.0,
+                          children: _selectedImages.map((image) {
+                            return SizedBox(
+                              height: 100,
+                              width: 100,
+                              child: Image.file(
+                                image,
+                                height: 100,
+                                width: 100,
+                                fit: BoxFit.cover,
+                              ),
+                            );
+                          }).toList(),
+                        ),
+                      ],
+                    ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  if (_nameController.text.isNotEmpty &&
+                      _detailsController.text.isNotEmpty &&
+                      _selectedTailorType.isNotEmpty &&
+                      _selectedImages.isNotEmpty &&
+                      _selectedImages.length <= 5) {
+                    // All mandatory fields are filled, proceed with saving the profile
+                    _saveProfile();
+                  } else {
+                    // Show a snackbar indicating that all fields are mandatory
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text(
+                            'Please fill in all fields and select between 1 and 5 images.'),
+                        duration: Duration(seconds: 3),
+                      ),
+                    );
+                  }
+                },
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.white,
+                  backgroundColor: redColor, // text color
+                ),
+                child: const Text('Save'),
+              ),
+            ],
+          ),
         ),
       ),
     );

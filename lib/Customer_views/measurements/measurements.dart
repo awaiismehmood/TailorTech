@@ -15,6 +15,13 @@ class MeasurementScreen extends StatefulWidget {
 class _MeasurementScreenState extends State<MeasurementScreen> {
   File? _imageFile;
   final picker = ImagePicker();
+  TextEditingController _heightController = TextEditingController();
+
+  @override
+  void dispose() {
+    _heightController.dispose(); // Dispose controller
+    super.dispose();
+  }
 
   Future<void> _getImage(ImageSource source) async {
     final pickedFile = await picker.pickImage(source: source);
@@ -77,7 +84,7 @@ class _MeasurementScreenState extends State<MeasurementScreen> {
   }
 
   Future<void> _sendMeasurementRequest(
-      BuildContext context, String imagePath) async {
+      BuildContext context, String imagePath, String height) async {
     // Show circular progress indicator dialog
     showDialog(
       context: context,
@@ -90,7 +97,7 @@ class _MeasurementScreenState extends State<MeasurementScreen> {
     );
 
     // URL of your API endpoint
-    var url = Uri.parse('http://192.168.100.105:5000/measurements');
+    var url = Uri.parse('http://192.168.100.8:5000/measurements');
 
     try {
       // Create a multipart request
@@ -106,8 +113,10 @@ class _MeasurementScreenState extends State<MeasurementScreen> {
         length,
         filename: imageFile.path.split('/').last,
       );
+
       // Add the image file to the request
       request.files.add(multipartFile);
+      request.fields['height'] = height;
 
       // Send the request
       var response = await request.send();
@@ -223,18 +232,22 @@ class _MeasurementScreenState extends State<MeasurementScreen> {
 
           // Navigate to the next screen
           Navigator.push(
+            // ignore: use_build_context_synchronously
             context,
             MaterialPageRoute(
                 builder: (context) => measurementsShow(
                       responseData: relevantData,
+                      height: height,
                     )),
           );
         } catch (e) {
           // Handle errors
           print('Error saving measurement data to Firebase: $e');
           // Dismiss the progress dialog
+          // ignore: use_build_context_synchronously
           Navigator.of(context).pop();
           // Show error toast
+          // ignore: use_build_context_synchronously
           VxToast.show(context,
               msg: 'Error saving measurement data to Firebase: $e',
               showTime: 5000);
@@ -255,8 +268,10 @@ class _MeasurementScreenState extends State<MeasurementScreen> {
       // Handle errors
       print('Error sending measurement request: $e');
       // Dismiss the progress dialog
+      // ignore: use_build_context_synchronously
       Navigator.of(context).pop();
       // Show error toast
+      // ignore: use_build_context_synchronously
       VxToast.show(context,
           msg: 'Error sending measurement request: $e', showTime: 5000);
     }
@@ -265,23 +280,43 @@ class _MeasurementScreenState extends State<MeasurementScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: redColor,
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  'Measurement Screen',
-                  style: TextStyle(
-                      color: whiteColor, fontSize: 30, fontFamily: bold),
+      appBar: AppBar(
+        backgroundColor: redColor, // Red app bar background color
+        elevation: 10, // Add elevation for drop shadow
+        title: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: Colors.white70, // You can change the border color here
+                width: 2.0, // You can adjust the border width here
+              ),
+              borderRadius: const BorderRadius.all(Radius.circular(10)),
+            ),
+            child: const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+              child: Text(
+                'Measurement Screen',
+                style: TextStyle(
+                  color: whiteColor,
+                  fontFamily: 'Roboto',
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-              Center(
+            ),
+          ),
+        ),
+      ),
+      backgroundColor: whiteColor, // White page background with 70% opacity
+      body: SafeArea(
+        child: SingleChildScrollView(
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+              const Center(
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 20),
+                  padding: EdgeInsets.only(top: 10),
                   child: Text(
                     "Sample Image",
                     style: TextStyle(
@@ -294,7 +329,7 @@ class _MeasurementScreenState extends State<MeasurementScreen> {
                   _showImageDialog(true);
                 },
                 child: Container(
-                  margin: EdgeInsets.all(20),
+                  margin: const EdgeInsets.all(20),
                   child: Card(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20),
@@ -330,7 +365,7 @@ class _MeasurementScreenState extends State<MeasurementScreen> {
                                 _imageFile!,
                                 fit: BoxFit.cover,
                               )
-                            : Center(
+                            : const Center(
                                 child: Text(
                                   'Tap the buttons below \n      to Select Image',
                                   style: TextStyle(
@@ -345,46 +380,90 @@ class _MeasurementScreenState extends State<MeasurementScreen> {
                 ),
               ),
               SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  ElevatedButton(
-                    onPressed: () {
-                      _getImage(ImageSource.gallery);
-                    },
-                    style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      backgroundColor: whiteColor,
+              Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+                ElevatedButton(
+                  onPressed: () {
+                    _getImage(ImageSource.gallery);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(24),
                     ),
-                    child: Text(
-                      'Upload Image',
-                      style: TextStyle(color: Colors.black),
+                    backgroundColor: redColor,
+                    side: BorderSide(
+                      color: Colors.grey,
+                      width: 2,
                     ),
                   ),
-                  ElevatedButton(
-                    onPressed: () {
-                      _getImage(ImageSource.camera);
-                    },
-                    style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      backgroundColor: whiteColor,
+                  child: const Text(
+                    'Upload Photo',
+                    style: TextStyle(color: whiteColor),
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    _getImage(ImageSource.camera);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(24),
                     ),
-                    child: Text(
-                      'Take Picture',
-                      style: TextStyle(color: Colors.black),
+                    backgroundColor: whiteColor,
+                    side: BorderSide(color: redColor),
+                  ),
+                  child: const Text(
+                    'Take Photo',
+                    style: TextStyle(color: redColor),
+                  ),
+                ),
+              ]),
+
+              const SizedBox(height: 20),
+              // Padding(
+              //   padding: const EdgeInsets.all(24.0),
+              //   child: ElevatedButton(
+              //     onPressed: () {
+              //       if (_imageFile != null) {
+              //         _sendMeasurementRequest(context, _imageFile!.path);
+              //       } else {
+              //         print('No image selected.');
+              //       }
+              //     },
+              //     style: ElevatedButton.styleFrom(
+              //       shape: RoundedRectangleBorder(
+              //         borderRadius: BorderRadius.circular(24),
+              //       ),
+              //       backgroundColor: redColor,
+              //       side: const BorderSide(color: Colors.grey,width: 2,),
+
+              //     ),
+              //     child: const Text(
+              //       'Measure',
+              //       style: TextStyle(color: whiteColor),
+              //     )
+              //   )
+              // ),
+
+              SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: TextFormField(
+                  controller: _heightController,
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                    labelText: 'Enter Your Height (in inches)',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20),
                     ),
                   ),
-                ],
+                ),
               ),
               SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
                   if (_imageFile != null) {
-                    _sendMeasurementRequest(context, _imageFile!.path);
+                    String height = _heightController.text;
+                    _sendMeasurementRequest(context, _imageFile!.path, height);
                   } else {
                     print('No image selected.');
                   }
@@ -401,9 +480,7 @@ class _MeasurementScreenState extends State<MeasurementScreen> {
                   style: TextStyle(color: Colors.red),
                 ),
               ),
-            ],
-          ),
-        ),
+            ])),
       ),
     );
   }
