@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dashboard/Customer_views/home_screen/home.dart';
+import 'package:dashboard/Customer_views/measurements/showMeasure.dart';
 import 'package:dashboard/Customer_views/services/chatt/chat_home.dart';
 import 'package:dashboard/Model_Classes/customer_class.dart';
 import 'package:dashboard/Model_Classes/order_class.dart';
@@ -158,6 +159,22 @@ class _SampleItemDetailsViewState extends State<SampleItemDetailsView> {
               },
               child: Text(
                 'Complete',
+                style: TextStyle(fontSize: 16.0),
+              ),
+            ),
+          ),
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => showMeasure(
+                            id: widget.order.customerId, isCustomer: false)));
+              },
+              child: Text(
+                'View Mesaurements',
                 style: TextStyle(fontSize: 16.0),
               ),
             ),

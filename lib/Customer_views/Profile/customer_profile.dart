@@ -1,6 +1,6 @@
 import 'package:dashboard/Customer_views/Profile/order_content.dart';
+import 'package:dashboard/Customer_views/measurements/showMeasure.dart';
 import 'package:dashboard/Model_Classes/customer_class.dart';
-import 'package:dashboard/consts/colors.dart';
 import 'package:dashboard/consts/consts.dart';
 import 'package:dashboard/controllers/auth_controller.dart';
 import 'package:dashboard/Customer_views/services/chatt/chat_home.dart';
@@ -22,34 +22,34 @@ class _ProfileScreenCustomerState extends State<ProfileScreenCustomer> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-      appBar: AppBar(
-        backgroundColor: redColor, // Red app bar background color
-        elevation: 10, // Add elevation for drop shadow
-        title: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Colors.white70, // You can change the border color here
-                    width: 2.0, // You can adjust the border width here
-                  ),
-                  borderRadius: const BorderRadius.all(Radius.circular(10)),
+        appBar: AppBar(
+          backgroundColor: redColor, // Red app bar background color
+          elevation: 10, // Add elevation for drop shadow
+          title: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: Colors.white70, // You can change the border color here
+                  width: 2.0, // You can adjust the border width here
                 ),
-                child: const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-                  child: Text(
-                    'My Profile ',
-                    style: TextStyle(
-                      color: whiteColor,
-                      fontFamily: 'Roboto',
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
+                borderRadius: const BorderRadius.all(Radius.circular(10)),
+              ),
+              child: const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                child: Text(
+                  'My Profile ',
+                  style: TextStyle(
+                    color: whiteColor,
+                    fontFamily: 'Roboto',
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
             ),
-      ),
+          ),
+        ),
         body: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Container(
@@ -59,7 +59,6 @@ class _ProfileScreenCustomerState extends State<ProfileScreenCustomer> {
             child: SafeArea(
               child: ListView(
                 children: [
-                  
                   Card(
                     elevation: 4,
                     shape: RoundedRectangleBorder(
@@ -145,12 +144,51 @@ class _ProfileScreenCustomerState extends State<ProfileScreenCustomer> {
                         const ListTile(
                           tileColor: redColor,
                           title: Text(
-                            'Account',
+                            'Measurements',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                                color: whiteColor),
+                          ),
+                        ),
+                        ListTile(
+                          onTap: (() {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => showMeasure(
+                                          id: currentUser!.uid,
+                                          isCustomer: true,
+                                        )));
+                          }),
+                          title: const Text(
+                            "Click to View Measurements",
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              fontSize: 16,
-                              color: whiteColor
+                              fontSize: 14,
                             ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  Card(
+                    elevation: 4,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const ListTile(
+                          tileColor: redColor,
+                          title: Text(
+                            'Account',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                                color: whiteColor),
                           ),
                         ),
                         // ListTile(
@@ -229,10 +267,9 @@ class _ProfileScreenCustomerState extends State<ProfileScreenCustomer> {
                           title: Text(
                             'Settings',
                             style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
-                              color: whiteColor
-                            ),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                                color: whiteColor),
                           ),
                         ),
                         ListTile(
@@ -246,7 +283,7 @@ class _ProfileScreenCustomerState extends State<ProfileScreenCustomer> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => chatHome()));
-          
+
                             // Add functionality for Chat
                           },
                         ),

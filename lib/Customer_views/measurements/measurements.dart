@@ -97,7 +97,7 @@ class _MeasurementScreenState extends State<MeasurementScreen> {
     );
 
     // URL of your API endpoint
-    var url = Uri.parse('http://192.168.100.8:5000/measurements');
+    var url = Uri.parse('http://192.168.100.146:5000/measurements');
 
     try {
       // Create a multipart request
@@ -326,7 +326,7 @@ class _MeasurementScreenState extends State<MeasurementScreen> {
               ),
               GestureDetector(
                 onTap: () {
-                  _showImageDialog(true);
+                  _showImageDialog(false);
                 },
                 child: Container(
                   margin: const EdgeInsets.all(20),
@@ -335,29 +335,8 @@ class _MeasurementScreenState extends State<MeasurementScreen> {
                       borderRadius: BorderRadius.circular(20),
                     ),
                     elevation: 5,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(20),
-                      child: Image.asset(
-                        "assets/image_1_50.png",
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  _showImageDialog(false);
-                },
-                child: Container(
-                  margin: EdgeInsets.symmetric(horizontal: 20),
-                  child: Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    elevation: 5,
                     child: AspectRatio(
-                      aspectRatio: _imageFile != null ? 1.0 : 16 / 10,
+                      aspectRatio: _imageFile != null ? 0.8 : 1.0,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(20),
                         child: _imageFile != null
@@ -365,20 +344,49 @@ class _MeasurementScreenState extends State<MeasurementScreen> {
                                 _imageFile!,
                                 fit: BoxFit.cover,
                               )
-                            : const Center(
-                                child: Text(
-                                  'Tap the buttons below \n      to Select Image',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
+                            : Image.asset(
+                                "assets/image_1_50.png",
+                                fit: BoxFit.cover,
                               ),
                       ),
                     ),
                   ),
                 ),
               ),
+              // GestureDetector(
+              //   onTap: () {
+              //     _showImageDialog(false);
+              //   },
+              //   child: Container(
+              //     margin: EdgeInsets.symmetric(horizontal: 20),
+              //     child: Card(
+              //       shape: RoundedRectangleBorder(
+              //         borderRadius: BorderRadius.circular(20),
+              //       ),
+              //       elevation: 5,
+              //       child: AspectRatio(
+              //         aspectRatio: _imageFile != null ? 1.0 : 16 / 10,
+              //         child: ClipRRect(
+              //           borderRadius: BorderRadius.circular(20),
+              //           child: _imageFile != null
+              //               ? Image.file(
+              //                   _imageFile!,
+              //                   fit: BoxFit.cover,
+              //                 )
+              //               : const Center(
+              //                   child: Text(
+              //                     'Tap the buttons below \n      to Select Image',
+              //                     style: TextStyle(
+              //                       fontSize: 16,
+              //                       fontWeight: FontWeight.bold,
+              //                     ),
+              //                   ),
+              //                 ),
+              //         ),
+              //       ),
+              //     ),
+              //   ),
+              // ),
               SizedBox(height: 20),
               Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
                 ElevatedButton(

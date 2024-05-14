@@ -72,17 +72,17 @@ class _measurementsShowState extends State<measurementsShow> {
             const SizedBox(
               height: 20,
             ),
-            Container(
-              margin: const EdgeInsets.only(bottom: 20.0),
-              child: const Text(
-                'wahab',
-                style: TextStyle(
-                  fontSize: 24.0,
-                  fontWeight: FontWeight.bold,
-                  color: Color.fromARGB(255, 255, 255, 255),
-                ),
-              ),
-            ),
+            // Container(
+            //   margin: const EdgeInsets.only(bottom: 20.0),
+            //   child: const Text(
+            //     'wahab',
+            //     style: TextStyle(
+            //       fontSize: 24.0,
+            //       fontWeight: FontWeight.bold,
+            //       color: Color.fromARGB(255, 255, 255, 255),
+            //     ),
+            //   ),
+            // ),
             _buildMeasurementContainer('Height', customerMeasurements.height),
             _buildMeasurementContainer('Waist', customerMeasurements.waist),
             _buildMeasurementContainer('Belly', customerMeasurements.belly),
@@ -100,9 +100,11 @@ class _measurementsShowState extends State<measurementsShow> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Get.offAll(Home());
-          setState(() {
-            customerMeasurements.saved = true;
-          });
+          customerMeasurements.saveToFirestore();
+
+          // setState(() {
+          //   customerMeasurements.saveToFirestore();
+          // });
           // Save measurements to profile or perform any other action here
           print('Measurements saved: $customerMeasurements');
           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(

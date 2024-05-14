@@ -36,8 +36,11 @@ class chatPage extends StatelessWidget {
   Widget build(BuildContext context) {
     log("iam in build message list");
     return Scaffold(
+      backgroundColor: whiteColor,
       appBar: AppBar(
+        backgroundColor: redColor,
         title: Text(recieverEmail),
+        shadowColor: Colors.grey.shade400,
       ),
       body: Column(
         children: [
@@ -121,9 +124,18 @@ class chatPage extends StatelessWidget {
         //text field to write message
 
         Expanded(
-          child: TextField(
-            controller: _messageController,
-            obscureText: false,
+          child: Container(
+            decoration: BoxDecoration(
+              border: Border.symmetric(
+                horizontal:
+                    BorderSide(style: BorderStyle.solid, color: Colors.grey),
+              ),
+            ),
+            child: TextField(
+              controller: _messageController,
+              obscureText: false,
+              showCursor: true,
+            ),
           ),
         ),
 
