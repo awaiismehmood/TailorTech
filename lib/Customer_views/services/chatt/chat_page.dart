@@ -35,25 +35,30 @@ class chatPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     log("iam in build message list");
-    return Scaffold(
-      backgroundColor: whiteColor,
-      appBar: AppBar(
-        backgroundColor: redColor,
-        title: Text(recieverEmail),
-        shadowColor: Colors.grey.shade400,
-      ),
-      body: Column(
-        children: [
-          //display the messages
+    return Container(
+      decoration: BoxDecoration(
+          image: DecorationImage(image: AssetImage(icChat), opacity: 0.5),
+          color: whiteColor),
+      child: Scaffold(
+        // backgroundColor: whiteColor,
+        appBar: AppBar(
+          backgroundColor: redColor,
+          title: Text(recieverEmail),
+          shadowColor: Colors.grey.shade400,
+        ),
+        body: Column(
+          children: [
+            //display the messages
 
-          Expanded(
-            child: _buildMessageList(),
-          ),
+            Expanded(
+              child: _buildMessageList(),
+            ),
 
-          //user input
+            //user input
 
-          _buildUserInput(),
-        ],
+            _buildUserInput(),
+          ],
+        ),
       ),
     );
   }

@@ -53,13 +53,13 @@ class _SplashScreenState extends State<SplashScreen> {
             40.heightBox,
 
             greeting1.text
-                .fontFamily(dance)
+                .fontFamily(bold)
                 .white
                 .fontWeight(FontWeight.bold)
                 .size(30)
                 .make(),
             greeting2.text
-                .fontFamily(dance)
+                .fontFamily(bold)
                 .white
                 .fontWeight(FontWeight.bold)
                 .size(30)
