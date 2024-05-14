@@ -17,7 +17,7 @@ class TailorShow extends StatefulWidget {
 }
 
 class _TailorShowState extends State<TailorShow> {
-  late Tailor tailor;
+  Tailor? tailor;
   final double coverHeight = 280;
   final double profileHeight = 144;
   final CarouselController carouselController = CarouselController();
@@ -31,28 +31,39 @@ class _TailorShowState extends State<TailorShow> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: whiteColor,
-      body: ListView(
-        padding: EdgeInsets.zero,
-        children: <Widget>[
-          buildTop(),
-          buildContent(),
-          const SizedBox(height: 70),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.red,
-              padding: const EdgeInsets.all(12),
+    return tailor == null
+        ? Scaffold(
+            backgroundColor: whiteColor,
+            body: Center(
+              child: CircularProgressIndicator(),
             ),
-            onPressed: () {
-              _confirmOrder(widget.tailorId);
-              Get.offAll(() => const Home());
-            },
-            child: "Place Order".text.color(whiteColor).fontFamily(bold).make(),
-          ),
-        ],
-      ),
-    );
+          )
+        : Scaffold(
+            backgroundColor: whiteColor,
+            body: ListView(
+              padding: EdgeInsets.zero,
+              children: <Widget>[
+                buildTop(),
+                buildContent(),
+                const SizedBox(height: 70),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.red,
+                    padding: const EdgeInsets.all(12),
+                  ),
+                  onPressed: () {
+                    _confirmOrder(widget.tailorId);
+                    Get.offAll(() => const Home());
+                  },
+                  child: "Place Order"
+                      .text
+                      .color(whiteColor)
+                      .fontFamily(bold)
+                      .make(),
+                ),
+              ],
+            ),
+          );
   }
 
   Widget buildContent() {
@@ -61,13 +72,13 @@ class _TailorShowState extends State<TailorShow> {
       children: [
         SizedBox(height: 50),
         Text(
-          tailor.name,
+          "${tailor?.name}",
           style: const TextStyle(
               fontSize: 28, fontWeight: FontWeight.bold, fontFamily: bold),
         ),
         const SizedBox(height: 2),
         Text(
-          "Type of tailor: ${tailor.T_type}",
+          "Type of tailor: ${tailor?.T_type}",
           style: TextStyle(fontSize: 20, color: Colors.black.withOpacity(0.4)),
         ),
         const SizedBox(height: 16),
@@ -80,12 +91,12 @@ class _TailorShowState extends State<TailorShow> {
         ),
         const SizedBox(height: 8),
         Text(
-          "Min Price: \$${tailor.minPrice.toStringAsFixed(2)}",
+          "Min Price: \$${tailor?.minPrice.toStringAsFixed(2)}",
           style: TextStyle(fontSize: 16, fontFamily: semibold),
         ),
         const SizedBox(height: 8),
         Text(
-          "Max Price: \$${tailor.maxPrice.toStringAsFixed(2)}",
+          "Max Price: \$${tailor?.maxPrice.toStringAsFixed(2)}",
           style: TextStyle(fontSize: 16, fontFamily: semibold),
         ),
       ],
@@ -108,7 +119,7 @@ class _TailorShowState extends State<TailorShow> {
                 fontFamily: semibold),
           ),
           Text(
-            tailor.details,
+            tailor!.details,
             style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w200,
@@ -145,12 +156,12 @@ class _TailorShowState extends State<TailorShow> {
   Widget buildProfileImage() => CircleAvatar(
         radius: profileHeight / 2,
         backgroundColor: whiteColor,
-        backgroundImage: NetworkImage(tailor.profile_url),
+        backgroundImage: NetworkImage(tailor!.profile_url),
       );
 
   Widget sliderImage() {
     return CarouselSlider(
-      items: tailor.images
+      items: tailor?.images
           .map((url) => Image.network(url, fit: BoxFit.contain))
           .toList(),
       carouselController: carouselController,
@@ -177,7 +188,7 @@ class _TailorShowState extends State<TailorShow> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           RatingBar.builder(
-            initialRating: tailor.ratting,
+            initialRating: tailor!.ratting.toDouble(),
             minRating: 1,
             direction: Axis.horizontal,
             allowHalfRating: true,

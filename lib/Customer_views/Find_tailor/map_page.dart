@@ -52,9 +52,7 @@ class _MapPageState extends State<MapPage> {
     return Scaffold(
       body: _currentP == null
           ? const Center(
-              child: Text(
-                "Loading..",
-              ),
+              child: CircularProgressIndicator(),
             )
           : GoogleMap(
               onMapCreated: ((GoogleMapController controller) =>

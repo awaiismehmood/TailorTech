@@ -23,7 +23,7 @@ class _TailorInfoScreenState extends State<TailorInfoScreen> {
       List<String> clothesImageUrls = await _uploadImages(clothesImages);
       List<String> designImageUrls = await _uploadImages(designImages);
 
-      log(clothesImageUrls.first.toString());
+      // log(clothesImageUrls.first.toString());
 
       // Create an Order object
       Orderr order = Orderr(
@@ -45,6 +45,8 @@ class _TailorInfoScreenState extends State<TailorInfoScreen> {
       String orderId = orderRef.id;
 
       // Navigate to the map page (you need to implement the map page navigation logic)
+
+      log("iam on navigator");
       Navigator.push(
           context,
           MaterialPageRoute(
@@ -402,7 +404,7 @@ class _TailorInfoScreenState extends State<TailorInfoScreen> {
                         };
                         // Handle place order logic here
                         _placeOrder();
-                        print('Placing Order...');
+                        //print('Placing Order...');
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.red,
