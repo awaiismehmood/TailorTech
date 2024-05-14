@@ -58,13 +58,16 @@ appBar: AppBar(
         padding: const EdgeInsets.all(12.0),
         child: Column(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                _buildFilterButton('All', OrderStatus.all),
-                _buildFilterButton('Completed', OrderStatus.completed),
-                _buildFilterButton('In Process', OrderStatus.Running),
-              ],
+            Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  _buildFilterButton('All', OrderStatus.all),
+                  _buildFilterButton('Completed', OrderStatus.completed),
+                  _buildFilterButton('In Process', OrderStatus.Running),
+                ],
+              ),
             ),
             Expanded(
               child: StreamBuilder(

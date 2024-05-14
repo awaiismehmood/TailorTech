@@ -467,25 +467,28 @@ class _MeasurementScreenState extends State<MeasurementScreen> {
                 ),
               ),
               SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  if (_imageFile != null) {
-                    String height = _heightController.text;
-                    _sendMeasurementRequest(context, _imageFile!.path, height);
-                  } else {
-                    print('No image selected.');
-                  }
-                },
-                style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: ElevatedButton(
+                  onPressed: () {
+                    if (_imageFile != null) {
+                      String height = _heightController.text;
+                      _sendMeasurementRequest(context, _imageFile!.path, height);
+                    } else {
+                      print('No image selected.');
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    backgroundColor: Colors.white,
+                    side: BorderSide(color: Colors.red),
                   ),
-                  backgroundColor: Colors.white,
-                  side: BorderSide(color: Colors.red),
-                ),
-                child: Text(
-                  'Measure',
-                  style: TextStyle(color: Colors.red),
+                  child: Text(
+                    'Measure',
+                    style: TextStyle(color: Colors.red),
+                  ),
                 ),
               ),
             ])),
