@@ -6,6 +6,7 @@ import 'package:dashboard/consts/consts.dart';
 import 'package:dashboard/controllers/order_controller.dart';
 import 'package:dashboard/widgets_common/order_card.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 
 class OrderAcceptScreen extends StatefulWidget {
@@ -25,7 +26,7 @@ class _OrderAcceptScreenState extends State<OrderAcceptScreen> {
       home: Scaffold(
         appBar: AppBar(
           leading: IconButton(
-            icon: Icon(Icons.arrow_back), // Add the back arrow icon
+            icon: const Icon(Icons.arrow_back), // Add the back arrow icon
             onPressed: () {
               Navigator.of(context).pop(); // Handle the back button press
             },
@@ -103,8 +104,13 @@ class _OrderListState extends State<OrderList> {
           .snapshots(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
-          return Center(
-            child: CircularProgressIndicator(),
+          return const Center(
+            child: Center(
+              child: SpinKitPulse(
+                color: Colors.red,
+                size: 100.0,
+              ),
+            ),
           );
         }
         // Extract orders from the snapshot
@@ -121,7 +127,10 @@ class _OrderListState extends State<OrderList> {
               builder: (context, customerSnapshot) {
                 if (customerSnapshot.connectionState ==
                     ConnectionState.waiting) {
-                  return CircularProgressIndicator();
+                  return const SpinKitPulse(
+                    color: Colors.red,
+                    size: 100.0,
+                  );
                 }
                 if (customerSnapshot.hasError) {
                   return Text('Error: ${customerSnapshot.error}');

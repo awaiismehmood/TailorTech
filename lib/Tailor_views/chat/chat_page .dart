@@ -4,9 +4,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dashboard/Tailor_views/chat/chat_service.dart';
 import 'package:dashboard/consts/consts.dart';
 import 'package:dashboard/Customer_views/services/chatt/chat_bubble.dart';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
+// ignore: camel_case_types
 class chatPageT extends StatelessWidget {
   final String recieverEmail;
   final String reciverID;
@@ -40,6 +41,7 @@ class chatPageT extends StatelessWidget {
       backgroundColor: whiteColor,
       appBar: AppBar(
         title: Text(recieverEmail),
+        backgroundColor: Colors.red,
       ),
       body: Column(
         children: [
@@ -68,13 +70,18 @@ class chatPageT extends StatelessWidget {
         //errors
 
         if (snapshot.hasError) {
-          return Text("Error");
+          return const Text("Error");
         }
 
         //loading
 
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Text("Loading..");
+          return const Center(
+            child: SpinKitPulse(
+              color: Colors.red,
+              size: 100.0,
+            ),
+          );
         }
 
         //return ListView
@@ -120,20 +127,30 @@ class chatPageT extends StatelessWidget {
   Widget _buildUserInput() {
     return Row(
       children: [
-        //text field to write message
-
         Expanded(
           child: Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               border: Border.symmetric(
-                horizontal:
-                    BorderSide(style: BorderStyle.solid, color: Colors.grey),
+                horizontal: BorderSide(
+                  style: BorderStyle.solid,
+                  color: Color.fromARGB(255, 0, 0, 0),
+                ),
               ),
             ),
             child: TextField(
               controller: _messageController,
               obscureText: false,
               showCursor: true,
+              style: const TextStyle(
+                  color: Colors.black), // Set input text color to black
+              decoration: const InputDecoration(
+                hintText: 'Write your message...', // Placeholder text
+                hintStyle:
+                    TextStyle(color: Colors.grey), // Placeholder text color
+                border: InputBorder.none, // Remove border
+                contentPadding:
+                    EdgeInsets.symmetric(horizontal: 10), // Add padding
+              ),
             ),
           ),
         ),
@@ -141,14 +158,14 @@ class chatPageT extends StatelessWidget {
         //send button
 
         Container(
-          decoration: BoxDecoration(
-            color: Colors.green,
+          decoration: const BoxDecoration(
+            color: Colors.red,
             shape: BoxShape.circle,
           ),
-          margin: EdgeInsets.only(right: 25),
+          margin: const EdgeInsets.only(right: 25),
           child: IconButton(
             onPressed: sendMessage,
-            icon: Icon(
+            icon: const Icon(
               Icons.arrow_upward,
               color: whiteColor,
             ),

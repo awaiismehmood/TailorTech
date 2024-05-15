@@ -7,6 +7,7 @@ import 'package:dashboard/Model_Classes/order_class.dart';
 import 'package:dashboard/Tailor_views/home_screen/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 
 import '../../consts/consts.dart';
@@ -43,7 +44,10 @@ class _SampleItemDetailsViewState extends State<SampleItemDetailsView> {
       body: SingleChildScrollView(
         padding: EdgeInsets.all(16.0),
         child: _isLoading == true
-            ? CircularProgressIndicator()
+            ? const SpinKitPulse(
+                color: Colors.red,
+                size: 100.0,
+              )
             : Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -173,7 +177,7 @@ class _SampleItemDetailsViewState extends State<SampleItemDetailsView> {
                         builder: (context) => showMeasure(
                             id: widget.order.customerId, isCustomer: false)));
               },
-              child: Text(
+              child: const Text(
                 'View Mesaurements',
                 style: TextStyle(fontSize: 16.0),
               ),

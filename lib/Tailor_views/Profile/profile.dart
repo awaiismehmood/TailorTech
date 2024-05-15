@@ -12,6 +12,7 @@ class EditProfileScreen extends StatefulWidget {
 
   const EditProfileScreen({required this.tailor, super.key});
   @override
+  // ignore: library_private_types_in_public_api
   _EditProfileScreenState createState() => _EditProfileScreenState();
 }
 
@@ -37,38 +38,34 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
-
           title: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Colors.white70, // You can change the border color here
-                    width: 2.0, // You can adjust the border width here
-                  ),
-                  borderRadius: const BorderRadius.all(Radius.circular(10)),
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: Colors.white70, // You can change the border color here
+                  width: 2.0, // You can adjust the border width here
                 ),
-                child: const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-                  child: Text(
-                    'My-Profile',
-                    style: TextStyle(
-                      color: whiteColor,
-                      fontFamily: 'Roboto',
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
+                borderRadius: const BorderRadius.all(Radius.circular(10)),
+              ),
+              child: const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                child: Text(
+                  'My-Profile',
+                  style: TextStyle(
+                    color: whiteColor,
+                    fontFamily: 'Roboto',
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
             ),
+          ),
           backgroundColor: redColor,
           foregroundColor: whiteColor,
           elevation: 0,
-          
         ),
-
-
         body: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Container(
@@ -281,7 +278,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         onTap: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => chatHomeT()),
+                            MaterialPageRoute(
+                                builder: (context) => chatHomeT()),
                           );
                           // Add functionality for Chat
                         },
@@ -297,7 +295,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       //   },
                       // ),
                       ListTile(
-                        leading: Icon(Icons.exit_to_app),
+                        leading: const Icon(Icons.exit_to_app),
                         title: const Text(
                           'Sign Out',
                           style: TextStyle(fontSize: 14),

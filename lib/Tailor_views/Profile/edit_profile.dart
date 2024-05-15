@@ -77,7 +77,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
     return Padding(
       padding: const EdgeInsets.all(0.0),
       child: Scaffold(
-        backgroundColor: Colors.white70,
+        backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: redColor,
           title: Padding(
@@ -85,7 +85,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
             child: Container(
               decoration: BoxDecoration(
                 border: Border.all(
-                  color: Colors.white70, // You can change the border color here
+                  color: Colors.white, // You can change the border color here
                   width: 2.0, // You can adjust the border width here
                 ),
                 borderRadius: const BorderRadius.all(Radius.circular(10)),

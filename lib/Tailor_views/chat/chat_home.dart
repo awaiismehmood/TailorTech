@@ -5,6 +5,7 @@ import 'package:dashboard/Tailor_views/chat/chat_service.dart';
 import 'package:dashboard/consts/consts.dart';
 import 'package:dashboard/widgets_common/user_tile.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class chatHomeT extends StatelessWidget {
   chatHomeT({super.key});
@@ -17,7 +18,7 @@ class chatHomeT extends StatelessWidget {
       child: Scaffold(
         backgroundColor: whiteColor,
         appBar: AppBar(
-          title: Text("Chat Home"),
+          title: const Text("Chat Home"),
           backgroundColor: redColor,
           foregroundColor: whiteColor,
           elevation: 0,
@@ -40,7 +41,12 @@ class chatHomeT extends StatelessWidget {
         //loading..
 
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Text("Loading..");
+          return const Center(
+            child: SpinKitPulse(
+              color: redColor,
+              size: 100.0,
+            ),
+          );
         }
 
         //return listview

@@ -43,11 +43,11 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     var controller = Get.put(HomeController());
     var navBarItem = [
-      GButton(
+      const GButton(
         icon: Icons.dashboard,
         text: "Dashboard",
       ),
-      GButton(
+      const GButton(
         icon: Icons.person_off_outlined,
         text: "Profile",
       ),
@@ -73,7 +73,7 @@ class _HomeState extends State<Home> {
         () => Container(
           decoration: BoxDecoration(
               color: Colors.grey[200],
-              borderRadius: BorderRadius.only(
+              borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(20), topRight: Radius.circular(20)),
               boxShadow: [
                 BoxShadow(blurRadius: 30, color: Colors.black.withOpacity(0.3))

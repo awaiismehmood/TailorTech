@@ -3,6 +3,7 @@ import 'package:dashboard/Customer_views/home_screen/home.dart';
 import 'package:dashboard/consts/consts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'measurement_class.dart';
 
@@ -39,10 +40,15 @@ class _showMeasureState extends State<showMeasure> {
   @override
   Widget build(BuildContext context) {
     return customerMeasurements == null
-        ? Scaffold(
+        ? const Scaffold(
             backgroundColor: whiteColor,
             body: Center(
-              child: CircularProgressIndicator(),
+              child: Center(
+                child: SpinKitPulse(
+                  color: Colors.red,
+                  size: 100.0,
+                ),
+              ),
             ),
           )
         : Scaffold(

@@ -8,6 +8,7 @@ import 'package:dashboard/widgets_common/applogo_widget.dart';
 import 'package:dashboard/widgets_common/bg_widgets.dart';
 import 'package:dashboard/widgets_common/button.dart';
 import 'package:dashboard/widgets_common/cuton_textfield.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
@@ -61,8 +62,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   5.heightBox,
                   controller.isloading.value
-                      ? const CircularProgressIndicator(
-                          valueColor: AlwaysStoppedAnimation(redColor),
+                      ? const SpinKitPulse(
+                          color: Colors.red,
+                          size: 100.0,
                         )
                       : Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -73,19 +75,22 @@ class _LoginScreenState extends State<LoginScreen> {
                                     await controller
                                         .loginMethod(context)
                                         .then((value) async {
-                                      DocumentSnapshot? userSnapshot =
-                                          await FirebaseFirestore.instance
-                                              .collection(usersCollection)
-                                              .doc(currentUser!.uid)
-                                              .get();
-                                      final data = userSnapshot.data()
-                                          as Map<String, dynamic>;
-                                      final String uType = data['type'];
-                                      if (value != null) {
-                                        if (uType == widget.type) {
-                                          // ignore: use_build_context_synchronously
-                                          VxToast.show(context, msg: logedin);
-                                          Get.offAll(() => const Home());
+                                      if (currentUser != null) {
+                                        DocumentSnapshot? userSnapshot =
+                                            await FirebaseFirestore.instance
+                                                .collection(usersCollection)
+                                                .doc(currentUser!.uid)
+                                                .get();
+
+                                        final data = userSnapshot.data()
+                                            as Map<String, dynamic>;
+                                        final String uType = data['type'];
+                                        if (value != null) {
+                                          if (uType == widget.type) {
+                                            // ignore: use_build_context_synchronously
+                                            VxToast.show(context, msg: logedin);
+                                            Get.offAll(() => const Home());
+                                          }
                                         } else {
                                           log("in else");
                                           // ignore: use_build_context_synchronously
