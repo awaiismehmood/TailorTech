@@ -5,6 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'measurement_class.dart';
 
+// ignore: camel_case_types
 class measurementsShow extends StatefulWidget {
   final Map<String, dynamic> responseData;
   final String height;
@@ -12,9 +13,11 @@ class measurementsShow extends StatefulWidget {
       {super.key, required this.responseData, required this.height});
 
   @override
+  // ignore: library_private_types_in_public_api
   _measurementsShowState createState() => _measurementsShowState();
 }
 
+// ignore: camel_case_types
 class _measurementsShowState extends State<measurementsShow> {
   late CustomerMeasurements customerMeasurements;
   bool isEditing = false;
@@ -39,7 +42,7 @@ class _measurementsShowState extends State<measurementsShow> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.red,
+      backgroundColor: redColor,
       body: SafeArea(
         child: ListView(
           padding: EdgeInsets.all(16.0),
@@ -99,7 +102,7 @@ class _measurementsShowState extends State<measurementsShow> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Get.offAll(Home());
+          Get.offAll(const Home());
           customerMeasurements.saveToFirestore();
 
           // setState(() {
@@ -111,15 +114,15 @@ class _measurementsShowState extends State<measurementsShow> {
             content: Text('Measurements saved!'),
           ));
         },
-        child: Icon(Icons.save),
+        child: const Icon(Icons.save),
       ),
     );
   }
 
   Widget _buildMeasurementContainer(String label, double value) {
     return Container(
-      margin: EdgeInsets.only(bottom: 20.0),
-      padding: EdgeInsets.all(16.0),
+      margin: const EdgeInsets.only(bottom: 20.0),
+      padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8.0),
         color: Color.fromARGB(

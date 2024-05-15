@@ -8,7 +8,6 @@ import 'package:dashboard/widgets_common/applogo_widget.dart';
 import 'package:dashboard/widgets_common/bg_widgets.dart';
 import 'package:dashboard/widgets_common/button.dart';
 import 'package:dashboard/widgets_common/cuton_textfield.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
@@ -62,16 +61,14 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   5.heightBox,
                   controller.isloading.value
-                      ? const SpinKitPulse(
-                          color: Colors.red,
-                          size: 100.0,
+                      ? const CircularProgressIndicator(
+                          color: redColor,
                         )
                       : Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: ourButton(
                                   onPress: () async {
                                     controller.isloading(true);
-
                                     await controller
                                         .loginMethod(context)
                                         .then((value) async {

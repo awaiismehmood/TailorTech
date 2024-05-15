@@ -240,7 +240,7 @@ class _TailorInfoScreenState extends State<TailorInfoScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const Text(
-                            'Price:',
+                            'Expected Price:',
                             style: TextStyle(
                               fontSize: 18.0,
                               fontWeight: FontWeight.bold,
@@ -275,7 +275,7 @@ class _TailorInfoScreenState extends State<TailorInfoScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const Text(
-                            'Clothes Section (Up to 4 Images):',
+                            'Fabric (Up to 4 Images):',
                             style: TextStyle(
                                 fontSize: 18.0,
                                 fontWeight: FontWeight.bold,
@@ -318,7 +318,7 @@ class _TailorInfoScreenState extends State<TailorInfoScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const Text(
-                            'Expected Design Section (Up to 2 Images):',
+                            'Design (Up to 2 Images):',
                             style: TextStyle(
                                 fontSize: 18.0,
                                 fontWeight: FontWeight.bold,
@@ -388,10 +388,18 @@ class _TailorInfoScreenState extends State<TailorInfoScreen> {
                         0.8, // 80% of screen width
                     child: ElevatedButton(
                       onPressed: () {
-                        const SpinKitPulse(
-                          color: Colors.red,
-                          size: 100.0,
-                        );
+                        (BuildContext context) {
+                          return const AlertDialog(
+                            content: SizedBox(
+                              width: 30.0, // Specify the desired width
+                              height: 150.0, // Specify the desired height
+                              child: SpinKitWaveSpinner(
+                                color: redColor,
+                                size: 70.0,
+                              ),
+                            ),
+                          );
+                        };
                         // Handle place order logic here
                         _placeOrder();
                         print('Placing Order...');

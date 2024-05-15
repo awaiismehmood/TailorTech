@@ -143,7 +143,7 @@ class chatPage extends StatelessWidget {
 
         Container(
           decoration: BoxDecoration(
-            color: Colors.green,
+            color: redColor,
             shape: BoxShape.circle,
           ),
           margin: EdgeInsets.only(right: 25),

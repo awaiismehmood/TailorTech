@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 import 'package:dashboard/consts/consts.dart';
@@ -90,8 +91,15 @@ class _MeasurementScreenState extends State<MeasurementScreen> {
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
-        return AlertDialog(
-          content: CircularProgressIndicator(),
+        return const AlertDialog(
+          content: SizedBox(
+            width: 30.0, // Specify the desired width
+            height: 150.0, // Specify the desired height
+            child: SpinKitWaveSpinner(
+              color: redColor,
+              size: 70.0,
+            ),
+          ),
         );
       },
     );

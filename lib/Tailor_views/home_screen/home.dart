@@ -83,7 +83,7 @@ class _Home_TailorState extends State<Home_Tailor> {
                 color: Colors.white.withOpacity(0.7),
                 child: const Center(
                   child: SpinKitPulse(
-                    color: Colors.red,
+                    color: redColor,
                     size: 100.0,
                   ),
                 ),

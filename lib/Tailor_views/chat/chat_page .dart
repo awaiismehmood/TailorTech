@@ -146,7 +146,7 @@ class chatPageT extends StatelessWidget {
               decoration: const InputDecoration(
                 hintText: 'Write your message...', // Placeholder text
                 hintStyle:
-                    TextStyle(color: Colors.grey), // Placeholder text color
+                    TextStyle(color: Colors.black), // Placeholder text color
                 border: InputBorder.none, // Remove border
                 contentPadding:
                     EdgeInsets.symmetric(horizontal: 10), // Add padding
@@ -159,7 +159,7 @@ class chatPageT extends StatelessWidget {
 
         Container(
           decoration: const BoxDecoration(
-            color: Colors.red,
+            color: redColor,
             shape: BoxShape.circle,
           ),
           margin: const EdgeInsets.only(right: 25),
