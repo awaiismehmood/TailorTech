@@ -9,6 +9,8 @@ import 'package:dashboard/consts/consts.dart';
 import 'package:dashboard/Customer_views/measurements/save_measurements.dart';
 
 class MeasurementScreen extends StatefulWidget {
+  const MeasurementScreen({super.key});
+
   @override
   _MeasurementScreenState createState() => _MeasurementScreenState();
 }
@@ -16,7 +18,7 @@ class MeasurementScreen extends StatefulWidget {
 class _MeasurementScreenState extends State<MeasurementScreen> {
   File? _imageFile;
   final picker = ImagePicker();
-  TextEditingController _heightController = TextEditingController();
+  final TextEditingController _heightController = TextEditingController();
 
   @override
   void dispose() {
@@ -35,8 +37,8 @@ class _MeasurementScreenState extends State<MeasurementScreen> {
     });
   }
 
-  Future<void> _showImageDialog(bool _isHardcode) async {
-    if (_imageFile != null && !_isHardcode) {
+  Future<void> _showImageDialog(bool isHardcode) async {
+    if (_imageFile != null && !isHardcode) {
       showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -51,7 +53,7 @@ class _MeasurementScreenState extends State<MeasurementScreen> {
         },
       );
     } else {
-      if (_isHardcode) {
+      if (isHardcode) {
         showDialog(
           context: context,
           builder: (BuildContext context) {
@@ -65,7 +67,7 @@ class _MeasurementScreenState extends State<MeasurementScreen> {
                       color: Colors.black.withOpacity(0.5),
                       spreadRadius: 5,
                       blurRadius: 7,
-                      offset: Offset(0, 3), // changes position of shadow
+                      offset: const Offset(0, 3), // changes position of shadow
                     ),
                   ],
                 ),
@@ -395,7 +397,7 @@ class _MeasurementScreenState extends State<MeasurementScreen> {
               //     ),
               //   ),
               // ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
                 ElevatedButton(
                   onPressed: () {
@@ -406,7 +408,7 @@ class _MeasurementScreenState extends State<MeasurementScreen> {
                       borderRadius: BorderRadius.circular(24),
                     ),
                     backgroundColor: redColor,
-                    side: BorderSide(
+                    side: const BorderSide(
                       color: Colors.grey,
                       width: 2,
                     ),
@@ -425,7 +427,7 @@ class _MeasurementScreenState extends State<MeasurementScreen> {
                       borderRadius: BorderRadius.circular(24),
                     ),
                     backgroundColor: whiteColor,
-                    side: BorderSide(color: redColor),
+                    side: const BorderSide(color: redColor),
                   ),
                   child: const Text(
                     'Take Photo',
@@ -460,7 +462,7 @@ class _MeasurementScreenState extends State<MeasurementScreen> {
               //   )
               // ),
 
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: TextFormField(
@@ -474,7 +476,7 @@ class _MeasurementScreenState extends State<MeasurementScreen> {
                   ),
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: ElevatedButton(
@@ -491,9 +493,9 @@ class _MeasurementScreenState extends State<MeasurementScreen> {
                       borderRadius: BorderRadius.circular(20),
                     ),
                     backgroundColor: Colors.white,
-                    side: BorderSide(color: Colors.red),
+                    side: const BorderSide(color: Colors.red),
                   ),
-                  child: Text(
+                  child: const Text(
                     'Measure',
                     style: TextStyle(color: Colors.red),
                   ),

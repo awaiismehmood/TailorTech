@@ -53,7 +53,7 @@ class OrderCard extends StatelessWidget {
                       ? NetworkImage(customer.profileImageUrl)
                       : null,
                   child: customer.profileImageUrl == " "
-                      ? Icon(Icons.person)
+                      ? const Icon(Icons.person)
                       : null,
                 ),
               ),

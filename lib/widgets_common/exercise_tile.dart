@@ -20,9 +20,9 @@ class ExerciseTile extends StatelessWidget {
     return GestureDetector(
       onTap: onpress,
       child: Padding(
-        padding: EdgeInsets.only(bottom: 12.0),
+        padding: const EdgeInsets.only(bottom: 12.0),
         child: Container(
-          padding: EdgeInsets.all(12),
+          padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
               color: Colors.white, borderRadius: BorderRadius.circular(16)),
           child: Row(
@@ -33,7 +33,7 @@ class ExerciseTile extends StatelessWidget {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(12),
                     child: Container(
-                      padding: EdgeInsets.all(16),
+                      padding: const EdgeInsets.all(16),
                       color: color,
                       child: Icon(
                         icon,
@@ -41,7 +41,7 @@ class ExerciseTile extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 12,
                   ),
                   Column(
@@ -50,17 +50,17 @@ class ExerciseTile extends StatelessWidget {
                       //tile
                       Text(
                         exerciseName,
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 16),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 5,
                       ),
 
                       //subtitle
                       Text(
-                        numberOfExercises.toString() + " exercises",
-                        style: TextStyle(
+                        "$numberOfExercises exercises",
+                        style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.grey,
                             fontSize: 14),
@@ -69,7 +69,7 @@ class ExerciseTile extends StatelessWidget {
                   ),
                 ],
               ),
-              Icon(Icons.more_horiz),
+              const Icon(Icons.more_horiz),
             ],
           ),
         ),

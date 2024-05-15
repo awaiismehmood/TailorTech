@@ -10,23 +10,23 @@ class DetailScreen extends StatelessWidget {
   final Orderr order;
   final Customer getCustomer;
 
-  DetailScreen({Key? key, required this.order, required this.getCustomer})
+  const DetailScreen({Key? key, required this.order, required this.getCustomer})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Order Details'),
+        title: const Text('Order Details'),
         backgroundColor: redColor,
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _buildUserProfile(),
-            SizedBox(height: 20.0),
+            const SizedBox(height: 20.0),
             Center(
               child: Card(
                 elevation: 4.0,
@@ -39,18 +39,18 @@ class DetailScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       _buildDetailItem('Customer Name', getCustomer.name),
-                      SizedBox(height: 10.0),
+                      const SizedBox(height: 10.0),
                       _buildDetailItem('Details of Order', order.details),
-                      SizedBox(height: 10.0),
+                      const SizedBox(height: 10.0),
                       _buildDetailItem('Tailor Type', order.tailorType),
-                      SizedBox(height: 10.0),
+                      const SizedBox(height: 10.0),
                       _buildDetailItem('Price', order.price.toString()),
                     ],
                   ),
                 ),
               ),
             ),
-            SizedBox(height: 20.0),
+            const SizedBox(height: 20.0),
             Card(
               elevation: 4.0,
               shape: RoundedRectangleBorder(
@@ -61,30 +61,30 @@ class DetailScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       'Clothes Images:',
                       style: TextStyle(
                         fontSize: 18.0,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(height: 10.0),
+                    const SizedBox(height: 10.0),
                     _buildImageSection(order.clothesImageUrls),
-                    SizedBox(height: 20.0),
-                    Text(
+                    const SizedBox(height: 20.0),
+                    const Text(
                       'Designed Images:',
                       style: TextStyle(
                         fontSize: 18.0,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(height: 10.0),
+                    const SizedBox(height: 10.0),
                     _buildImageSection(order.designImageUrls),
                   ],
                 ),
               ),
             ),
-            SizedBox(height: 20.0),
+            const SizedBox(height: 20.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -94,7 +94,7 @@ class DetailScreen extends StatelessWidget {
                     onPressed: () {
                       deleteOrder(order);
                     },
-                    child: Text(
+                    child: const Text(
                       'Decline',
                       style: TextStyle(fontSize: 16.0),
                     ),
@@ -131,14 +131,14 @@ class DetailScreen extends StatelessWidget {
                 // ),
               ],
             ),
-            SizedBox(height: 10.0),
+            const SizedBox(height: 10.0),
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
                   acceptOrder(order.expId, order);
                 },
-                child: Text(
+                child: const Text(
                   'Accept',
                   style: TextStyle(fontSize: 16.0),
                 ),
@@ -160,13 +160,13 @@ class DetailScreen extends StatelessWidget {
                 ? NetworkImage(getCustomer.profileImageUrl)
                 : null,
             child:
-                getCustomer.profileImageUrl == " " ? Icon(Icons.person) : null,
+                getCustomer.profileImageUrl == " " ? const Icon(Icons.person) : null,
           ),
         ),
-        SizedBox(height: 10.0),
+        const SizedBox(height: 10.0),
         Text(
           getCustomer.name,
-          style: TextStyle(fontSize: 26.0, fontFamily: bold),
+          style: const TextStyle(fontSize: 26.0, fontFamily: bold),
         ),
       ],
     );
@@ -178,15 +178,15 @@ class DetailScreen extends StatelessWidget {
       children: [
         Text(
           title,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 18.0,
             fontWeight: FontWeight.bold,
           ),
         ),
-        SizedBox(height: 8.0),
+        const SizedBox(height: 8.0),
         Text(
           value,
-          style: TextStyle(fontSize: 16.0),
+          style: const TextStyle(fontSize: 16.0),
         ),
       ],
     );
@@ -239,12 +239,12 @@ class DetailScreen extends StatelessWidget {
       'expectedTailorId': "",
     });
 
-    Get.offAll(() => Home_Tailor());
+    Get.offAll(() => const Home_Tailor());
   }
 
   Future<void> deleteOrder(Orderr order) async {
     String orderId = order.getDocumentId() ?? '';
     await FirebaseFirestore.instance.collection('orders').doc(orderId).delete();
-    Get.offAll(() => Home_Tailor());
+    Get.offAll(() => const Home_Tailor());
   }
 }

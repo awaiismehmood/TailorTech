@@ -122,7 +122,7 @@ class _RatingScreenState extends State<RatingScreen> {
                     ElevatedButton(
                       onPressed: () {
                         updateRatting();
-                        Get.offAll(() => Home());
+                        Get.offAll(() => const Home());
                         updateTailorRating();
                       },
                       style: ElevatedButton.styleFrom(
@@ -161,7 +161,7 @@ class _RatingScreenState extends State<RatingScreen> {
     int count = 0;
 
     for (var doc in ordersSnapshot.docs) {
-      var orderData = doc.data() as Map<String, dynamic>;
+      var orderData = doc.data();
       totalRating += orderData['ratting'];
       count++;
     }

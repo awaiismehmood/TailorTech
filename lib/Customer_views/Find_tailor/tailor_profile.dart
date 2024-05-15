@@ -32,7 +32,7 @@ class _TailorShowState extends State<TailorShow> {
   @override
   Widget build(BuildContext context) {
     return tailor == null
-        ? Scaffold(
+        ? const Scaffold(
             backgroundColor: whiteColor,
             body: Center(
               child: CircularProgressIndicator(),
@@ -70,7 +70,7 @@ class _TailorShowState extends State<TailorShow> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        SizedBox(height: 50),
+        const SizedBox(height: 50),
         Text(
           "${tailor?.name}",
           style: const TextStyle(
@@ -84,7 +84,7 @@ class _TailorShowState extends State<TailorShow> {
         const SizedBox(height: 16),
         buildAbout(),
         const SizedBox(height: 16),
-        Text(
+        const Text(
           "Price Range:",
           style: TextStyle(
               fontSize: 20, fontWeight: FontWeight.bold, fontFamily: bold),
@@ -92,12 +92,12 @@ class _TailorShowState extends State<TailorShow> {
         const SizedBox(height: 8),
         Text(
           "Min Price: \$${tailor?.minPrice.toStringAsFixed(2)}",
-          style: TextStyle(fontSize: 16, fontFamily: semibold),
+          style: const TextStyle(fontSize: 16, fontFamily: semibold),
         ),
         const SizedBox(height: 8),
         Text(
           "Max Price: \$${tailor?.maxPrice.toStringAsFixed(2)}",
-          style: TextStyle(fontSize: 16, fontFamily: semibold),
+          style: const TextStyle(fontSize: 16, fontFamily: semibold),
         ),
       ],
     );
@@ -106,12 +106,12 @@ class _TailorShowState extends State<TailorShow> {
   Widget buildAbout() {
     return Container(
       alignment: Alignment.topLeft,
-      padding: EdgeInsets.symmetric(horizontal: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Text(
+          const Text(
             "Details",
             style: TextStyle(
                 fontSize: 30,
@@ -120,19 +120,19 @@ class _TailorShowState extends State<TailorShow> {
           ),
           Text(
             tailor!.details,
-            style: TextStyle(
+            style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w200,
                 fontFamily: semibold),
           ),
-          Text(
+          const Text(
             "Ratings",
             style: TextStyle(
                 fontSize: 30,
                 fontWeight: FontWeight.w500,
                 fontFamily: semibold),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           ratings(),
         ],
       ),
@@ -181,7 +181,7 @@ class _TailorShowState extends State<TailorShow> {
   }
 
   Widget ratings() {
-    return Container(
+    return SizedBox(
       width: double.infinity,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -192,8 +192,8 @@ class _TailorShowState extends State<TailorShow> {
             minRating: 1,
             direction: Axis.horizontal,
             allowHalfRating: true,
-            itemPadding: EdgeInsets.symmetric(horizontal: 4),
-            itemBuilder: (context, _) => Icon(Icons.star, color: redColor),
+            itemPadding: const EdgeInsets.symmetric(horizontal: 4),
+            itemBuilder: (context, _) => const Icon(Icons.star, color: redColor),
             ignoreGestures: true,
             onRatingUpdate: (rating) {},
           ),

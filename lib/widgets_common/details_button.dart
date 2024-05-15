@@ -8,5 +8,5 @@ Widget detailCard(width, String? count, String? title) {
       "00".text.fontFamily(bold).size(16).color(darkFontGrey).make(),
       "in your cart".text.color(darkFontGrey).make(),
     ],
-  ).box.white.rounded.padding(EdgeInsets.all(4)).width(width).height(68).make();
+  ).box.white.rounded.padding(const EdgeInsets.all(4)).width(width).height(68).make();
 }

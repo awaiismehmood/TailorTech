@@ -98,22 +98,22 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     ),
                     subtitle: Text(
                       widget.tailor.email,
-                      style: TextStyle(fontSize: 14),
+                      style: const TextStyle(fontSize: 14),
                     ),
                     trailing: IconButton(
-                      icon: Icon(Icons.edit),
+                      icon: const Icon(Icons.edit),
                       onPressed: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => EditProfilePage()),
+                              builder: (context) => const EditProfilePage()),
                         );
                       },
                     ),
-                    contentPadding: EdgeInsets.symmetric(vertical: 4),
+                    contentPadding: const EdgeInsets.symmetric(vertical: 4),
                   ),
                 ),
-                SizedBox(height: 10), // Reduced the space
+                const SizedBox(height: 10), // Reduced the space
                 Card(
                   elevation: 4,
                   shape: RoundedRectangleBorder(
@@ -137,15 +137,15 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         title: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            SizedBox(height: 10),
-                            Container(
+                            const SizedBox(height: 10),
+                            SizedBox(
                               height: 200,
                               width: double.infinity,
                               child: PageView.builder(
                                 controller: _controller,
                                 itemCount: widget.tailor.images.length,
                                 scrollDirection: Axis.horizontal,
-                                physics: BouncingScrollPhysics(),
+                                physics: const BouncingScrollPhysics(),
                                 itemBuilder: (context, index) {
                                   return Image.network(
                                     widget.tailor.images[index],
@@ -154,7 +154,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 },
                               ),
                             ),
-                            SizedBox(height: 1),
+                            const SizedBox(height: 1),
                             Center(
                               child: DotsIndicator(
                                 dotsCount: widget.tailor.images.length,
@@ -171,7 +171,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     ],
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Card(
                   elevation: 4,
                   shape: RoundedRectangleBorder(
@@ -235,7 +235,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               rating: widget.tailor.ratting,
                               onRatingChanged: (double ratting) {},
                             ),
-                            SizedBox(width: 10),
+                            const SizedBox(width: 10),
                             Text(
                               widget.tailor.ratting.toString(),
                               style: const TextStyle(
@@ -249,7 +249,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     ],
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Card(
                   elevation: 4,
                   shape: RoundedRectangleBorder(
@@ -320,7 +320,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 class RatingBar extends StatelessWidget {
   final double rating;
   final Function(double) onRatingChanged;
-  RatingBar({required this.rating, required this.onRatingChanged});
+  const RatingBar({super.key, required this.rating, required this.onRatingChanged});
 
   @override
   Widget build(BuildContext context) {

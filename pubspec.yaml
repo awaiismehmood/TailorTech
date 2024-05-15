@@ -75,6 +75,7 @@ dependencies:
   overlay_loader_with_app_icon: ^0.0.3
   
  
+  http: any
 dev_dependencies:
   flutter_lints: ^2.0.0
   flutter_test:

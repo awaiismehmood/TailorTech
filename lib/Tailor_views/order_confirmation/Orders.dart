@@ -79,7 +79,7 @@ class _OrderAcceptScreenState extends State<OrderAcceptScreen> {
               ),
             ),
             // Order list
-            OrderList(),
+            const OrderList(),
           ],
         ),
       ),
@@ -88,7 +88,7 @@ class _OrderAcceptScreenState extends State<OrderAcceptScreen> {
 }
 
 class OrderList extends StatefulWidget {
-  OrderList({super.key});
+  const OrderList({super.key});
 
   @override
   State<OrderList> createState() => _OrderListState();

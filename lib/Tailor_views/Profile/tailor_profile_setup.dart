@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 class TailorProfileSetupPage extends StatelessWidget {
   final Tailor tailor;
 
-  TailorProfileSetupPage({required this.tailor});
+  const TailorProfileSetupPage({super.key, required this.tailor});
 
   @override
   Widget build(BuildContext context) {
@@ -24,16 +24,16 @@ class TailorProfileSetupPage extends StatelessWidget {
         // Center the AlertDialog
         Center(
           child: AlertDialog(
-            title: Text('Setup Profile'),
+            title: const Text('Setup Profile'),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
                   'Welcome ${tailor.name}!',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
-                SizedBox(height: 20),
-                Text(
+                const SizedBox(height: 20),
+                const Text(
                   'Please set up your profile',
                   style: TextStyle(fontSize: 16),
                 ),
@@ -45,13 +45,13 @@ class TailorProfileSetupPage extends StatelessWidget {
                   onPressed: () {
                     // Perform profile setup actions
                     Navigator.of(context).pop(); // Close the dialog
-                    Get.off(() => EditProfilePage());
+                    Get.off(() => const EditProfilePage());
                   },
                   style: ElevatedButton.styleFrom(
                     foregroundColor: Colors.white,
                     backgroundColor: Colors.blue, // text color
                   ),
-                  child: Text('Setup Profile'),
+                  child: const Text('Setup Profile'),
                 ),
               ),
             ],

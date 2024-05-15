@@ -58,7 +58,7 @@ class _HomePageState extends State<HomePage> {
                                   height: 8,
                                 ),
                                 Text(
-                                  "$formattedDate",
+                                  formattedDate,
                                   style: const TextStyle(color: Colors.white),
                                 )
                               ],
@@ -72,7 +72,7 @@ class _HomePageState extends State<HomePage> {
                           height: 25,
                         ),
 
-                        Container(
+                        SizedBox(
                           height: 250, // Adjust the height as needed
                           width: 300, // Adjust the width as needed
                           child: Lottie.network(
@@ -98,7 +98,7 @@ class _HomePageState extends State<HomePage> {
                           topLeft: Radius.circular(20),
                           topRight: Radius.circular(20)),
                       child: Container(
-                        padding: EdgeInsets.all(25),
+                        padding: const EdgeInsets.all(25),
                         color: Colors.grey[200],
                         child: Center(
                           child: Column(
@@ -130,7 +130,7 @@ class _HomePageState extends State<HomePage> {
                                             context,
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                    MeasurementScreen()));
+                                                    const MeasurementScreen()));
                                       },
                                       icon: Icons.miscellaneous_services,
                                       exerciseName: "Measurements",
@@ -143,7 +143,7 @@ class _HomePageState extends State<HomePage> {
                                             context,
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                    TailorInfoScreen()));
+                                                    const TailorInfoScreen()));
                                       },
                                       icon: Icons.more,
                                       exerciseName: "find tailor",

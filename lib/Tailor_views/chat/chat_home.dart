@@ -16,7 +16,7 @@ class chatHomeT extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
             image: DecorationImage(image: AssetImage(T_logo), opacity: 0.5),
             color: whiteColor),
         child: Scaffold(

@@ -10,11 +10,11 @@ class EmotionFace extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
           color: redColor, borderRadius: BorderRadius.circular(12)),
-      padding: EdgeInsets.all(12),
+      padding: const EdgeInsets.all(12),
       child: Center(
         child: Text(
           emotionFace,
-          style: TextStyle(fontSize: 28),
+          style: const TextStyle(fontSize: 28),
         ),
       ),
     );

@@ -106,7 +106,7 @@ class _HomePageTailorState extends State<HomePage_Tailor> {
                         const SizedBox(
                           height: 25,
                         ),
-                        Container(
+                        SizedBox(
                           height: 250, // Adjust the height as needed
                           width: 300, // Adjust the width as needed
                           child: Lottie.network(

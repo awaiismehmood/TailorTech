@@ -1,7 +1,6 @@
 import 'package:dashboard/Customer_views/home_screen/home.dart';
 import 'package:dashboard/consts/consts.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'measurement_class.dart';
 
@@ -45,7 +44,7 @@ class _measurementsShowState extends State<measurementsShow> {
       backgroundColor: redColor,
       body: SafeArea(
         child: ListView(
-          padding: EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(16.0),
           children: [
             Row(
               children: [
@@ -125,24 +124,24 @@ class _measurementsShowState extends State<measurementsShow> {
       padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8.0),
-        color: Color.fromARGB(
+        color: const Color.fromARGB(
             255, 255, 255, 255), // Set container color to light red
         boxShadow: [
           BoxShadow(
-            color: Color.fromARGB(122, 209, 200, 200).withOpacity(0.4),
+            color: const Color.fromARGB(122, 209, 200, 200).withOpacity(0.4),
             spreadRadius: 2,
             blurRadius: 2,
-            offset: Offset(0, 2),
+            offset: const Offset(0, 2),
           ),
         ],
       ),
       child: Row(
         children: [
-          Icon(Icons.linear_scale),
-          SizedBox(width: 8.0),
+          const Icon(Icons.linear_scale),
+          const SizedBox(width: 8.0),
           Text(label,
-              style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold)),
-          SizedBox(width: 20.0),
+              style: const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold)),
+          const SizedBox(width: 20.0),
           if (isEditing)
             Expanded(
               child: TextFormField(

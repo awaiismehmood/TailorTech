@@ -38,7 +38,7 @@ class chatPageT extends StatelessWidget {
   Widget build(BuildContext context) {
     log("iam in build message list");
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
           image: DecorationImage(image: AssetImage(icChat), opacity: 0.5),
           color: whiteColor),
       child: Scaffold(

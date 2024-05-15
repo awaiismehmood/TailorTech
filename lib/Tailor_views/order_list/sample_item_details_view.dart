@@ -6,7 +6,6 @@ import 'package:dashboard/Model_Classes/customer_class.dart';
 import 'package:dashboard/Model_Classes/order_class.dart';
 import 'package:dashboard/Tailor_views/home_screen/home.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 
@@ -40,33 +39,32 @@ class _SampleItemDetailsViewState extends State<SampleItemDetailsView> {
       appBar: AppBar(
         backgroundColor: redColor,
         title: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: Colors.white70, // You can change the border color here
-                  width: 2.0, // You can adjust the border width here
-                ),
-                borderRadius: const BorderRadius.all(Radius.circular(10)),
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: Colors.white70, // You can change the border color here
+                width: 2.0, // You can adjust the border width here
               ),
-              child: const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-                child: Text(
-                  'Order Details',
-                  style: TextStyle(
-                    color: whiteColor,
-                    fontFamily: 'Roboto',
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
+              borderRadius: const BorderRadius.all(Radius.circular(10)),
+            ),
+            child: const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+              child: Text(
+                'Order Details',
+                style: TextStyle(
+                  color: whiteColor,
+                  fontFamily: 'Roboto',
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-                          ),
+            ),
           ),
         ),
-      
+      ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: _isLoading == true
             ? const SpinKitPulse(
                 color: Colors.red,
@@ -76,71 +74,107 @@ class _SampleItemDetailsViewState extends State<SampleItemDetailsView> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   _buildUserProfile(),
-                  SizedBox(height: 20.0),
+                  const SizedBox(height: 20.0),
                   Center(
-                    child:Padding(
+                    child: Padding(
                       padding: const EdgeInsets.all(12.0),
-                      child: Container(
-                        width: MediaQuery.of(context).size.width, // Set width to screen width
+                      child: SizedBox(
+                        width: MediaQuery.of(context)
+                            .size
+                            .width, // Set width to screen width
                         child: Card(
                           elevation: 4.0,
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0),
+                            borderRadius: BorderRadius.circular(16.0),
                           ),
-                          child: Padding(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: redColor.withOpacity(0.1),
+                                  spreadRadius: 4,
+                                  blurRadius: 2,
+                                  offset: const Offset(0, 2),
+                                ),
+                              ],
+                            ), // Set background color to light red
                             padding: const EdgeInsets.all(16.0),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                _buildDetailItem('Customer Name', getCustomer.name),
-                                SizedBox(height: 10.0),
-                                _buildDetailItem('Details of Order', widget.order.details),
-                                SizedBox(height: 10.0),
-                                _buildDetailItem('Tailor Type', widget.order.tailorType),
-                                SizedBox(height: 10.0),
-                                _buildDetailItem('Price', widget.order.price.toString()),
+                                _buildDetailItem(
+                                    'Customer Name', getCustomer.name),
+                                const SizedBox(height: 10.0),
+                                _buildDetailItem(
+                                    'Details of Order', widget.order.details),
+                                const SizedBox(height: 10.0),
+                                _buildDetailItem(
+                                    'Tailor Type', widget.order.tailorType),
+                                const SizedBox(height: 10.0),
+                                _buildDetailItem(
+                                    'Price', widget.order.price.toString()),
                               ],
                             ),
                           ),
                         ),
                       ),
-                    )
+                    ),
                   ),
-                  SizedBox(height: 20.0),
+
+                  const SizedBox(height: 20.0),
                   Card(
                     elevation: 4.0,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0),
                     ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            'Clothes Images:',
-                            style: TextStyle(
-                              fontSize: 18.0,
-                              fontWeight: FontWeight.bold,
-                            ),
+                    color: Colors.white, // Set background color to white
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10.0),
+                        boxShadow: [
+                          BoxShadow(
+                            color:
+                                redColor.withOpacity(0.1), // Set shadow color
+                            spreadRadius: 4,
+                            blurRadius: 2,
+                            offset: const Offset(0, 2), // changes position of shadow
                           ),
-                          SizedBox(height: 10.0),
-                          _buildImageSection(widget.order.clothesImageUrls),
-                          SizedBox(height: 20.0),
-                          const Text(
-                            'Designed Images:',
-                            style: TextStyle(
-                              fontSize: 18.0,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          SizedBox(height: 10.0),
-                          _buildImageSection(widget.order.designImageUrls),
                         ],
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              'Clothes Images:',
+                              style: TextStyle(
+                                fontSize: 18.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const SizedBox(height: 10.0),
+                            _buildImageSection(widget.order.clothesImageUrls),
+                            const SizedBox(height: 20.0),
+                            const Text(
+                              'Designed Images:',
+                              style: TextStyle(
+                                fontSize: 18.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const SizedBox(height: 10.0),
+                            _buildImageSection(widget.order.designImageUrls),
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                  SizedBox(height: 20.0),
+
+                  const SizedBox(height: 20.0),
                   // Row(
                   //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   //   children: [
@@ -170,7 +204,7 @@ class _SampleItemDetailsViewState extends State<SampleItemDetailsView> {
                   //     ),
                   //   ],
                   // ),
-                  SizedBox(height: 10.0),
+                  const SizedBox(height: 10.0),
                   button(),
                 ],
               ),
@@ -188,7 +222,7 @@ class _SampleItemDetailsViewState extends State<SampleItemDetailsView> {
               onPressed: () {
                 CompleteOrder(widget.order.expId, widget.order);
               },
-              child: Text(
+              child: const Text(
                 'Complete',
                 style: TextStyle(fontSize: 16.0),
               ),
@@ -205,12 +239,12 @@ class _SampleItemDetailsViewState extends State<SampleItemDetailsView> {
                             id: widget.order.customerId, isCustomer: false)));
               },
               style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(24),
-                    ),
-                    backgroundColor: whiteColor,
-                    side: BorderSide(color: redColor),
-                  ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(24),
+                ),
+                backgroundColor: whiteColor,
+                side: const BorderSide(color: redColor),
+              ),
               child: const Text(
                 'View Mesaurements',
                 style: TextStyle(fontSize: 16.0, color: redColor),
@@ -222,7 +256,6 @@ class _SampleItemDetailsViewState extends State<SampleItemDetailsView> {
     } else {
       return Column(
         children: [
-
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: SizedBox(
@@ -245,12 +278,12 @@ class _SampleItemDetailsViewState extends State<SampleItemDetailsView> {
                   }
                 },
                 style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(24),
-                    ),
-                    backgroundColor: whiteColor,
-                    side: BorderSide(color: redColor),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(24),
                   ),
+                  backgroundColor: whiteColor,
+                  side: const BorderSide(color: redColor),
+                ),
                 child: const Text(
                   'Chat',
                   style: TextStyle(fontSize: 16.0, color: redColor),
@@ -258,10 +291,6 @@ class _SampleItemDetailsViewState extends State<SampleItemDetailsView> {
               ),
             ),
           ),
-
-
-
-
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: SizedBox(
@@ -271,12 +300,12 @@ class _SampleItemDetailsViewState extends State<SampleItemDetailsView> {
                   deleteOrder(widget.order);
                 },
                 style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(24),
-                    ),
-                    backgroundColor: redColor,
-                    side: BorderSide(color: whiteColor),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(24),
                   ),
+                  backgroundColor: redColor,
+                  side: const BorderSide(color: whiteColor),
+                ),
                 child: const Text(
                   'Cancel',
                   style: TextStyle(fontSize: 16.0, color: whiteColor),
@@ -284,7 +313,6 @@ class _SampleItemDetailsViewState extends State<SampleItemDetailsView> {
               ),
             ),
           ),
-          
         ],
       );
     }
@@ -300,13 +328,13 @@ class _SampleItemDetailsViewState extends State<SampleItemDetailsView> {
                 ? NetworkImage(getCustomer.profileImageUrl)
                 : null,
             child:
-                getCustomer.profileImageUrl == " " ? Icon(Icons.person) : null,
+                getCustomer.profileImageUrl == " " ? const Icon(Icons.person) : null,
           ),
         ),
-        SizedBox(height: 10.0),
+        const SizedBox(height: 10.0),
         Text(
           getCustomer.name,
-          style: TextStyle(fontSize: 26.0, fontFamily: bold),
+          style: const TextStyle(fontSize: 26.0, fontFamily: bold),
         ),
       ],
     );
@@ -324,10 +352,10 @@ class _SampleItemDetailsViewState extends State<SampleItemDetailsView> {
             color: Colors.black,
           ),
         ),
-        SizedBox(height: 8.0),
+        const SizedBox(height: 8.0),
         Text(
           value,
-          style: TextStyle(fontSize: 16.0),
+          style: const TextStyle(fontSize: 16.0),
         ),
       ],
     );
@@ -400,13 +428,13 @@ class _SampleItemDetailsViewState extends State<SampleItemDetailsView> {
       'status': 'completed',
     });
 
-    Get.offAll(() => Home_Tailor());
+    Get.offAll(() => const Home_Tailor());
   }
 
   Future<void> deleteOrder(Orderr order) async {
     String orderId = order.getDocumentId() ?? '';
     await FirebaseFirestore.instance.collection('orders').doc(orderId).delete();
-    Get.offAll(() => Home());
+    Get.offAll(() => const Home());
   }
 
   Future<void> addToChatList(String customerId, String tailorId) async {
@@ -441,7 +469,7 @@ class _SampleItemDetailsViewState extends State<SampleItemDetailsView> {
       }
     } catch (e) {
       print(e.toString());
-      throw e; // Re-throw the exception for handling in calling function
+      rethrow; // Re-throw the exception for handling in calling function
     }
   }
 
@@ -475,7 +503,7 @@ class _SampleItemDetailsViewState extends State<SampleItemDetailsView> {
       }
     } catch (e) {
       print(e.toString());
-      throw e; // Re-throw the exception for handling in calling function
+      rethrow; // Re-throw the exception for handling in calling function
     }
   }
 }

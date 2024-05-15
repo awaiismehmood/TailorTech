@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dashboard/controllers/auth_controller.dart';
 import 'package:dashboard/Customer_views/auth_screen/signup_screen.dart';
@@ -69,46 +68,42 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: ourButton(
                                   onPress: () async {
                                     controller.isloading(true);
-                                    await controller
-                                        .loginMethod(context)
-                                        .then((value) async {
-                                      if (currentUser != null) {
-                                        DocumentSnapshot? userSnapshot =
-                                            await FirebaseFirestore.instance
-                                                .collection(usersCollection)
-                                                .doc(currentUser!.uid)
-                                                .get();
 
-                                        final data = userSnapshot.data()
-                                            as Map<String, dynamic>;
-                                        final String uType = data['type'];
-                                        if (value != null) {
-                                          if (uType == widget.type) {
-                                            // ignore: use_build_context_synchronously
-                                            VxToast.show(context, msg: logedin);
-                                            Get.offAll(() => const Home());
+                                    try {
+                                      await controller
+                                          .loginMethod(context)
+                                          .then((value) async {
+                                        if (currentUser != null) {
+                                          DocumentSnapshot? userSnapshot =
+                                              await FirebaseFirestore.instance
+                                                  .collection(usersCollection)
+                                                  .doc(currentUser!.uid)
+                                                  .get();
+                                          final data = userSnapshot.data()
+                                              as Map<String, dynamic>;
+                                          final String uType = data['type'];
+                                          if (value != null) {
+                                            if (uType == widget.type) {
+                                              VxToast.show(context,
+                                                  msg: logedin);
+                                              Get.offAll(() => const Home());
+                                            } else {
+                                              VxToast.show(context,
+                                                  msg: "User type mismatch");
+                                            }
+                                          } else {
+                                            VxToast.show(context,
+                                                msg: "Login failed");
                                           }
-                                        } else {
-                                          log("in else");
-                                          // ignore: use_build_context_synchronously
-                                          VxToast.show(context, msg: "Sorry");
                                         }
-                                      } else {
-                                        // If value is null, login failed
-                                        setState(() {
-                                          controller.isloading(
-                                              false); // Stop loading indicator
-                                        });
-                                      }
-                                    }).catchError((error) {
-                                      // Handle error from loginMethod
-                                      setState(() {
-                                        controller.isloading(
-                                            false); // Stop loading indicator
                                       });
+                                    } catch (error) {
                                       VxToast.show(context,
                                           msg: "Invalid Credentials");
-                                    });
+                                    } finally {
+                                      controller.isloading(
+                                          false); // Ensure loader is stopped
+                                    }
                                   },
                                   color: redColor,
                                   textcolor: whiteColor,

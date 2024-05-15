@@ -161,32 +161,32 @@ class _EditProfilePageState extends State<EditProfilePage> {
               const SizedBox(height: 20),
               TextFormField(
                 controller: _nameController,
-                decoration: InputDecoration(labelText: 'Name'),
+                decoration: const InputDecoration(labelText: 'Name'),
               ),
               const SizedBox(height: 20),
               TextFormField(
                 controller: _detailsController,
-                decoration: InputDecoration(labelText: 'Details'),
+                decoration: const InputDecoration(labelText: 'Details'),
               ),
               const SizedBox(height: 20),
               TextFormField(
                 controller: _minPriceController,
                 keyboardType: TextInputType.number,
-                decoration: InputDecoration(labelText: 'Min Price'),
+                decoration: const InputDecoration(labelText: 'Min Price'),
               ),
               const SizedBox(height: 20),
               TextFormField(
                 controller: _maxPriceController,
                 keyboardType: TextInputType.number,
-                decoration: InputDecoration(labelText: 'Max Price'),
+                decoration: const InputDecoration(labelText: 'Max Price'),
               ),
               const SizedBox(height: 20),
               DropdownButtonFormField<String>(
                 value: _selectedTailorType,
                 items: ['Male Tailor', 'Female Tailor']
                     .map((type) => DropdownMenuItem(
-                          child: Text(type),
                           value: type,
+                          child: Text(type),
                         ))
                     .toList(),
                 onChanged: (value) {
@@ -196,12 +196,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 },
                 decoration: const InputDecoration(labelText: 'Tailor Type'),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               const Text(
                 'Upload Images of Pre-built Clothes:',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               ElevatedButton(
                 onPressed: _selectImages,
                 style: ElevatedButton.styleFrom(
@@ -212,7 +212,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
               ),
               const SizedBox(height: 10),
               _selectedImages.isEmpty
-                  ? Text('No images selected')
+                  ? const Text('No images selected')
                   : Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -319,7 +319,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
           duration: Duration(seconds: 3),
         ),
       );
-      Get.offAll(Home_Tailor());
+      Get.offAll(const Home_Tailor());
     } catch (error) {
       // Show error message
       ScaffoldMessenger.of(context).showSnackBar(
@@ -347,7 +347,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
       return imageUrl;
     } catch (error) {
-      throw error;
+      rethrow;
     }
   }
 }

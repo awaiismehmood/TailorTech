@@ -8,7 +8,7 @@ Widget IconButtonn({onPress, String? tit, String? tit2, String? img}) {
   return GestureDetector(
     onTap: onPress,
     child: Container(
-      padding: EdgeInsets.symmetric(),
+      padding: const EdgeInsets.symmetric(),
       width: 120,
       height: 300,
       decoration: BoxDecoration(
@@ -16,8 +16,8 @@ Widget IconButtonn({onPress, String? tit, String? tit2, String? img}) {
           borderRadius: BorderRadius.circular(70),
           boxShadow: [
             BoxShadow(
-                color: Color.fromARGB(255, 102, 98, 98).withOpacity(0.7),
-                offset: Offset(3, 1),
+                color: const Color.fromARGB(255, 102, 98, 98).withOpacity(0.7),
+                offset: const Offset(3, 1),
                 spreadRadius: 1,
                 blurRadius: 5,
                 blurStyle: BlurStyle.normal)
@@ -30,10 +30,10 @@ Widget IconButtonn({onPress, String? tit, String? tit2, String? img}) {
               foregroundImage: AssetImage(img!),
               radius: 58,
             ),
-            SizedBox(height: 20.0),
+            const SizedBox(height: 20.0),
             Text(
               tit!, // Hard-coded text
-              style: TextStyle(
+              style: const TextStyle(
                 color: redColor,
                 fontSize: 18.0,
                 fontFamily: bold,
@@ -42,7 +42,7 @@ Widget IconButtonn({onPress, String? tit, String? tit2, String? img}) {
             7.heightBox,
             Text(
               tit2!, // Hard-coded text
-              style: TextStyle(
+              style: const TextStyle(
                 color: redColor,
                 fontSize: 10.0,
                 fontFamily: semibold,
@@ -50,7 +50,7 @@ Widget IconButtonn({onPress, String? tit, String? tit2, String? img}) {
               textAlign: TextAlign.center,
             ),
             55.heightBox,
-            Icon(
+            const Icon(
               Icons.check_box_outline_blank_rounded,
               size: 20,
             )

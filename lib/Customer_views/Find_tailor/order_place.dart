@@ -10,6 +10,8 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:image_picker/image_picker.dart';
 
 class TailorInfoScreen extends StatefulWidget {
+  const TailorInfoScreen({super.key});
+
   @override
   _TailorInfoScreenState createState() => _TailorInfoScreenState();
 }
@@ -105,7 +107,7 @@ class _TailorInfoScreenState extends State<TailorInfoScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Maximum $maxImages images allowed.'),
-            duration: Duration(seconds: 2),
+            duration: const Duration(seconds: 2),
           ),
         );
       }
@@ -143,7 +145,7 @@ class _TailorInfoScreenState extends State<TailorInfoScreen> {
                   ),
                 ),
                 IconButton(
-                  icon: Icon(Icons.cancel),
+                  icon: const Icon(Icons.cancel),
                   onPressed: () => _removeImage(imageList, imageList[index]),
                 ),
               ],
@@ -197,9 +199,21 @@ class _TailorInfoScreenState extends State<TailorInfoScreen> {
                   height: 20,
                 ),
                 Container(
-                  color: whiteColor,
+                  decoration: BoxDecoration(
+                    color: Colors.white, // Set background color to white
+                    borderRadius: BorderRadius.circular(10.0),
+                    boxShadow: [
+                      BoxShadow(
+                        color: redColor.withOpacity(0.1), // Set shadow color
+                        spreadRadius: 2,
+                        blurRadius: 4,
+                        offset: const Offset(0, 2), // changes position of shadow
+                      ),
+                    ],
+                  ),
                   child: Card(
-                    elevation: 4.0,
+                    elevation:
+                        0, // Remove Card's elevation since we are handling it with BoxDecoration
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0),
                     ),
@@ -211,15 +225,16 @@ class _TailorInfoScreenState extends State<TailorInfoScreen> {
                           const Text(
                             'Select Tailor Type:',
                             style: TextStyle(
-                                fontSize: 18.0,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black87),
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black87,
+                            ),
                           ),
                           const SizedBox(height: 8.0),
                           Row(
                             children: [
                               _buildTailorTypeButton('Male'),
-                              SizedBox(width: 16.0),
+                              const SizedBox(width: 16.0),
                               _buildTailorTypeButton('Female'),
                             ],
                           ),
@@ -230,9 +245,21 @@ class _TailorInfoScreenState extends State<TailorInfoScreen> {
                 ),
                 const SizedBox(height: 16.0),
                 Container(
-                  color: whiteColor,
+                  decoration: BoxDecoration(
+                    color: Colors.white, // Set background color to white
+                    borderRadius: BorderRadius.circular(10.0),
+                    boxShadow: [
+                      BoxShadow(
+                        color: redColor.withOpacity(0.1), // Set shadow color
+                        spreadRadius: 2,
+                        blurRadius: 4,
+                        offset: const Offset(0, 2), // changes position of shadow
+                      ),
+                    ],
+                  ),
                   child: Card(
-                    elevation: 4.0,
+                    elevation:
+                        0, // Remove Card's elevation since we are handling it with BoxDecoration
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0),
                     ),
@@ -263,11 +290,23 @@ class _TailorInfoScreenState extends State<TailorInfoScreen> {
                     ),
                   ),
                 ),
-                SizedBox(height: 16.0),
+                const SizedBox(height: 16.0),
                 Container(
-                  color: whiteColor,
+                  decoration: BoxDecoration(
+                    color: Colors.white, // Set background color to white
+                    borderRadius: BorderRadius.circular(10.0),
+                    boxShadow: [
+                      BoxShadow(
+                        color: redColor.withOpacity(0.1), // Set shadow color
+                        spreadRadius: 2,
+                        blurRadius: 4,
+                        offset: const Offset(0, 2), // changes position of shadow
+                      ),
+                    ],
+                  ),
                   child: Card(
-                    elevation: 4.0,
+                    elevation:
+                        0, // Remove Card's elevation since we are handling it with BoxDecoration
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0),
                     ),
@@ -279,13 +318,14 @@ class _TailorInfoScreenState extends State<TailorInfoScreen> {
                           const Text(
                             'Fabric (Up to 4 Images):',
                             style: TextStyle(
-                                fontSize: 18.0,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black87),
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black87,
+                            ),
                           ),
-                          SizedBox(height: 8.0),
+                          const SizedBox(height: 8.0),
                           _buildImageList(clothesImages),
-                          SizedBox(height: 8.0),
+                          const SizedBox(height: 8.0),
                           ElevatedButton(
                             onPressed: () => _pickImage(
                                 ImageSource.gallery, clothesImages, 4),
@@ -294,7 +334,7 @@ class _TailorInfoScreenState extends State<TailorInfoScreen> {
                                 borderRadius: BorderRadius.circular(24),
                               ),
                               backgroundColor: whiteColor,
-                              side: BorderSide(color: redColor),
+                              side: const BorderSide(color: redColor),
                             ),
                             child: const Text(
                               'Add clothes Photo',
@@ -306,11 +346,23 @@ class _TailorInfoScreenState extends State<TailorInfoScreen> {
                     ),
                   ),
                 ),
-                SizedBox(height: 16.0),
+                const SizedBox(height: 16.0),
                 Container(
-                  color: whiteColor,
+                  decoration: BoxDecoration(
+                    color: Colors.white, // Set background color to white
+                    borderRadius: BorderRadius.circular(10.0),
+                    boxShadow: [
+                      BoxShadow(
+                        color: redColor.withOpacity(0.1), // Set shadow color
+                        spreadRadius: 2,
+                        blurRadius: 4,
+                        offset: const Offset(0, 2), // changes position of shadow
+                      ),
+                    ],
+                  ),
                   child: Card(
-                    elevation: 4.0,
+                    elevation:
+                        0, // Remove Card's elevation since we are handling it with BoxDecoration
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0),
                     ),
@@ -322,13 +374,14 @@ class _TailorInfoScreenState extends State<TailorInfoScreen> {
                           const Text(
                             'Design (Up to 2 Images):',
                             style: TextStyle(
-                                fontSize: 18.0,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black87),
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black87,
+                            ),
                           ),
-                          SizedBox(height: 8.0),
+                          const SizedBox(height: 8.0),
                           _buildImageList(designImages),
-                          SizedBox(height: 8.0),
+                          const SizedBox(height: 8.0),
                           ElevatedButton(
                             onPressed: () => _pickImage(
                                 ImageSource.gallery, designImages, 2),
@@ -337,7 +390,7 @@ class _TailorInfoScreenState extends State<TailorInfoScreen> {
                                 borderRadius: BorderRadius.circular(24),
                               ),
                               backgroundColor: whiteColor,
-                              side: BorderSide(color: redColor),
+                              side: const BorderSide(color: redColor),
                             ),
                             child: const Text(
                               'Add Design Photo',
@@ -349,11 +402,23 @@ class _TailorInfoScreenState extends State<TailorInfoScreen> {
                     ),
                   ),
                 ),
-                SizedBox(height: 16.0),
+                const SizedBox(height: 16.0),
                 Container(
-                  color: whiteColor,
+                  decoration: BoxDecoration(
+                    color: Colors.white, // Set background color to white
+                    borderRadius: BorderRadius.circular(10.0),
+                    boxShadow: [
+                      BoxShadow(
+                        color: redColor.withOpacity(0.1), // Set shadow color
+                        spreadRadius: 2,
+                        blurRadius: 4,
+                        offset: const Offset(0, 2), // changes position of shadow
+                      ),
+                    ],
+                  ),
                   child: Card(
-                    elevation: 4.0,
+                    elevation:
+                        0, // Remove Card's elevation since we are handling it with BoxDecoration
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0),
                     ),
@@ -365,11 +430,12 @@ class _TailorInfoScreenState extends State<TailorInfoScreen> {
                           const Text(
                             'Details about the Design:',
                             style: TextStyle(
-                                fontSize: 18.0,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black87),
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black87,
+                            ),
                           ),
-                          SizedBox(height: 8.0),
+                          const SizedBox(height: 8.0),
                           TextField(
                             controller: detailsController,
                             maxLines: 4,
@@ -383,7 +449,7 @@ class _TailorInfoScreenState extends State<TailorInfoScreen> {
                     ),
                   ),
                 ),
-                SizedBox(height: 16.0),
+                const SizedBox(height: 16.0),
                 Center(
                   child: SizedBox(
                     width: MediaQuery.of(context).size.width *
@@ -425,7 +491,7 @@ class _TailorInfoScreenState extends State<TailorInfoScreen> {
                     ),
                   ),
                 ),
-                SizedBox(height: 16.0),
+                const SizedBox(height: 16.0),
               ],
             ),
           ),

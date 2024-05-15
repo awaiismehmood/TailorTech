@@ -36,7 +36,7 @@ class chatPage extends StatelessWidget {
   Widget build(BuildContext context) {
     log("iam in build message list");
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
           image: DecorationImage(image: AssetImage(icChat), opacity: 0.5),
           color: whiteColor),
       child: Scaffold(
@@ -74,13 +74,13 @@ class chatPage extends StatelessWidget {
         //errors
 
         if (snapshot.hasError) {
-          return Text("Error");
+          return const Text("Error");
         }
 
         //loading
 
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Text("Loading..");
+          return const Text("Loading..");
         }
 
         //return ListView
@@ -130,7 +130,7 @@ class chatPage extends StatelessWidget {
 
         Expanded(
           child: Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               border: Border.symmetric(
                 horizontal:
                     BorderSide(style: BorderStyle.solid, color: Colors.grey),
@@ -147,14 +147,14 @@ class chatPage extends StatelessWidget {
         //send button
 
         Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: redColor,
             shape: BoxShape.circle,
           ),
-          margin: EdgeInsets.only(right: 25),
+          margin: const EdgeInsets.only(right: 25),
           child: IconButton(
             onPressed: sendMessage,
-            icon: Icon(
+            icon: const Icon(
               Icons.arrow_upward,
               color: whiteColor,
             ),

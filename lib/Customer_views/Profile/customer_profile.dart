@@ -60,6 +60,7 @@ class _ProfileScreenCustomerState extends State<ProfileScreenCustomer> {
               child: ListView(
                 children: [
                   Card(
+                    color: Colors.white, // Set the background color to white
                     elevation: 4,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16),
@@ -71,7 +72,7 @@ class _ProfileScreenCustomerState extends State<ProfileScreenCustomer> {
                             ? NetworkImage(widget.customer.profileImageUrl)
                             : null,
                         child: widget.customer.profileImageUrl == " "
-                            ? Icon(Icons.person)
+                            ? const Icon(Icons.person)
                             : null,
                       ),
                       title: Text(
@@ -83,7 +84,7 @@ class _ProfileScreenCustomerState extends State<ProfileScreenCustomer> {
                       ),
                       subtitle: Text(
                         widget.customer.email,
-                        style: TextStyle(fontSize: 14),
+                        style: const TextStyle(fontSize: 14),
                       ),
                       // trailing: IconButton(
                       //   icon: Icon(Icons.edit),
@@ -91,12 +92,13 @@ class _ProfileScreenCustomerState extends State<ProfileScreenCustomer> {
                       //     // EditProfileScreen(tailor: widget.tailor);
                       //   },
                       // ),
-                      contentPadding: EdgeInsets.symmetric(vertical: 4),
+                      contentPadding: const EdgeInsets.symmetric(vertical: 4),
                     ),
                   ),
-                  SizedBox(height: 10), // Reduced the space
+                  const SizedBox(height: 10), // Reduced the space
                   // New "View My History" section
                   Card(
+                    color: whiteColor, // Set the background color to white
                     elevation: 4,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16),
@@ -132,7 +134,7 @@ class _ProfileScreenCustomerState extends State<ProfileScreenCustomer> {
                       ],
                     ),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Card(
                     elevation: 4,
                     shape: RoundedRectangleBorder(
@@ -172,7 +174,7 @@ class _ProfileScreenCustomerState extends State<ProfileScreenCustomer> {
                       ],
                     ),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Card(
                     elevation: 4,
                     shape: RoundedRectangleBorder(
@@ -253,7 +255,7 @@ class _ProfileScreenCustomerState extends State<ProfileScreenCustomer> {
                       ],
                     ),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Card(
                     elevation: 4,
                     shape: RoundedRectangleBorder(
@@ -273,7 +275,7 @@ class _ProfileScreenCustomerState extends State<ProfileScreenCustomer> {
                           ),
                         ),
                         ListTile(
-                          leading: Icon(Icons.chat),
+                          leading: const Icon(Icons.chat),
                           title: const Text(
                             'Chat',
                             style: TextStyle(fontSize: 14),

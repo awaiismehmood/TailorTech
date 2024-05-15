@@ -113,7 +113,7 @@ class _HomeState extends State<Home> {
               padding:
                   const EdgeInsets.symmetric(horizontal: 50.0, vertical: 2),
               child: GNav(
-                rippleColor: Colors.white,
+                rippleColor: redColor,
                 hoverColor: Colors.white,
                 tabBorderRadius: 30,
                 selectedIndex: controller.currNavIndex.value,
@@ -123,7 +123,7 @@ class _HomeState extends State<Home> {
                 backgroundColor: Colors.transparent,
                 // tabMargin: EdgeInsets.fromLTRB(10, 0, 10, 0),
                 activeColor: Colors.black,
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 tabBackgroundColor: Colors.black.withOpacity(0.02),
                 tabShadow: [
                   BoxShadow(

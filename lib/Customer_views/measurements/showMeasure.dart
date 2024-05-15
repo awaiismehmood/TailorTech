@@ -148,18 +148,18 @@ class _showMeasureState extends State<showMeasure> {
 
   Widget _buildMeasurementContainer(String label, double value) {
     return Container(
-      margin: EdgeInsets.only(bottom: 20.0),
-      padding: EdgeInsets.all(16.0),
+      margin: const EdgeInsets.only(bottom: 20.0),
+      padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8.0),
-        color: Color.fromARGB(
+        color: const Color.fromARGB(
             255, 255, 255, 255), // Set container color to light red
         boxShadow: [
           BoxShadow(
-            color: Color.fromARGB(122, 209, 200, 200).withOpacity(0.4),
+            color: const Color.fromARGB(122, 209, 200, 200).withOpacity(0.4),
             spreadRadius: 2,
             blurRadius: 2,
-            offset: Offset(0, 2),
+            offset: const Offset(0, 2),
           ),
         ],
       ),

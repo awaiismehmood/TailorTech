@@ -27,7 +27,7 @@ class Home_Tailor extends StatefulWidget {
 class _Home_TailorState extends State<Home_Tailor> {
   late Tailor tailor;
   var controller = Get.put(AuthController());
-  Location _locationController = new Location();
+  final Location _locationController = Location();
   bool isLoading = true;
 
   @override
@@ -124,7 +124,7 @@ class _Home_TailorState extends State<Home_Tailor> {
               padding:
                   const EdgeInsets.symmetric(horizontal: 50.0, vertical: 2),
               child: GNav(
-                rippleColor: Colors.white,
+                rippleColor: redColor,
                 hoverColor: Colors.white,
                 tabBorderRadius: 30,
                 selectedIndex: controller.currNavIndex.value,
@@ -134,7 +134,7 @@ class _Home_TailorState extends State<Home_Tailor> {
                 backgroundColor: Colors.transparent,
                 // tabMargin: EdgeInsets.fromLTRB(10, 0, 10, 0),
                 activeColor: Colors.black,
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 tabBackgroundColor: Colors.black.withOpacity(0.02),
                 tabShadow: [
                   BoxShadow(
@@ -153,21 +153,21 @@ class _Home_TailorState extends State<Home_Tailor> {
   }
 
   Future<void> getLocationUpdates() async {
-    bool _serviceEnabled;
-    PermissionStatus _permissionGranted;
+    bool serviceEnabled;
+    PermissionStatus permissionGranted;
 
-    _serviceEnabled = await _locationController.serviceEnabled();
-    if (_serviceEnabled) {
-      _serviceEnabled = await _locationController.requestService();
+    serviceEnabled = await _locationController.serviceEnabled();
+    if (serviceEnabled) {
+      serviceEnabled = await _locationController.requestService();
     } else {
       return;
     }
 
-    _permissionGranted = await _locationController.hasPermission();
+    permissionGranted = await _locationController.hasPermission();
 
-    if (_permissionGranted == PermissionStatus.denied) {
-      _permissionGranted = await _locationController.requestPermission();
-      if (_permissionGranted != PermissionStatus.granted) {
+    if (permissionGranted == PermissionStatus.denied) {
+      permissionGranted = await _locationController.requestPermission();
+      if (permissionGranted != PermissionStatus.granted) {
         return;
       }
     }

@@ -187,7 +187,7 @@ class AuthController extends GetxController {
 
 //signout method
 
-  signoutmethod(context, u_type) async {
+  signoutmethod(context, uType) async {
     try {
       await auth.signOut();
       Get.offAll(() => const SplashScreen());
