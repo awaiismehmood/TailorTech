@@ -38,9 +38,33 @@ class _SampleItemDetailsViewState extends State<SampleItemDetailsView> {
     return Scaffold(
       backgroundColor: whiteColor,
       appBar: AppBar(
-        title: Text('Order Details'),
         backgroundColor: redColor,
-      ),
+        title: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: Colors.white70, // You can change the border color here
+                  width: 2.0, // You can adjust the border width here
+                ),
+                borderRadius: const BorderRadius.all(Radius.circular(10)),
+              ),
+              child: const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                child: Text(
+                  'Order Details',
+                  style: TextStyle(
+                    color: whiteColor,
+                    fontFamily: 'Roboto',
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+                          ),
+          ),
+        ),
+      
       body: SingleChildScrollView(
         padding: EdgeInsets.all(16.0),
         child: _isLoading == true
@@ -54,30 +78,33 @@ class _SampleItemDetailsViewState extends State<SampleItemDetailsView> {
                   _buildUserProfile(),
                   SizedBox(height: 20.0),
                   Center(
-                    child: Card(
-                      elevation: 4.0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            _buildDetailItem('Customer Name', getCustomer.name),
-                            SizedBox(height: 10.0),
-                            _buildDetailItem(
-                                'Details of Order', widget.order.details),
-                            SizedBox(height: 10.0),
-                            _buildDetailItem(
-                                'Tailor Type', widget.order.tailorType),
-                            SizedBox(height: 10.0),
-                            _buildDetailItem(
-                                'Price', widget.order.price.toString()),
-                          ],
+                    child:Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Container(
+                        width: MediaQuery.of(context).size.width, // Set width to screen width
+                        child: Card(
+                          elevation: 4.0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                _buildDetailItem('Customer Name', getCustomer.name),
+                                SizedBox(height: 10.0),
+                                _buildDetailItem('Details of Order', widget.order.details),
+                                SizedBox(height: 10.0),
+                                _buildDetailItem('Tailor Type', widget.order.tailorType),
+                                SizedBox(height: 10.0),
+                                _buildDetailItem('Price', widget.order.price.toString()),
+                              ],
+                            ),
+                          ),
                         ),
                       ),
-                    ),
+                    )
                   ),
                   SizedBox(height: 20.0),
                   Card(
@@ -90,7 +117,7 @@ class _SampleItemDetailsViewState extends State<SampleItemDetailsView> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
+                          const Text(
                             'Clothes Images:',
                             style: TextStyle(
                               fontSize: 18.0,
@@ -100,7 +127,7 @@ class _SampleItemDetailsViewState extends State<SampleItemDetailsView> {
                           SizedBox(height: 10.0),
                           _buildImageSection(widget.order.clothesImageUrls),
                           SizedBox(height: 20.0),
-                          Text(
+                          const Text(
                             'Designed Images:',
                             style: TextStyle(
                               fontSize: 18.0,
@@ -177,9 +204,16 @@ class _SampleItemDetailsViewState extends State<SampleItemDetailsView> {
                         builder: (context) => showMeasure(
                             id: widget.order.customerId, isCustomer: false)));
               },
+              style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(24),
+                    ),
+                    backgroundColor: whiteColor,
+                    side: BorderSide(color: redColor),
+                  ),
               child: const Text(
                 'View Mesaurements',
-                style: TextStyle(fontSize: 16.0),
+                style: TextStyle(fontSize: 16.0, color: redColor),
               ),
             ),
           ),
@@ -188,43 +222,69 @@ class _SampleItemDetailsViewState extends State<SampleItemDetailsView> {
     } else {
       return Column(
         children: [
-          SizedBox(
-            width: double.infinity,
-            child: ElevatedButton(
-              onPressed: () {
-                deleteOrder(widget.order);
-              },
-              child: Text(
-                'Cancel',
-                style: TextStyle(fontSize: 16.0),
+
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () async {
+                  try {
+                    // Assuming you have the tailor's ID available
+                    String tailorId = widget.order.expId;
+                    // Get the current customer's ID
+                    String customerId = currentUser!.uid;
+                    // Add tailor's ID to the customer's chat list
+                    await addToChatList(customerId, tailorId);
+                    // Navigate to the chat page
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => chatHome()));
+                  } catch (e) {
+                    print("Error: $e");
+                    // Handle error
+                  }
+                },
+                style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(24),
+                    ),
+                    backgroundColor: whiteColor,
+                    side: BorderSide(color: redColor),
+                  ),
+                child: const Text(
+                  'Chat',
+                  style: TextStyle(fontSize: 16.0, color: redColor),
+                ),
               ),
             ),
           ),
-          SizedBox(
-            width: double.infinity,
-            child: ElevatedButton(
-              onPressed: () async {
-                try {
-                  // Assuming you have the tailor's ID available
-                  String tailorId = widget.order.expId;
-                  // Get the current customer's ID
-                  String customerId = currentUser!.uid;
-                  // Add tailor's ID to the customer's chat list
-                  await addToChatList(customerId, tailorId);
-                  // Navigate to the chat page
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => chatHome()));
-                } catch (e) {
-                  print("Error: $e");
-                  // Handle error
-                }
-              },
-              child: Text(
-                'Chat',
-                style: TextStyle(fontSize: 16.0),
+
+
+
+
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () {
+                  deleteOrder(widget.order);
+                },
+                style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(24),
+                    ),
+                    backgroundColor: redColor,
+                    side: BorderSide(color: whiteColor),
+                  ),
+                child: const Text(
+                  'Cancel',
+                  style: TextStyle(fontSize: 16.0, color: whiteColor),
+                ),
               ),
             ),
           ),
+          
         ],
       );
     }
@@ -258,9 +318,10 @@ class _SampleItemDetailsViewState extends State<SampleItemDetailsView> {
       children: [
         Text(
           title,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 18.0,
             fontWeight: FontWeight.bold,
+            color: Colors.black,
           ),
         ),
         SizedBox(height: 8.0),
