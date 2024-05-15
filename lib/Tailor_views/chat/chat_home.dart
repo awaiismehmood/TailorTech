@@ -22,11 +22,40 @@ class chatHomeT extends StatelessWidget {
         child: Scaffold(
           // backgroundColor: whiteColor,
           appBar: AppBar(
-            title: const Text("Chat Home"),
-            backgroundColor: redColor,
-            foregroundColor: whiteColor,
-            elevation: 0,
+        title: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: Colors.white70, // You can change the border color here
+                width: 2.0, // You can adjust the border width here
+              ),
+              borderRadius: const BorderRadius.all(Radius.circular(10)),
+            ),
+            child: const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+              child: Text(
+                'Chat - Home',
+                style: TextStyle(
+                  color: whiteColor,
+                  fontFamily: 'Roboto',
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
           ),
+        ),
+        backgroundColor: redColor,
+        actions: const [
+          // IconButton(
+          //   icon: const Icon(Icons.settings),
+          //   onPressed: () {
+          //     // Navigator.restorablePushNamed(context, SettingsView.routeName);
+          //   },
+          // ),
+        ],
+      ),
           body: _buildUserList(),
         ),
       ),

@@ -2,20 +2,22 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dashboard/Customer_views/home_screen/home.dart';
 import 'package:dashboard/consts/consts.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'measurement_class.dart';
 
+// ignore: camel_case_types
 class showMeasure extends StatefulWidget {
   final String id;
   final bool isCustomer;
   const showMeasure({super.key, required this.id, required this.isCustomer});
 
   @override
+  // ignore: library_private_types_in_public_api
   _showMeasureState createState() => _showMeasureState();
 }
 
+// ignore: camel_case_types
 class _showMeasureState extends State<showMeasure> {
   CustomerMeasurements? customerMeasurements;
   bool isEditing = false;
@@ -52,28 +54,48 @@ class _showMeasureState extends State<showMeasure> {
             ),
           )
         : Scaffold(
-            backgroundColor: Colors.red,
+          appBar: AppBar(
+          backgroundColor: redColor, // Red app bar background color
+          elevation: 10, // Add elevation for drop shadow
+          title: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: Colors.white70, // You can change the border color here
+                  width: 2.0, // You can adjust the border width here
+                ),
+                borderRadius: const BorderRadius.all(Radius.circular(10)),
+              ),
+              child: const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                child: Text(
+                  'My Measurements',
+                  style: TextStyle(
+                    color: whiteColor,
+                    fontFamily: 'Roboto',
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+        
+            backgroundColor: whiteColor,
             body: SafeArea(
               child: ListView(
-                padding: EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(16.0),
                 children: [
                   Row(
                     children: [
-                      const Expanded(
-                        child: Text(
-                          'My Measurements',
-                          style: TextStyle(
-                            fontFamily: bold,
-                            color: whiteColor,
-                            fontSize: 30,
-                          ),
-                        ),
-                      ),
+                       Spacer(),
                       widget.isCustomer
                           ? IconButton(
                               icon: Icon(
                                 isEditing ? Icons.done : Icons.edit,
-                                color: whiteColor,
+                                color: redColor,
                               ),
                               onPressed: () {
                                 setState(() {
@@ -136,13 +158,17 @@ class _showMeasureState extends State<showMeasure> {
                         content: Text('Measurements saved!'),
                       ));
                     },
-                    child: Icon(Icons.save),
+                    backgroundColor: Colors.white, // White background color
+                    foregroundColor: Colors.red, // Red icon color
+                    child: const Icon(Icons.save),
                   )
                 : FloatingActionButton(
                     onPressed: (() {
                       Navigator.of(context).pop();
                     }),
-                    child: Icon(Icons.home_filled),
+                    backgroundColor: Colors.white, // White background color
+                    foregroundColor: Colors.red, // Red icon color
+                    child: const Icon(Icons.home_filled),
                   ));
   }
 
@@ -156,7 +182,7 @@ class _showMeasureState extends State<showMeasure> {
             255, 255, 255, 255), // Set container color to light red
         boxShadow: [
           BoxShadow(
-            color: const Color.fromARGB(122, 209, 200, 200).withOpacity(0.4),
+            color:  redColor.withOpacity(0.2),
             spreadRadius: 2,
             blurRadius: 2,
             offset: const Offset(0, 2),
@@ -165,11 +191,11 @@ class _showMeasureState extends State<showMeasure> {
       ),
       child: Row(
         children: [
-          Icon(Icons.linear_scale),
-          SizedBox(width: 8.0),
+          const Icon(Icons.linear_scale),
+          const SizedBox(width: 8.0),
           Text(label,
-              style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold)),
-          SizedBox(width: 20.0),
+              style: const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold)),
+          const SizedBox(width: 20.0),
           if (isEditing)
             Expanded(
               child: TextFormField(
