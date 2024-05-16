@@ -6,6 +6,7 @@ import 'package:dashboard/consts/firebase_const.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
+import 'package:dashboard/consts/colors.dart';
 // import 'package:get/get.dart';
 
 class RatingScreen extends StatefulWidget {
@@ -31,12 +32,33 @@ class _RatingScreenState extends State<RatingScreen> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
-          title: const Text(
-            'Rate Your Tailor',
-            style: TextStyle(color: Colors.white),
-          ),
-          backgroundColor: Colors.red,
-        ),
+        backgroundColor: redColor, // Red app bar background color
+        elevation: 10, // Add elevation for drop shadow
+        title: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Colors.white70, // You can change the border color here
+                    width: 2.0, // You can adjust the border width here
+                  ),
+                  borderRadius: const BorderRadius.all(Radius.circular(10)),
+                ),
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                  child: Text(
+                    'Rate Your Tailor ',
+                    style: TextStyle(
+                      color: whiteColor,
+                      fontFamily: 'Roboto',
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+      ),
         body: FutureBuilder<DocumentSnapshot>(
           future: FirebaseFirestore.instance
               .collection(usersCollection1)
@@ -58,33 +80,35 @@ class _RatingScreenState extends State<RatingScreen> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Card(
-                      elevation: 4,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            CircleAvatar(
-                              radius: 50,
-                              backgroundImage:
-                                  NetworkImage(tailorData['ProfileImageurl']),
-                              backgroundColor: Colors.white,
+                    elevation: 4,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    color: Colors.white, 
+                    shadowColor: redColor.withOpacity(0.5), 
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          CircleAvatar(
+                            radius: 50,
+                            backgroundImage: NetworkImage(tailorData['ProfileImageurl']),
+                            backgroundColor: Colors.white,
+                          ),
+                          const SizedBox(height: 10),
+                          Text(
+                            tailorData['name'],
+                            style: const TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
                             ),
-                            const SizedBox(height: 10),
-                            Text(
-                              tailorData['name'],
-                              style: const TextStyle(
-                                fontSize: 24,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
+                  ),
+
                     const SizedBox(height: 20),
                     RatingBar.builder(
                       initialRating: _rating,

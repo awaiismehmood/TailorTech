@@ -9,10 +9,11 @@ import 'package:get/get.dart';
 import '../consts/consts.dart';
 //import '../view/home_screen/home.dart';
 
-class AuthController extends GetxController {
+class AuthController extends GetxController 
+{
   var isloading = false.obs;
 
-//text controllers
+  //text controllers
 
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
@@ -110,7 +111,7 @@ class AuthController extends GetxController {
     return emailRegExp.hasMatch(email);
   }
 
-//storing data od costumer method
+  //storing data od costumer method
 
   storeuserData({
     name,
@@ -139,8 +140,8 @@ class AuthController extends GetxController {
     });
   }
 
-//from map
-//to map
+  //from map
+  //to map
 
   storeTailorData({
     required BuildContext context,
@@ -185,7 +186,18 @@ class AuthController extends GetxController {
     });
   }
 
-//signout method
+  Future<void> sendPasswordReset(String email) async {
+    try {
+      await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+      // Password reset email sent successfully
+    } catch (e) {
+      // Error occurred while sending reset email
+      print('Error sending password reset email: $e');
+      throw e; // Re-throw the error to handle it where the method is called
+    }
+  }
+
+  //signout method
 
   signoutmethod(context, uType) async {
     try {
@@ -201,3 +213,11 @@ class AuthController extends GetxController {
     }
   }
 }
+
+// Future<void> sendPasswordReset(String email) async{
+//   try{
+//     await auth.sendPasswordResetEmail(email: email);
+//   }catch(e){
+//     print(e.toString());
+//   }
+// }

@@ -17,86 +17,189 @@ class DetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Order Details'),
-        backgroundColor: redColor,
-      ),
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back), // Add the back arrow icon
+            onPressed: () {
+              Navigator.of(context).pop(); // Handle the back button press
+            },
+          ),
+          title: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: Colors.white70, // You can change the border color here
+                  width: 2.0, // You can adjust the border width here
+                ),
+                borderRadius: const BorderRadius.all(Radius.circular(10)),
+              ),
+              child: const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                child: Text(
+                  'Order Details',
+                  style: TextStyle(
+                    color: whiteColor,
+                    fontFamily: 'Roboto',
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+          ),
+
+          backgroundColor:
+              Colors.red, // Set the background color of the app bar
+          elevation: 10, // Adjust the elevation to add drop shadow
+          shadowColor:
+              Colors.grey.withOpacity(0.5), // Set the color of the drop shadow
+        ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+
             _buildUserProfile(),
             const SizedBox(height: 20.0),
             Center(
-              child: Card(
-                elevation: 4.0,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _buildDetailItem('Customer Name', getCustomer.name),
-                      const SizedBox(height: 10.0),
-                      _buildDetailItem('Details of Order', order.details),
-                      const SizedBox(height: 10.0),
-                      _buildDetailItem('Tailor Type', order.tailorType),
-                      const SizedBox(height: 10.0),
-                      _buildDetailItem('Price', order.price.toString()),
-                    ],
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: SizedBox(
+                          width: MediaQuery.of(context).size.width, 
+                  child: Card(
+                    elevation: 4.0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16.0),
+                    ),
+                    child:  Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: redColor.withOpacity(0.1),
+                                  spreadRadius: 4,
+                                  blurRadius: 2,
+                                  offset: const Offset(0, 2),
+                                ),
+                              ],
+                            ), // Set background color to light red
+                            padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          _buildDetailItem('Customer Name', getCustomer.name),
+                          const SizedBox(height: 10.0),
+                          _buildDetailItem('Details of Order', order.details),
+                          const SizedBox(height: 10.0),
+                          _buildDetailItem('Tailor Type', order.tailorType),
+                          const SizedBox(height: 10.0),
+                          _buildDetailItem('Price', order.price.toString()),
+                        ],
+                      ),
+                    ),
                   ),
                 ),
               ),
             ),
             const SizedBox(height: 20.0),
             Card(
-              elevation: 4.0,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.0),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'Clothes Images:',
-                      style: TextStyle(
-                        fontSize: 18.0,
-                        fontWeight: FontWeight.bold,
+                    elevation: 4.0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    color: Colors.white, // Set background color to white
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10.0),
+                        boxShadow: [
+                          BoxShadow(
+                            color:
+                                redColor.withOpacity(0.1), // Set shadow color
+                            spreadRadius: 4,
+                            blurRadius: 2,
+                            offset: const Offset(0, 2), // changes position of shadow
+                          ),
+                        ],
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              'Clothes Images:',
+                              style: TextStyle(
+                                fontSize: 18.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const SizedBox(height: 10.0),
+                            _buildImageSection(order.clothesImageUrls),
+                            const SizedBox(height: 20.0),
+                            const Text(
+                              'Designed Images:',
+                              style: TextStyle(
+                                fontSize: 18.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const SizedBox(height: 10.0),
+                            _buildImageSection(order.designImageUrls),
+                          ],
+                        ),
                       ),
                     ),
-                    const SizedBox(height: 10.0),
-                    _buildImageSection(order.clothesImageUrls),
-                    const SizedBox(height: 20.0),
-                    const Text(
-                      'Designed Images:',
-                      style: TextStyle(
-                        fontSize: 18.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 10.0),
-                    _buildImageSection(order.designImageUrls),
-                  ],
+                  ),
+            
+
+
+            const SizedBox(height: 20.0),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () {
+                  acceptOrder(order.expId, order);
+                },
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(24),
+                  ),
+                  backgroundColor: whiteColor,
+                  side: const BorderSide(color: redColor),
+                ),
+                child: const Text(
+                  'Accept',
+                  style: TextStyle(fontSize: 16.0,
+                  color: redColor),
                 ),
               ),
             ),
-            const SizedBox(height: 20.0),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
+
+
+
+
+            const SizedBox(height: 10.0),
+
                 SizedBox(
-                  width: 300, //150,
+                  width: double.infinity, //150,
                   child: ElevatedButton(
                     onPressed: () {
                       deleteOrder(order);
                     },
+                    style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(24),
+                  ),
+                  backgroundColor: redColor,
+                  side: const BorderSide(color: whiteColor),
+                ),
                     child: const Text(
                       'Decline',
-                      style: TextStyle(fontSize: 16.0),
+                      style: TextStyle(fontSize: 16.0,
+                      color: whiteColor),
                     ),
                   ),
                 ),
@@ -129,21 +232,10 @@ class DetailScreen extends StatelessWidget {
                 //     ),
                 //   ),
                 // ),
-              ],
-            ),
+            
+    
             const SizedBox(height: 10.0),
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () {
-                  acceptOrder(order.expId, order);
-                },
-                child: const Text(
-                  'Accept',
-                  style: TextStyle(fontSize: 16.0),
-                ),
-              ),
-            ),
+
           ],
         ),
       ),

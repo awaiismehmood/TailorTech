@@ -128,7 +128,8 @@ class _ProfileScreenCustomerState extends State<ProfileScreenCustomer> {
                           },
                           title: const Text(
                             'History Content',
-                            style: TextStyle(fontSize: 14),
+                            style: TextStyle(fontSize: 14,
+                            fontWeight: FontWeight.bold,),
                           ),
                         ),
                       ],
@@ -278,7 +279,8 @@ class _ProfileScreenCustomerState extends State<ProfileScreenCustomer> {
                           leading: const Icon(Icons.chat),
                           title: const Text(
                             'Chat',
-                            style: TextStyle(fontSize: 14),
+                            style: TextStyle(fontSize: 14,
+                            fontWeight: FontWeight.bold,),
                           ),
                           onTap: () {
                             Navigator.push(

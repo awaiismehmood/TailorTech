@@ -3,6 +3,7 @@ import 'package:dashboard/Tailor_views/auth_screen/signup_screen.dart';
 import 'package:dashboard/Tailor_views/home_screen/home.dart';
 import 'package:dashboard/controllers/auth_controller.dart';
 import 'package:dashboard/consts/consts.dart';
+import 'package:dashboard/view/forgot_password_tailor.dart';
 import 'package:dashboard/widgets_common/applogo_widget.dart';
 import 'package:dashboard/widgets_common/bg_widgets.dart';
 import 'package:dashboard/widgets_common/button.dart';
@@ -57,7 +58,9 @@ class _LoginScreenTailorState extends State<LoginScreen_Tailor> {
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>const ForgotPassword_t()));
+                        },
                         child: forgetPass.text.make(),
                       ),
                     ),

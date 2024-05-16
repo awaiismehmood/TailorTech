@@ -216,38 +216,52 @@ class _SampleItemDetailsViewState extends State<SampleItemDetailsView> {
     if (widget.isTailor == true) {
       return Column(
         children: [
-          SizedBox(
-            width: double.infinity,
-            child: ElevatedButton(
-              onPressed: () {
-                CompleteOrder(widget.order.expId, widget.order);
-              },
-              child: const Text(
-                'Complete',
-                style: TextStyle(fontSize: 16.0),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () {
+                  CompleteOrder(widget.order.expId, widget.order);
+                },
+                              style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(24),
+                  ),
+                  backgroundColor: whiteColor,
+                  side: const BorderSide(color: redColor),
+                ),
+                child: const Text(
+                  'Complete',
+                  style: TextStyle(fontSize: 16.0,
+                  color: redColor),
+                ),
               ),
             ),
           ),
-          SizedBox(
-            width: double.infinity,
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => showMeasure(
-                            id: widget.order.customerId, isCustomer: false)));
-              },
-              style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(24),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => showMeasure(
+                              id: widget.order.customerId, isCustomer: false)));
+                },
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(24),
+                  ),
+                  backgroundColor: whiteColor,
+                  side: const BorderSide(color: redColor),
                 ),
-                backgroundColor: whiteColor,
-                side: const BorderSide(color: redColor),
-              ),
-              child: const Text(
-                'View Mesaurements',
-                style: TextStyle(fontSize: 16.0, color: redColor),
+                child: const Text(
+                  'View Mesaurements',
+                  style: TextStyle(fontSize: 16.0, color: redColor),
+                ),
               ),
             ),
           ),
