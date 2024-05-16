@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dashboard/Model_Classes/tailor_class.dart';
 // import 'package:dashboard/Tailor_views/Profile/profilepage.dart';
@@ -13,6 +15,7 @@ import 'package:get/get.dart';
 //import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:location/location.dart';
+import 'package:geolocator/geolocator.dart';
 
 import '../../controllers/home_controller.dart';
 
@@ -34,10 +37,10 @@ class _Home_TailorState extends State<Home_Tailor> {
   void initState() {
     super.initState();
     fetchData();
+    getLocationUpdates();
   }
 
   void fetchData() async {
-    getLocationUpdates();
     DocumentSnapshot doc = await FirebaseFirestore.instance
         .collection(usersCollection1)
         .doc(currentUser!.uid)
@@ -153,35 +156,50 @@ class _Home_TailorState extends State<Home_Tailor> {
   }
 
   Future<void> getLocationUpdates() async {
-    bool serviceEnabled;
-    PermissionStatus permissionGranted;
+    try {
+      log("in try");
 
-    serviceEnabled = await _locationController.serviceEnabled();
-    if (serviceEnabled) {
-      serviceEnabled = await _locationController.requestService();
-    } else {
-      return;
-    }
-
-    permissionGranted = await _locationController.hasPermission();
-
-    if (permissionGranted == PermissionStatus.denied) {
-      permissionGranted = await _locationController.requestPermission();
-      if (permissionGranted != PermissionStatus.granted) {
+      bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+      if (!serviceEnabled) {
+        log("Location services are disabled.");
         return;
       }
-    }
-    _locationController.onLocationChanged
-        .listen((LocationData currentLocation) async {
-      if (currentLocation.latitude != null &&
-          currentLocation.longitude != null) {
-        CollectionReference collection =
-            FirebaseFirestore.instance.collection(usersCollection1);
-        await collection.doc(currentUser!.uid).update({
-          'longitude': currentLocation.longitude,
-          'latitude': currentLocation.latitude,
-        });
+
+      // Check for location permissions
+      LocationPermission permission = await Geolocator.checkPermission();
+      log("Permission status: $permission");
+
+      if (permission == LocationPermission.denied) {
+        permission = await Geolocator.requestPermission();
+        log("Permission status after request: $permission");
+        if (permission == LocationPermission.denied) {
+          return;
+        }
       }
-    });
+
+      try {
+        Position initialLocation = await Geolocator.getCurrentPosition();
+        log("Initial location: $initialLocation");
+      } catch (e) {
+        log("Error getting initial location: $e");
+        // Handle error accordingly...
+      }
+      // Listen for location changes
+      Geolocator.getPositionStream().listen((Position currentLocation) async {
+        log("Location update received: $currentLocation");
+        if (currentLocation.latitude != null &&
+            currentLocation.longitude != null) {
+          CollectionReference collection =
+              FirebaseFirestore.instance.collection(usersCollection1);
+          await collection.doc(currentUser!.uid).update({
+            'longitude': currentLocation.longitude,
+            'latitude': currentLocation.latitude,
+          });
+        }
+      });
+    } catch (e) {
+      log("Error getting location: $e");
+      // Handle error accordingly...
+    }
   }
 }

@@ -17,7 +17,7 @@ class MapPage extends StatefulWidget {
 }
 
 class _MapPageState extends State<MapPage> {
-  final Location _locationController = Location();
+  Location _locationController = new Location();
   var controller1 = Get.put(AuthController());
 
   List<Map<String, dynamic>> tailorLocations = [];
@@ -29,7 +29,7 @@ class _MapPageState extends State<MapPage> {
 
   // static const LatLng _pApplePark = LatLng(37.3346, -122.0090);
   static const LatLng _pGooglePlex = LatLng(37.4223, -122.0848);
-  LatLng? _currentP;
+  LatLng? _currentP = null;
 
   // void setCustomMarkerIcon() {
   //   BitmapDescriptor.fromAssetImage(
@@ -52,12 +52,14 @@ class _MapPageState extends State<MapPage> {
     return Scaffold(
       body: _currentP == null
           ? const Center(
-              child: CircularProgressIndicator(),
+              child: Text(
+                "Loading..",
+              ),
             )
           : GoogleMap(
               onMapCreated: ((GoogleMapController controller) =>
                   _mapController.complete(controller)),
-              initialCameraPosition: const CameraPosition(
+              initialCameraPosition: CameraPosition(
                 target: _pGooglePlex,
                 zoom: 13,
               ),
@@ -67,7 +69,7 @@ class _MapPageState extends State<MapPage> {
   }
 
   Set<Marker> _createMarkers() {
-    Set<Marker> markers = <Marker>{};
+    Set<Marker> markers = Set<Marker>();
 
     // Add markers for tailor locations
     for (int i = 0; i < tailorLocations.length; i++) {
@@ -80,7 +82,7 @@ class _MapPageState extends State<MapPage> {
 
       markers.add(
         Marker(
-          markerId: const MarkerId("_currentLocation"),
+          markerId: MarkerId("_currentLocation"),
           icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueCyan),
           position: _currentP!,
         ),
@@ -124,31 +126,31 @@ class _MapPageState extends State<MapPage> {
 
   Future<void> _cameraToPosition(LatLng pos) async {
     final GoogleMapController controller = await _mapController.future;
-    CameraPosition newCameraPosition = CameraPosition(
+    CameraPosition _newCameraPosition = CameraPosition(
       target: pos,
       zoom: 15,
     );
     await controller.animateCamera(
-      CameraUpdate.newCameraPosition(newCameraPosition),
+      CameraUpdate.newCameraPosition(_newCameraPosition),
     );
   }
 
   Future<void> getLocationUpdates() async {
-    bool serviceEnabled;
-    PermissionStatus permissionGranted;
+    bool _serviceEnabled;
+    PermissionStatus _permissionGranted;
 
-    serviceEnabled = await _locationController.serviceEnabled();
-    if (serviceEnabled) {
-      serviceEnabled = await _locationController.requestService();
+    _serviceEnabled = await _locationController.serviceEnabled();
+    if (_serviceEnabled) {
+      _serviceEnabled = await _locationController.requestService();
     } else {
       return;
     }
 
-    permissionGranted = await _locationController.hasPermission();
+    _permissionGranted = await _locationController.hasPermission();
 
-    if (permissionGranted == PermissionStatus.denied) {
-      permissionGranted = await _locationController.requestPermission();
-      if (permissionGranted != PermissionStatus.granted) {
+    if (_permissionGranted == PermissionStatus.denied) {
+      _permissionGranted = await _locationController.requestPermission();
+      if (_permissionGranted != PermissionStatus.granted) {
         return;
       }
     }

@@ -1,6 +1,5 @@
 import 'package:dashboard/consts/consts.dart';
 import 'package:dashboard/controllers/auth_controller.dart';
-import 'package:dashboard/consts/consts.dart';
 import 'package:flutter/material.dart';
 
 class ForgotPassword_t extends StatefulWidget {
@@ -104,7 +103,8 @@ class _ForgotPasswordState extends State<ForgotPassword_t> {
                         await _auth.sendPasswordReset(email);
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
-                            content: Text('Password reset email sent to $email'),
+                            content:
+                                Text('Password reset email sent to $email'),
                             backgroundColor: Colors.green,
                           ),
                         );
