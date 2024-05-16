@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:developer';
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -13,6 +15,7 @@ class TailorInfoScreen extends StatefulWidget {
   const TailorInfoScreen({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _TailorInfoScreenState createState() => _TailorInfoScreenState();
 }
 
@@ -207,7 +210,8 @@ class _TailorInfoScreenState extends State<TailorInfoScreen> {
                         color: redColor.withOpacity(0.1), // Set shadow color
                         spreadRadius: 2,
                         blurRadius: 4,
-                        offset: const Offset(0, 2), // changes position of shadow
+                        offset:
+                            const Offset(0, 2), // changes position of shadow
                       ),
                     ],
                   ),
@@ -253,7 +257,8 @@ class _TailorInfoScreenState extends State<TailorInfoScreen> {
                         color: redColor.withOpacity(0.1), // Set shadow color
                         spreadRadius: 2,
                         blurRadius: 4,
-                        offset: const Offset(0, 2), // changes position of shadow
+                        offset:
+                            const Offset(0, 2), // changes position of shadow
                       ),
                     ],
                   ),
@@ -300,7 +305,8 @@ class _TailorInfoScreenState extends State<TailorInfoScreen> {
                         color: redColor.withOpacity(0.1), // Set shadow color
                         spreadRadius: 2,
                         blurRadius: 4,
-                        offset: const Offset(0, 2), // changes position of shadow
+                        offset:
+                            const Offset(0, 2), // changes position of shadow
                       ),
                     ],
                   ),
@@ -356,7 +362,8 @@ class _TailorInfoScreenState extends State<TailorInfoScreen> {
                         color: redColor.withOpacity(0.1), // Set shadow color
                         spreadRadius: 2,
                         blurRadius: 4,
-                        offset: const Offset(0, 2), // changes position of shadow
+                        offset:
+                            const Offset(0, 2), // changes position of shadow
                       ),
                     ],
                   ),
@@ -412,7 +419,8 @@ class _TailorInfoScreenState extends State<TailorInfoScreen> {
                         color: redColor.withOpacity(0.1), // Set shadow color
                         spreadRadius: 2,
                         blurRadius: 4,
-                        offset: const Offset(0, 2), // changes position of shadow
+                        offset:
+                            const Offset(0, 2), // changes position of shadow
                       ),
                     ],
                   ),

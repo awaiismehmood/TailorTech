@@ -1,12 +1,14 @@
+// ignore_for_file: library_private_types_in_public_api, camel_case_types, duplicate_ignore, avoid_print
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dashboard/Customer_views/home_screen/home.dart';
 import 'package:dashboard/consts/consts.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'measurement_class.dart';
 
+// ignore: camel_case_types
 class showMeasure extends StatefulWidget {
   final String id;
   final bool isCustomer;
@@ -55,7 +57,7 @@ class _showMeasureState extends State<showMeasure> {
             backgroundColor: Colors.red,
             body: SafeArea(
               child: ListView(
-                padding: EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(16.0),
                 children: [
                   Row(
                     children: [
@@ -81,7 +83,7 @@ class _showMeasureState extends State<showMeasure> {
                                 });
                               },
                             )
-                          : Icon(Icons.accessible_forward_rounded),
+                          : const Icon(Icons.accessible_forward_rounded),
                     ],
                   ),
                   const SizedBox(
@@ -124,7 +126,7 @@ class _showMeasureState extends State<showMeasure> {
             floatingActionButton: widget.isCustomer
                 ? FloatingActionButton(
                     onPressed: () {
-                      Get.offAll(Home());
+                      Get.offAll(const Home());
                       customerMeasurements?.saveToFirestore();
 
                       // setState(() {
@@ -136,13 +138,13 @@ class _showMeasureState extends State<showMeasure> {
                         content: Text('Measurements saved!'),
                       ));
                     },
-                    child: Icon(Icons.save),
+                    child: const Icon(Icons.save),
                   )
                 : FloatingActionButton(
                     onPressed: (() {
                       Navigator.of(context).pop();
                     }),
-                    child: Icon(Icons.home_filled),
+                    child: const Icon(Icons.home_filled),
                   ));
   }
 
@@ -165,11 +167,12 @@ class _showMeasureState extends State<showMeasure> {
       ),
       child: Row(
         children: [
-          Icon(Icons.linear_scale),
-          SizedBox(width: 8.0),
+          const Icon(Icons.linear_scale),
+          const SizedBox(width: 8.0),
           Text(label,
-              style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold)),
-          SizedBox(width: 20.0),
+              style:
+                  const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold)),
+          const SizedBox(width: 20.0),
           if (isEditing)
             Expanded(
               child: TextFormField(

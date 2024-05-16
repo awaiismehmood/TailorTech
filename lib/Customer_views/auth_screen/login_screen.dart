@@ -84,20 +84,24 @@ class _LoginScreenState extends State<LoginScreen> {
                                           final String uType = data['type'];
                                           if (value != null) {
                                             if (uType == widget.type) {
+                                              // ignore: use_build_context_synchronously
                                               VxToast.show(context,
                                                   msg: logedin);
                                               Get.offAll(() => const Home());
                                             } else {
+                                              // ignore: use_build_context_synchronously
                                               VxToast.show(context,
                                                   msg: "User type mismatch");
                                             }
                                           } else {
+                                            // ignore: use_build_context_synchronously
                                             VxToast.show(context,
                                                 msg: "Login failed");
                                           }
                                         }
                                       });
                                     } catch (error) {
+                                      // ignore: use_build_context_synchronously
                                       VxToast.show(context,
                                           msg: "Invalid Credentials");
                                     } finally {
