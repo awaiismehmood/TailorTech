@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api, avoid_unnecessary_containers, use_build_context_synchronously, duplicate_ignore
+
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
@@ -483,7 +485,8 @@ class _MeasurementScreenState extends State<MeasurementScreen> {
                   onPressed: () {
                     if (_imageFile != null) {
                       String height = _heightController.text;
-                      _sendMeasurementRequest(context, _imageFile!.path, height);
+                      _sendMeasurementRequest(
+                          context, _imageFile!.path, height);
                     } else {
                       print('No image selected.');
                     }

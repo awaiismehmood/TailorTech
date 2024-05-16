@@ -12,6 +12,7 @@ const nameHint = "Name Here";
 const forgetPass = "Forget Password";
 const phone = "Phone Number";
 const phoneHint = "03000111000";
+// ignore: constant_identifier_names
 const Cnic = "Enter Your CNIC Number";
 const cnicHint = "55555-4444444-4";
 const login = " Log in";
