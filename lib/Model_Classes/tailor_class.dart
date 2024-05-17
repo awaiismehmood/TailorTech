@@ -20,6 +20,7 @@ class Tailor {
   double minPrice;
   double maxPrice;
   List<String> chatList;
+  bool verified;
 
   Tailor(
       {required this.id,
@@ -40,6 +41,7 @@ class Tailor {
       required this.ratting,
       required this.minPrice,
       required this.maxPrice,
+      required this.verified,
       required this.chatList});
 
   factory Tailor.fromFirestore1(DocumentSnapshot doc) {
@@ -63,6 +65,7 @@ class Tailor {
       ratting: data['ratting'],
       minPrice: data['minPrice'],
       maxPrice: data['maxPrice'],
+      verified: data['verified'],
       chatList: List<String>.from(data['chatlist'] ?? []),
     );
   }

@@ -10,6 +10,7 @@ enum OrderStatus {
   all,
   completed,
   Running,
+  Pending,
 }
 
 class customerOrderHistory extends StatefulWidget {
@@ -26,33 +27,33 @@ class _customerOrderHistoryState extends State<customerOrderHistory> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-appBar: AppBar(
+      appBar: AppBar(
         backgroundColor: redColor, // Red app bar background color
         elevation: 10, // Add elevation for drop shadow
         title: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Colors.white70, // You can change the border color here
-                    width: 2.0, // You can adjust the border width here
-                  ),
-                  borderRadius: const BorderRadius.all(Radius.circular(10)),
-                ),
-                child: const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-                  child: Text(
-                    'Order History ',
-                    style: TextStyle(
-                      color: whiteColor,
-                      fontFamily: 'Roboto',
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: Colors.white70, // You can change the border color here
+                width: 2.0, // You can adjust the border width here
+              ),
+              borderRadius: const BorderRadius.all(Radius.circular(10)),
+            ),
+            child: const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+              child: Text(
+                'Order History ',
+                style: TextStyle(
+                  color: whiteColor,
+                  fontFamily: 'Roboto',
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
             ),
+          ),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(12.0),
@@ -60,13 +61,17 @@ appBar: AppBar(
           children: [
             Padding(
               padding: const EdgeInsets.all(12.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  _buildFilterButton('All', OrderStatus.all),
-                  _buildFilterButton('Completed', OrderStatus.completed),
-                  _buildFilterButton('In Process', OrderStatus.Running),
-                ],
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    _buildFilterButton('All', OrderStatus.all),
+                    _buildFilterButton('Completed', OrderStatus.completed),
+                    _buildFilterButton('In Process', OrderStatus.Running),
+                    _buildFilterButton("Pending", OrderStatus.Pending),
+                  ],
+                ),
               ),
             ),
             Expanded(
@@ -80,16 +85,16 @@ appBar: AppBar(
                       child: CircularProgressIndicator(),
                     );
                   }
-        
+
                   List<Orderr> orders = snapshot.data!.docs
                       .map((DocumentSnapshot document) {
                         return Orderr.fromDocument(document);
                       })
                       .where((orders) => orders.customerId == currentUser?.uid)
                       .toList();
-        
+
                   List<Orderr> filteredOrders = _filterOrders(orders);
-        
+
                   return ListView.builder(
                     itemCount: filteredOrders.length,
                     itemBuilder: (BuildContext context, int index) {
@@ -104,7 +109,8 @@ appBar: AppBar(
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => SampleItemDetailsView(
+                                      builder: (context) =>
+                                          SampleItemDetailsView(
                                             isTailor: false,
                                             order: order,
                                           )));
@@ -114,7 +120,8 @@ appBar: AppBar(
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => RatingScreen(
-                                              tailorId: order.tailorId.toString(),
+                                              tailorId:
+                                                  order.tailorId.toString(),
                                               order: order,
                                             )));
                               }
@@ -149,6 +156,8 @@ appBar: AppBar(
         return 'completed';
       case OrderStatus.Running:
         return 'Running';
+      case OrderStatus.Pending:
+        return 'Pending';
       default:
         return '';
     }

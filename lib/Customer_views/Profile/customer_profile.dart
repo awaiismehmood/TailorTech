@@ -128,8 +128,10 @@ class _ProfileScreenCustomerState extends State<ProfileScreenCustomer> {
                           },
                           title: const Text(
                             'History Content',
-                            style: TextStyle(fontSize: 14,
-                            fontWeight: FontWeight.bold,),
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                       ],
@@ -279,8 +281,10 @@ class _ProfileScreenCustomerState extends State<ProfileScreenCustomer> {
                           leading: const Icon(Icons.chat),
                           title: const Text(
                             'Chat',
-                            style: TextStyle(fontSize: 14,
-                            fontWeight: FontWeight.bold,),
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                           onTap: () {
                             Navigator.push(
@@ -308,7 +312,8 @@ class _ProfileScreenCustomerState extends State<ProfileScreenCustomer> {
                             style: TextStyle(fontSize: 14),
                           ),
                           onTap: () {
-                            controller.signoutmethod(context, "Customer");
+                            controller.signoutMethod(context);
+                            controller.dispose();
                           },
                         ),
                       ],

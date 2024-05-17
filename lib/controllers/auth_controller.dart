@@ -1,7 +1,7 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dashboard/First_screen/first_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,8 +9,7 @@ import 'package:get/get.dart';
 import '../consts/consts.dart';
 //import '../view/home_screen/home.dart';
 
-class AuthController extends GetxController 
-{
+class AuthController extends GetxController {
   var isloading = false.obs;
 
   //text controllers
@@ -159,6 +158,7 @@ class AuthController extends GetxController
     minPrice = 0.0,
     maxPrice = 0.00,
     List<String>? chatList,
+    verified,
   }) async {
     DocumentReference store =
         firestore.collection(usersCollection1).doc(currentUser!.uid);
@@ -183,6 +183,7 @@ class AuthController extends GetxController
       'minPrice': minPrice,
       'maxPrice': maxPrice,
       'chatlist': chatList,
+      'verified': verified,
     });
   }
 
@@ -199,17 +200,19 @@ class AuthController extends GetxController
 
   //signout method
 
-  signoutmethod(context, uType) async {
+  Future<void> signoutMethod(BuildContext context) async {
     try {
-      await auth.signOut();
-      Get.offAll(() => const SplashScreen());
-      // if (u_type == "Customer") {
-      //   Get.offAll(LoginScreen(type: u_type));
-      // } else {
-      //   Get.offAll(LoginScreen_Tailor(type: u_type));
-      // }
+      await _auth.signOut();
+      emailController.clear();
+      passwordController.clear();
+      exit(0);
+      // Clear email and password controllers
+
+      // Navigate to the splash screen or login screen
+      // Get.offAll(() => const SplashScreen());
     } catch (e) {
-      VxToast.show(context, msg: e.toString());
+      log('Error during signout: $e');
+      VxToast.show(context, msg: 'Failed to sign out.');
     }
   }
 }

@@ -193,7 +193,8 @@ class _TailorShowState extends State<TailorShow> {
             direction: Axis.horizontal,
             allowHalfRating: true,
             itemPadding: const EdgeInsets.symmetric(horizontal: 4),
-            itemBuilder: (context, _) => const Icon(Icons.star, color: redColor),
+            itemBuilder: (context, _) =>
+                const Icon(Icons.star, color: redColor),
             ignoreGestures: true,
             onRatingUpdate: (rating) {},
           ),
@@ -208,6 +209,7 @@ class _TailorShowState extends State<TailorShow> {
         .doc(widget.orderId)
         .update({
       'expectedTailorId': tailorId,
+      'status': "Pending",
     });
   }
 

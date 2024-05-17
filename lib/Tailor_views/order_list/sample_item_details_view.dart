@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dashboard/Customer_views/home_screen/home.dart';
 import 'package:dashboard/Customer_views/measurements/showMeasure.dart';
@@ -140,7 +142,8 @@ class _SampleItemDetailsViewState extends State<SampleItemDetailsView> {
                                 redColor.withOpacity(0.1), // Set shadow color
                             spreadRadius: 4,
                             blurRadius: 2,
-                            offset: const Offset(0, 2), // changes position of shadow
+                            offset: const Offset(
+                                0, 2), // changes position of shadow
                           ),
                         ],
                       ),
@@ -224,7 +227,7 @@ class _SampleItemDetailsViewState extends State<SampleItemDetailsView> {
                 onPressed: () {
                   CompleteOrder(widget.order.expId, widget.order);
                 },
-                              style: ElevatedButton.styleFrom(
+                style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(24),
                   ),
@@ -233,8 +236,7 @@ class _SampleItemDetailsViewState extends State<SampleItemDetailsView> {
                 ),
                 child: const Text(
                   'Complete',
-                  style: TextStyle(fontSize: 16.0,
-                  color: redColor),
+                  style: TextStyle(fontSize: 16.0, color: redColor),
                 ),
               ),
             ),
@@ -278,11 +280,13 @@ class _SampleItemDetailsViewState extends State<SampleItemDetailsView> {
                 onPressed: () async {
                   try {
                     // Assuming you have the tailor's ID available
-                    String tailorId = widget.order.expId;
+                    String? tailorId = widget.order.tailorId;
                     // Get the current customer's ID
                     String customerId = currentUser!.uid;
                     // Add tailor's ID to the customer's chat list
-                    await addToChatList(customerId, tailorId);
+                    log("customer ID $customerId");
+                    log("tailorid $tailorId");
+                    await addToChatList(customerId, tailorId!);
                     // Navigate to the chat page
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => chatHome()));
@@ -341,8 +345,9 @@ class _SampleItemDetailsViewState extends State<SampleItemDetailsView> {
             backgroundImage: getCustomer.profileImageUrl != " "
                 ? NetworkImage(getCustomer.profileImageUrl)
                 : null,
-            child:
-                getCustomer.profileImageUrl == " " ? const Icon(Icons.person) : null,
+            child: getCustomer.profileImageUrl == " "
+                ? const Icon(Icons.person)
+                : null,
           ),
         ),
         const SizedBox(height: 10.0),
@@ -453,6 +458,7 @@ class _SampleItemDetailsViewState extends State<SampleItemDetailsView> {
 
   Future<void> addToChatList(String customerId, String tailorId) async {
     try {
+      log("in chat list");
       // Get the current chat list of the customer
       DocumentSnapshot customerSnapshot = await FirebaseFirestore.instance
           .collection(usersCollection)
@@ -460,15 +466,20 @@ class _SampleItemDetailsViewState extends State<SampleItemDetailsView> {
           .get();
 
       if (customerSnapshot.exists) {
+        log("in if");
         // Extract chatList and cast it to List<String>
         List<String> currentChatList = List<String>.from(
             (customerSnapshot.data() as Map<String, dynamic>?)?['chatlist']
                     ?.cast<String>() ??
                 []);
 
+        log("curr $currentChatList");
+
         // Add tailor's ID only if it's not already in the list
         if (!currentChatList.contains(tailorId)) {
           currentChatList.add(tailorId);
+
+          log("current $currentChatList");
 
           // Update the document with the modified chat list
           await FirebaseFirestore.instance
@@ -477,6 +488,7 @@ class _SampleItemDetailsViewState extends State<SampleItemDetailsView> {
               .update({'chatlist': currentChatList});
 
           addToTailorChatList(customerId, tailorId);
+          log("current chat list$currentChatList");
         }
       } else {
         throw Exception('Customer not found');
@@ -501,6 +513,8 @@ class _SampleItemDetailsViewState extends State<SampleItemDetailsView> {
             (TailorSnapshot.data() as Map<String, dynamic>?)?['chatlist']
                     ?.cast<String>() ??
                 []);
+
+        log("current chat list");
 
         // Add tailor's ID only if it's not already in the list
         if (!currentChatList.contains(customerId)) {

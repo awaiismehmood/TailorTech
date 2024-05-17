@@ -177,6 +177,7 @@ class _SignupScreenTailorState extends State<SignupScreen_Tailor> {
                                             cnic: cnicController.text,
                                             profileSetup: false,
                                             online: false,
+                                            verified: false,
                                           )
                                               .then((value) {
                                             // Only navigate if signup and data storage are successful

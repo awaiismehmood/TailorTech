@@ -301,8 +301,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           style: TextStyle(fontSize: 14),
                         ),
                         onTap: () {
-                          controller.signoutmethod(context, "Tailor");
-                          // Add functionality for Sign Out
+                          controller.signoutMethod(context);
                         },
                       ),
                     ],
@@ -320,7 +319,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 class RatingBar extends StatelessWidget {
   final double rating;
   final Function(double) onRatingChanged;
-  const RatingBar({super.key, required this.rating, required this.onRatingChanged});
+  const RatingBar(
+      {super.key, required this.rating, required this.onRatingChanged});
 
   @override
   Widget build(BuildContext context) {

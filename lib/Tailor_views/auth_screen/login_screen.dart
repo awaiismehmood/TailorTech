@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dashboard/Tailor_views/auth_screen/signup_screen.dart';
+import 'package:dashboard/Tailor_views/auth_screen/verification.dart';
 import 'package:dashboard/Tailor_views/home_screen/home.dart';
 import 'package:dashboard/controllers/auth_controller.dart';
 import 'package:dashboard/consts/consts.dart';
@@ -59,7 +60,11 @@ class _LoginScreenTailorState extends State<LoginScreen_Tailor> {
                       padding: const EdgeInsets.all(8.0),
                       child: TextButton(
                         onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=>const ForgotPassword_t()));
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const ForgotPassword_t()));
                         },
                         child: forgetPass.text.make(),
                       ),
@@ -87,12 +92,14 @@ class _LoginScreenTailorState extends State<LoginScreen_Tailor> {
                                         final data = userSnapshot.data()
                                             as Map<String, dynamic>;
                                         final String uType = data['type'];
+                                        final bool verified = data['verified'];
                                         if (value != null) {
                                           if (uType == widget.type) {
                                             // ignore: use_build_context_synchronously
                                             VxToast.show(context, msg: logedin);
-                                            Get.offAll(
-                                                () => const Home_Tailor());
+                                            Get.offAll(verified == true
+                                                ? () => const Home_Tailor()
+                                                : () => verifyUser());
                                           } else {
                                             setState(() {
                                               controller1.isloading(false);
