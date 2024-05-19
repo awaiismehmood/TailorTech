@@ -15,6 +15,7 @@ class EditProfilePage extends StatefulWidget {
 }
 
 class _EditProfilePageState extends State<EditProfilePage> {
+  bool _isLoading = false;
   late TextEditingController _nameController;
   late TextEditingController _detailsController;
   late TextEditingController _minPriceController;
@@ -238,30 +239,37 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     ),
               const SizedBox(height: 20),
               ElevatedButton(
-                onPressed: () {
-                  if (_nameController.text.isNotEmpty &&
-                      _detailsController.text.isNotEmpty &&
-                      _selectedTailorType.isNotEmpty &&
-                      _selectedImages.isNotEmpty &&
-                      _selectedImages.length <= 5) {
-                    // All mandatory fields are filled, proceed with saving the profile
-                    _saveProfile();
-                  } else {
-                    // Show a snackbar indicating that all fields are mandatory
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text(
-                            'Please fill in all fields and select between 1 and 5 images.'),
-                        duration: Duration(seconds: 3),
-                      ),
-                    );
-                  }
-                },
+                onPressed: _isLoading
+                    ? null
+                    : () {
+                        if (_nameController.text.isNotEmpty &&
+                            _detailsController.text.isNotEmpty &&
+                            _selectedTailorType.isNotEmpty &&
+                            _selectedImages.isNotEmpty &&
+                            _selectedImages.length <= 5) {
+                          // All mandatory fields are filled, proceed with saving the profile
+                          _saveProfile();
+                        } else {
+                          // Show a snackbar indicating that all fields are mandatory
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text(
+                                  'Please fill in all fields and select between 1 and 5 images.'),
+                              duration: Duration(seconds: 3),
+                            ),
+                          );
+                        }
+                      },
                 style: ElevatedButton.styleFrom(
                   foregroundColor: Colors.white,
-                  backgroundColor: redColor, // text color
+                  backgroundColor:
+                      _isLoading ? Colors.red : Colors.red, // text color
                 ),
-                child: const Text('Save'),
+                child: _isLoading
+                    ? const CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(whiteColor),
+                      )
+                    : const Text('Save'),
               ),
             ],
           ),
@@ -275,6 +283,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
     double maxPrice = double.parse(_maxPriceController.text);
     try {
       // Upload profile picture if selected
+      setState(() {
+        _isLoading = true;
+      });
       String profileImageUrl = '';
       if (_selectedProfileImage != null) {
         profileImageUrl = await _uploadImage(_selectedProfileImage!,
@@ -320,6 +331,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
         ),
       );
       Get.offAll(const Home_Tailor());
+      setState(() {
+        _isLoading = true;
+      });
     } catch (error) {
       // Show error message
       ScaffoldMessenger.of(context).showSnackBar(
@@ -328,6 +342,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
           duration: Duration(seconds: 3),
         ),
       );
+      setState(() {
+        _isLoading = false;
+      });
     }
   }
 

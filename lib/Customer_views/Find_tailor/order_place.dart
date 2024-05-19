@@ -8,7 +8,6 @@ import 'package:dashboard/Model_Classes/order_class.dart';
 import 'package:dashboard/consts/consts.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:image_picker/image_picker.dart';
 
 class TailorInfoScreen extends StatefulWidget {
@@ -20,10 +19,16 @@ class TailorInfoScreen extends StatefulWidget {
 }
 
 class _TailorInfoScreenState extends State<TailorInfoScreen> {
+  bool _isLoading = false;
+
   void _placeOrder() async {
     if (selectedTailorType.isNotEmpty &&
         clothesImages.isNotEmpty &&
         designImages.isNotEmpty) {
+      setState(() {
+        _isLoading = true;
+      });
+
       // Upload images to Firebase Storage and get the download URLs
       List<String> clothesImageUrls = await _uploadImages(clothesImages);
       List<String> designImageUrls = await _uploadImages(designImages);
@@ -59,6 +64,10 @@ class _TailorInfoScreenState extends State<TailorInfoScreen> {
               builder: (context) => MapPage(
                     orderId: orderId,
                   )));
+
+      setState(() {
+        _isLoading = false;
+      });
     }
   }
 
@@ -83,7 +92,7 @@ class _TailorInfoScreenState extends State<TailorInfoScreen> {
         // Add the download URL to the list
         imageUrls.add(downloadUrl);
       } catch (error) {
-        print('Error uploading image: $error');
+        log('Error uploading image: $error');
         // Handle error, e.g., show a message to the user
       }
     }
@@ -464,38 +473,31 @@ class _TailorInfoScreenState extends State<TailorInfoScreen> {
                     width: MediaQuery.of(context).size.width *
                         0.8, // 80% of screen width
                     child: ElevatedButton(
-                      onPressed: () {
-                        (BuildContext context) {
-                          return const AlertDialog(
-                            content: SizedBox(
-                              width: 30.0, // Specify the desired width
-                              height: 150.0, // Specify the desired height
-                              child: SpinKitWaveSpinner(
-                                color: redColor,
-                                size: 70.0,
-                              ),
-                            ),
-                          );
-                        };
-                        // Handle place order logic here
-                        _placeOrder();
-                        //print('Placing Order...');
-                      },
+                      onPressed: _isLoading
+                          ? null
+                          : () {
+                              _placeOrder();
+                            },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.red,
+                        backgroundColor: _isLoading ? Colors.red : Colors.red,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(24.0),
                         ),
                       ),
-                      child: const Padding(
-                        padding: EdgeInsets.all(16.0),
-                        child: Text(
-                          'Place Order',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: _isLoading
+                            ? const CircularProgressIndicator(
+                                valueColor:
+                                    AlwaysStoppedAnimation<Color>(whiteColor),
+                              )
+                            : const Text(
+                                'Place Order',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                       ),
                     ),
                   ),

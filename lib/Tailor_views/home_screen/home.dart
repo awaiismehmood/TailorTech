@@ -14,7 +14,7 @@ import 'package:get/get.dart';
 //import 'package:google_maps_flutter/google_maps_flutter.dart';
 //import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:location/location.dart';
+// import 'package:location/location.dart';
 import 'package:geolocator/geolocator.dart';
 
 import '../../controllers/home_controller.dart';
@@ -30,7 +30,7 @@ class Home_Tailor extends StatefulWidget {
 class _Home_TailorState extends State<Home_Tailor> {
   late Tailor tailor;
   var controller = Get.put(AuthController());
-  final Location _locationController = Location();
+  // final Location _locationController = Location();
   bool isLoading = true;
 
   @override
@@ -187,7 +187,9 @@ class _Home_TailorState extends State<Home_Tailor> {
       // Listen for location changes
       Geolocator.getPositionStream().listen((Position currentLocation) async {
         log("Location update received: $currentLocation");
+        // ignore: unnecessary_null_comparison
         if (currentLocation.latitude != null &&
+            // ignore: unnecessary_null_comparison
             currentLocation.longitude != null) {
           CollectionReference collection =
               FirebaseFirestore.instance.collection(usersCollection1);

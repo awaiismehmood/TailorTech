@@ -1,6 +1,5 @@
 import 'package:dashboard/First_screen/first_screen.dart';
 import 'package:dashboard/consts/consts.dart';
-import 'package:dashboard/controllers/auth_controller.dart';
 import 'package:dashboard/firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';

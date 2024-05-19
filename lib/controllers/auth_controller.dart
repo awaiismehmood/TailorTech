@@ -1,10 +1,11 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dashboard/First_screen/first_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:dashboard/First_screen/first_screen.dart';
+// import 'package:dashboard/First_screen/first_screen.dart';
 import '../consts/consts.dart';
 
 class AuthController extends GetxController {
@@ -200,13 +201,15 @@ class AuthController extends GetxController {
 
   Future<void> signoutMethod(BuildContext context) async {
     try {
-      await _auth.signOut();
       emailController.clear();
       passwordController.clear();
       // Clear any additional user-specific data
-      Get.delete<AuthController>(); // Clear the AuthController instance
-
+      // Clear the AuthController instance
+      // exit(0);
+      await _auth.signOut();
+      Get.delete<AuthController>();
       // Navigate to the splash screen or login screen
+      //exit(0);
       Get.offAll(() => const SplashScreen());
     } catch (e) {
       VxToast.show(context, msg: 'Failed to sign out.');
