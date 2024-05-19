@@ -99,7 +99,7 @@ class _LoginScreenTailorState extends State<LoginScreen_Tailor> {
                                             VxToast.show(context, msg: logedin);
                                             Get.offAll(verified == true
                                                 ? () => const Home_Tailor()
-                                                : () => verifyUser());
+                                                : () => VerifyUser());
                                           } else {
                                             setState(() {
                                               controller1.isloading(false);
