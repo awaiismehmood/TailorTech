@@ -13,7 +13,6 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
 // ignore: camel_case_types
-// ignore: camel_case_types
 class LoginScreen_Tailor extends StatefulWidget {
   final String type;
   const LoginScreen_Tailor({required this.type, super.key});
@@ -84,7 +83,7 @@ class _LoginScreenTailorState extends State<LoginScreen_Tailor> {
                                       await controller1
                                           .loginMethod(context)
                                           .then((value) async {
-                                        DocumentSnapshot? userSnapshot =
+                                        DocumentSnapshot userSnapshot =
                                             await FirebaseFirestore.instance
                                                 .collection(usersCollection1)
                                                 .doc(currentUser!.uid)
@@ -99,9 +98,11 @@ class _LoginScreenTailorState extends State<LoginScreen_Tailor> {
                                             VxToast.show(context, msg: logedin);
                                             Get.offAll(verified == true
                                                 ? () => const Home_Tailor()
-                                                : () => VerifyUser());
+                                                : () => const VerifyUser());
                                           } else {
                                             setState(() {
+                                              VxToast.show(context,
+                                                  msg: "Incorrect user type");
                                               controller1.isloading(false);
                                             });
                                           }

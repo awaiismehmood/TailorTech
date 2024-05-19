@@ -1,13 +1,11 @@
 import 'dart:developer';
-import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import 'package:dashboard/First_screen/first_screen.dart';
 import '../consts/consts.dart';
-//import '../view/home_screen/home.dart';
 
 class AuthController extends GetxController {
   var isloading = false.obs;
@@ -194,7 +192,7 @@ class AuthController extends GetxController {
     } catch (e) {
       // Error occurred while sending reset email
       print('Error sending password reset email: $e');
-      throw e; // Re-throw the error to handle it where the method is called
+      rethrow; // Re-throw the error to handle it where the method is called
     }
   }
 
@@ -205,22 +203,13 @@ class AuthController extends GetxController {
       await _auth.signOut();
       emailController.clear();
       passwordController.clear();
-      exit(0);
-      // Clear email and password controllers
+      // Clear any additional user-specific data
+      Get.delete<AuthController>(); // Clear the AuthController instance
 
       // Navigate to the splash screen or login screen
-      // Get.offAll(() => const SplashScreen());
+      Get.offAll(() => const SplashScreen());
     } catch (e) {
-      log('Error during signout: $e');
       VxToast.show(context, msg: 'Failed to sign out.');
     }
   }
 }
-
-// Future<void> sendPasswordReset(String email) async{
-//   try{
-//     await auth.sendPasswordResetEmail(email: email);
-//   }catch(e){
-//     print(e.toString());
-//   }
-// }
