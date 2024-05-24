@@ -3,6 +3,7 @@ import 'package:dashboard/Tailor_views/Profile/edit_profile.dart';
 import 'package:dashboard/Tailor_views/chat/chat_home.dart';
 import 'package:dashboard/consts/colors.dart';
 import 'package:dashboard/controllers/auth_controller.dart';
+import 'package:dashboard/view/support.dart';
 import 'package:flutter/material.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:get/get.dart';
@@ -284,16 +285,23 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           // Add functionality for Chat
                         },
                       ),
-                      // ListTile(
-                      //   leading: Icon(Icons.notifications),
-                      //   title: Text(
-                      //     'Notifications',
-                      //     style: TextStyle(fontSize: 14),
-                      //   ),
-                      //   onTap: () {
-                      //     // Add functionality for Notifications
-                      //   },
-                      // ),
+                      ListTile(
+                        leading: const Icon(Icons.question_mark_rounded),
+                        title: const Text(
+                          'Help and Support',
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const HelpAndSupportScreen()));
+                        },
+                      ),
                       ListTile(
                         leading: const Icon(Icons.exit_to_app),
                         title: const Text(
