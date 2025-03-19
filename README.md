@@ -8,5 +8,5 @@ TailorTech is a Flutter application designed to revolutionize the tailoring indu
 - **Measurement Storage**: Securely store customer measurements and preferences for future reference.
 - **Payment Integration**: Facilitate secure and easy payments through the app.
 
-##Contact
+Contact
 For any inquiries or issues, please contact us at [awaiismehmood69@gmail.com].
